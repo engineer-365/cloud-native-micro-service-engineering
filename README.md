@@ -4,7 +4,7 @@
 
 ## 想法：
    - 采用云原生的微服务架构: Docker, Kubernetes。
-   - 实现一个功能需求上能覆盖计划技术栈的Web应用，目前考虑是一个二手计算机图书电商系统，是真的准备把大家的书上架的！
+   - 实现一个功能需求上能覆盖计划技术栈的Web应用，目前考虑是一个二手计算机图书电商系统，是<b>真的准备把大家的书上架的</b>！
    - 前后端分离，以后端为主，后端最初会以JAVA的Spring Boot全家桶开始，包括MySQL、Redis、RabbitMQ、ElasticSearch等基本的主流技术栈，然后一步步增加别的，包括支持GO等其他语言；前端最初用React或Vue的全家桶开发SPA Web应用，然后扩展到小程序和手机App，建立大前端体系。
    - 自动化测试：单元测试、集成测试、性能测试、压力测试、端对端功能测试。整体测试覆盖率达到100%。
    - 以DevOps和GitOps为理念的工程开发体系：
@@ -27,26 +27,26 @@
       - 手动部署，直接上线运行
     - 阶段性技术栈：
       - 后端 -> Java技术栈:
-         - Spring MVC: REST API(JSON), Swagger (Spring Fox)
-         - 测试: Junit5 (单元测试), Mockito (Mock), JaCoCo (测试覆盖率分析)
-         - 数据库访问：Spring Data JPA（Hibernate），QueryDSL（动态查询），Flyway（数据库升级管理）
-         - 日志：Logback
-         - Jar包依赖管理：Maven
-         - Spring Boot Actuator：监控数据采集和管理
-         - 其他：Guava（工具类），Lombok (Java Bean代码生成)
+         - [ ] Spring MVC: REST API(JSON), Swagger (Spring Fox)
+         - [ ] 测试: Junit5 (单元测试), Mockito (Mock), JaCoCo (测试覆盖率分析)
+         - [ ] 数据库访问：Spring Data JPA（Hibernate），QueryDSL（动态查询），Flyway（数据库升级管理）
+         - [ ] 日志：Logback
+         - [ ] Jar包依赖管理：Maven
+         - [ ] Spring Boot Actuator：监控数据采集和管理
+         - [ ] 其他：Guava（工具类），Lombok (Java Bean代码生成)
       - 前端 -> React全家桶：
-         - Webpack
-         - 路由：React Router
-         - UI库：Material Design或Ant Design
-         - REST客户端：Axios
-         - 测试：Jest或Mocha
-      - Nginx做前端静态页面和后端API的统一入口
-      - 关系数据库：MySQL单节点，H2（测试用）
-      - 持续集成（CI）：Jenkins, GITHUB Hook/Action, SonarQube (代码质量检查)
-      - Maven私有仓库：Nexus
-      - 开发者本地Docker开发环境：Docker-compose
-      - 用Helm或Kustomize手动部署到Kubernetes
-      - Spring Boot Admin
+         - [ ] Webpack
+         - [ ] 路由：React Router
+         - [ ] UI库：Material Design或Ant Design
+         - [ ] REST客户端：Axios
+         - [ ] 测试：Jest或Mocha
+      - [ ] Nginx做前端静态页面和后端API的统一入口
+      - [ ] 关系数据库：MySQL单节点，H2（测试用）
+      - [ ] 持续集成（CI）：Jenkins, GITHUB Hook/Action, SonarQube (代码质量检查)
+      - [ ] Maven私有仓库：Nexus
+      - [ ] 开发者本地Docker开发环境：Docker-compose
+      - [ ] 用Helm或Kustomize手动部署到Kubernetes
+      - [ ] Spring Boot Admin
 
   - 二期开发：
     - 阶段性目标：
@@ -55,26 +55,26 @@
       - 自动部署
     - 阶段性技术栈
       - 后端增加：
-        - 参数校验: javax.validation (JSR-303, Hibernate Validator)
-        - 测试: Cucumber, TestContainers (容器化测试)，JMeter (性能测试和压测)，Contract
-        - 权限控制：Spring Security (OAuth + JWT)
-        - 日志：JSON日志格式
-        - REST客户端: Resilience4J，Spring RestTemplate，或Open Feign
-        - 缓存：Jedis, Spring Data Redis, Caffeine
-        - 全文检索：Spring Data Elasticsearch
-        - 消息队列：Spring AMQP, RabbitMQ
-        - 定时任务：TBD
+        - [ ] 参数校验: javax.validation (JSR-303, Hibernate Validator)
+        - [ ] 测试: Cucumber, TestContainers (容器化测试)，JMeter (性能测试和压测)，Contract
+        - [ ] 权限控制：Spring Security (OAuth + JWT)
+        - [ ] 日志：JSON日志格式
+        - [ ] REST客户端: Resilience4J，Spring RestTemplate或Open Feign
+        - [ ] 缓存：Jedis, Spring Data Redis, Caffeine
+        - [ ] 全文检索：Spring Data Elasticsearch
+        - [ ] 消息队列：Spring AMQP, RabbitMQ
+        - [ ] 定时任务：TBD
       - 前端增加：
-        - 状态管理：Redux或MobX
-        - 测试：Selenium，Puppeteer
-    - 关系数据库：高可用MySQL集群（MySQL Router + Group Replication + MySQL Shell）
-    - 持续部署（CD）：ArgoCD（自动部署到Kubernetes）
-    - 私有Docker仓库：Habor
-    - 分布式缓存：Redis, Redis Sentinel
-    - ELK (Elasticsearch + Logstash + Kibana): 全文检索，日志管理
-    - 配置集中管理：Consul，Vault（MySQL等密码管理），Git2Consul
-    - 分布式调用链路追踪：OpenTracing, Jaeger
-    - 监控报警：Prometheus，Grafana
+        - [ ] 状态管理：Redux或MobX
+        - [ ] 测试：Selenium，Puppeteer
+    - [ ] 关系数据库：高可用MySQL集群（MySQL Router + Group Replication + MySQL Shell）
+    - [ ] 持续部署（CD）：ArgoCD（自动部署到Kubernetes）
+    - [ ] 私有Docker仓库：Habor
+    - [ ] 分布式缓存：Redis, Redis Sentinel
+    - [ ] ELK (Elasticsearch + Logstash + Kibana): 全文检索，日志管理
+    - [ ] 配置集中管理：Consul，Vault（MySQL等密码管理），Git2Consul
+    - [ ] 分布式调用链路追踪：OpenTracing, [ ] Jaeger
+    - [ ] 监控报警：Prometheus，Grafana
 
   - 三期开发：
     - 阶段性目标：
@@ -84,19 +84,19 @@
       - 云原生的持续集成、持续部署、自动化运维
     - 阶段性技术栈
       - 后端：
-        - 支持用GO，Python，Node.JS，PHP开发微服务
-        - 部分功能改用Serverless/FaaS实现
-        - GraphQL API
-        - gRPC
-        - WebSocket
-        - Workflow
+        - [ ] 支持用GO，Python，Node.JS，PHP开发微服务
+        - [ ] 部分功能改用Serverless/FaaS实现
+        - [ ] GraphQL API
+        - [ ] gRPC
+        - [ ] WebSocket
+        - [ ] Workflow
       - 前端：
-        - GraphQL API
-        - 参与全链路数据采集追踪
-      - API网关：Kong，Ambassador，或Traefix？
-      - Lstio
-      - NoSQL数据库：MongoDB
-      - 自动化运维：Ansible，Vagrant，Terraform
+        - [ ] GraphQL API
+        - [ ] 参与全链路数据采集追踪
+      - [ ] API网关：Kong，Ambassador，或Traefix？
+      - [ ] Lstio
+      - [ ] NoSQL数据库：MongoDB
+      - [ ] 自动化运维：Ansible，Vagrant，Terraform
 
   - 四期开发：
     - 阶段性目标：
@@ -145,7 +145,9 @@
 
 > 6. “关于发起者（我）的背景？还有，为什么要发起这么一个开源项目”
 
-  我是一个MFC和EJB时代的蜀黍程序员，创业过两年（浪花都没起一个就失败了），现在回到了老公司里求个安稳低风险，级别算是架构师，但其实继续拧螺丝不过也爱好拧螺丝，自我评价是中上水平（不够顶尖），对技术的了解比较多比较杂。个人的技术经历比较丰富，包括接受面试或面试别人，包括做甲方转包或做乙方跟着销售抢标接外包，包括从无到有做出点东西（虽然产品上算失败），也包括民企国企外企间的折腾，还包括闷头写代码或带团队，经验比较丰富，所以想表示我有信心有那个能力当好一个老司机。要问我哪家公司的话只能说是传统ERP行业的大型外企，但提名字不合适（私人行为，公司政策不允许提）。个人能力和精力都有局限，非常欢迎更多的老司机一起带大家开起来。
+  我是一个MFC和EJB时代的蜀黍程序员，创业过两年（浪花都没起一个就失败了），现在回到了老公司里求个安稳低风险，级别算是架构师，但其实继续拧螺丝不过也爱好拧螺丝，自我评价是中上水平（不够顶尖），对技术的了解比较多比较杂，经验比较丰富，所以想表示我能当好一个老司机。不过要问我哪家公司的话，我只能说是传统ERP行业的大型外企，不合适提公司名字（因为是个人行为，公司政策不允许提）。
+
+  个人能力和精力都有局限，非常欢迎更多的老司机一起带大家开起来。
 
   发起这么个项目，原因在上面的啰啰嗦嗦里大家也能多多少少看出一些来了：
 
