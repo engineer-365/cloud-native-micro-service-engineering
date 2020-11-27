@@ -1,0 +1,1 @@
+https://start.spring.io/#!type=maven-project&language=java&platformVersion=2.4.0.RELEASE&packaging=jar&jvmVersion=11&groupId=org.engineer365&artifactId=flea&name=flea&description=Demo%20project%20for%20Spring%20Boot&packageName=org.engineer365.flea&dependencies=lombok,configuration-processor,web,data-jpa,flyway,h2,mysql,actuator
