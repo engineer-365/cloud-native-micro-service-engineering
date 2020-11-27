@@ -45,7 +45,7 @@
       - [ ] Nginx做前端静态页面和后端API的统一入口
       - [ ] 关系数据库：MySQL单节点，H2（测试用）
       - [ ] 持续集成（CI）：Jenkins, GITHUB Hook/Action, SonarQube (代码质量检查)
-      - [ ] Maven私有仓库：Nexus
+      - [ ] Maven私有仓库：Nexus，或JFrog
       - [ ] 开发者本地Docker开发环境：Docker-compose
       - [ ] 用Helm或Kustomize手动部署到Kubernetes
       - [ ] Spring Boot Admin
