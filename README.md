@@ -92,7 +92,7 @@
         - [ ] Workflow
       - 前端：
         - [ ] GraphQL API
-        - [ ] 参与全链路数据采集追踪
+        - [ ] snowplow
       - [ ] API网关：Kong，Ambassador，Gloo或Traefix？
       - [ ] ServiceMesh: lstio
       - [ ] NoSQL数据库：MongoDB
