@@ -97,7 +97,7 @@
         - [ ] snowplow
       - [ ] API网关：Kong，Ambassador，Gloo或Traefix？
       - [ ] ServiceMesh: lstio
-      - [ ] NoSQL数据库：MongoDB
+      - [ ] NoSQL数据库：MongoDB, Neo4J
       - [ ] 自动化运维：Ansible，Vagrant，Terraform
       - [ ] Jenkins-X, Skaffold
      
@@ -114,12 +114,13 @@
       - Flutter
       - Crossplane
       - chaos-mesh
+      - TiDB, PostgreSQL/Cockroachdb
      
 ## 问答：
 
 > 1. "太多了，一看就跟不上，就连这个简介都看不懂"
 
-  首先，我的观点是：看得懂就不用一起学了。一步一步来，让我们在实践中一起学习。
+  首先，我的观点是：看得懂就不用一起学了。很多我也只是个大概的了解，一步一步来吧，让我们在实践中一起学习。
 
   现在的趋势就是云原生、微服务、DevOps，列出的这些技术是在跟着大趋势走，避免走弯路，避免重复发明轮子，希望走到主流的前排里。所以很自然，很多技术要么只能在它们的官方网站上才学得到，要么在网上零零散散的而且大部分还是重复的或过时的，跟着教程书学效果不好，真正的技术只可能在系统化的实践中才学得到学得好。
 
