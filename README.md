@@ -39,7 +39,7 @@
  
   4. 入群后，请把你的群内昵称改为GITHUB账号名，否则会被踢出。
   
-  5. 可选：Star一下
+  5. 可选：Star一下，有助于我们找到更多参与者
   
   对这个过程如果有什么问题，可以提交Issue [https://github.com/engineer-365/cloud-native-micro-service-engineering/issues]
 
