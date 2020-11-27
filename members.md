@@ -5,6 +5,8 @@
 
    QQ群：1033056382（目前不打算用微信）
 
+   对这个过程如果有什么问题，可以提交Issue(https://github.com/engineer-365/cloud-native-micro-service-engineering/issues)[https://github.com/engineer-365/cloud-native-micro-service-engineering/issues]
+
     | #     | GITHUB账号（必填）                     | 备注（可选）                    |
     | :---: | :----------------------------------- | :---------------------------: |
     |  1    | qiangyt                              | 发起人                         |

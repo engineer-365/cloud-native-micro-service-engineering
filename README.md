@@ -35,6 +35,8 @@
 
   2. PR合并成功后，加入QQ群1033056382（目前不打算用微信）。加群时需要回答你提交PR时用的GITHUB账号。
 
+  对这个过程如果有什么问题，可以提交Issue(https://github.com/engineer-365/cloud-native-micro-service-engineering/issues)[https://github.com/engineer-365/cloud-native-micro-service-engineering/issues]
+
 ## 目标：
 
    （欢迎补充等建议）
