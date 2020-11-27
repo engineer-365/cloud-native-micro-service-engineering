@@ -3,7 +3,7 @@
 下面长文，但主要的目的其实只有一个：招兵不买马。这个项目是开放的，不过，对参加者还是有一定要求，感兴趣的话请坚持看完，往下看到底。
 
 ## 想法：
-   - 采用云原生的微服务架构: Docker, Kubernetes。
+   - 采用云原生的微服务架构: Docker, Kubernetes, ServiceMesh。
    - 实现一个功能需求上能覆盖计划技术栈的Web应用，目前考虑是一个二手计算机图书电商系统，是<b>真的准备把大家的书上架的</b>！
    - 前后端分离，以后端为主，后端最初会以JAVA的Spring Boot全家桶开始，包括MySQL、Redis、RabbitMQ、ElasticSearch等基本的主流技术栈，然后一步步增加别的，包括支持GO等其他语言；前端最初用React或Vue的全家桶开发SPA Web应用，然后扩展到小程序和手机App，建立大前端体系。
    - 自动化测试：单元测试、集成测试、性能测试、压力测试、端对端功能测试。整体测试覆盖率达到100%。
@@ -73,7 +73,7 @@
     - [ ] 分布式缓存：Redis, Redis Sentinel
     - [ ] ELK (Elasticsearch + Logstash + Kibana): 全文检索，日志管理
     - [ ] 配置集中管理：Consul，Vault（MySQL等密码管理），Git2Consul
-    - [ ] 分布式调用链路追踪：OpenTracing, [ ] Jaeger
+    - [ ] 分布式调用链路追踪：OpenTracing, Jaeger
     - [ ] 监控报警：Prometheus，Grafana
 
   - 三期开发：
@@ -94,7 +94,7 @@
         - [ ] GraphQL API
         - [ ] 参与全链路数据采集追踪
       - [ ] API网关：Kong，Ambassador，或Traefix？
-      - [ ] Lstio
+      - [ ] ServiceMesh: lstio
       - [ ] NoSQL数据库：MongoDB
       - [ ] 自动化运维：Ansible，Vagrant，Terraform
 
