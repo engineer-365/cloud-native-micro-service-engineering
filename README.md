@@ -93,18 +93,25 @@
       - 前端：
         - [ ] GraphQL API
         - [ ] 参与全链路数据采集追踪
-      - [ ] API网关：Kong，Ambassador，或Traefix？
+      - [ ] API网关：Kong，Ambassador，Gloo或Traefix？
       - [ ] ServiceMesh: lstio
       - [ ] NoSQL数据库：MongoDB
       - [ ] 自动化运维：Ansible，Vagrant，Terraform
-
+      - [ ] Jenkins-X, Skaffold
+     
   - 四期开发：
     - 阶段性目标：
       - 对接云供应商：阿里云，AWS，Azure等
       - 大数据分析：Flink，Hive, Kafka等
       - 全面高可用
-      - Flutter手机App
-
+      - 尝试新技术
+      - 手机App
+    - 阶段性技术栈
+      - 异步/Reactive Java, WebFlux
+      - GraalVM, Quarkus
+      - Flutter
+      - Crossplane
+     
 ## 问答：
 
 > 1. "太多了，一看就跟不上，就连这个简介都看不懂"
