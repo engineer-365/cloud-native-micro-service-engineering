@@ -68,7 +68,7 @@
         - [ ] 状态管理：Redux或MobX
         - [ ] 测试：Selenium，Puppeteer
     - [ ] 关系数据库：高可用MySQL集群（MySQL Router + Group Replication + MySQL Shell）
-    - [ ] 持续部署（CD）：Ranchor(Kubernetes集群管理），ArgoCD（自动部署到Kubernetes）
+    - [ ] 持续部署（CD）：Ranchor(Kubernetes集群管理），gitkube, ArgoCD（自动部署到Kubernetes）
     - [ ] 私有Docker仓库：Habor
     - [ ] 分布式缓存：Redis, Redis Sentinel
     - [ ] ELK (Elasticsearch + Logstash + Kibana): 全文检索，日志管理
