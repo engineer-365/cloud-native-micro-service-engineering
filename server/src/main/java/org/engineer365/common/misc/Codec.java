@@ -54,20 +54,20 @@ public class Codec {
    * long转换成字节数组
    */
   static void longTobytes(long value, byte[] bytes, int offset) {
-      for (int i = 7; i > -1; i--) {
-          bytes[offset++] = (byte) ((value >> 8 * i) & 0xFF);
-      }
+    for (int i = 7; i > -1; i--) {
+      bytes[offset++] = (byte) ((value >> 8 * i) & 0xFF);
+    }
   }
 
   /**
    * 字节数组转换成long
    */
   static long bytesTolong(byte[] bytes, int offset) {
-      long value = 0;
-      for (int i = 7; i > -1; i--) {
-          value |= (((long) bytes[offset++]) & 0xFF) << 8 * i;
-      }
-      return value;
+    long value = 0;
+    for (int i = 7; i > -1; i--) {
+      value |= (((long) bytes[offset++]) & 0xFF) << 8 * i;
+    }
+    return value;
   }
 
 }

@@ -35,22 +35,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class SpringBeanHolder implements ApplicationContextAware {
 
-    private static ApplicationContext context;
+  private static ApplicationContext context;
 
-    public static <T> T getBean(Class<T> clazz) {
-        return context.getBean(clazz);
-    }
+  public static <T> T getBean(Class<T> clazz) {
+    return context.getBean(clazz);
+  }
 
-    public static <T> T getBean(String name, Class<T> clazz) {
-        return context.getBean(name, clazz);
-    }
+  public static <T> T getBean(String name, Class<T> clazz) {
+    return context.getBean(name, clazz);
+  }
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        if (context != null) {
-            throw new InternalError("context already initialized");
-        }
-        SpringBeanHolder.context = applicationContext;
+  @Override
+  public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    if (context != null) {
+      throw new InternalError("context already initialized");
     }
+    SpringBeanHolder.context = applicationContext;
+  }
 
 }

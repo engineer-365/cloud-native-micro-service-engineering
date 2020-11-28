@@ -67,7 +67,7 @@ public class DateHelper {
    *
    */
   public static final ThreadLocal<DateFormat> DATE_FORMAT_RFC_3339= ThreadLocal
-          .withInitial(() -> new SimpleDateFormat(DATE_FORMAT_RFC_3339_TEXT));
+      .withInitial(() -> new SimpleDateFormat(DATE_FORMAT_RFC_3339_TEXT));
 
   /**
    *

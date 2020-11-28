@@ -30,38 +30,38 @@ import java.util.UUID;
  */
 public class UuidHelper {
 
-    /**
-     * 生成短UUID字符串（22位）
-     * @return
-     */
-    public static String shortUuid() {
-        var uuid = UUID.randomUUID();
-        return compress(uuid);
-    }
+  /**
+   * 生成短UUID字符串（22位）
+   * @return
+   */
+  public static String shortUuid() {
+    var uuid = UUID.randomUUID();
+    return compress(uuid);
+  }
 
-    /**
-     * 把UUID对象压缩成短UUID字符串
-     */
-    public static String compress(UUID uuid) {
-        byte[] byUuid = new byte[16];
-        long least = uuid.getLeastSignificantBits();
-        long most = uuid.getMostSignificantBits();
-        Codec.longTobytes(most, byUuid, 0);
-        Codec.longTobytes(least, byUuid, 8);
-        return Codec.bytesToBase64(byUuid);
-    }
+  /**
+   * 把UUID对象压缩成短UUID字符串
+   */
+  public static String compress(UUID uuid) {
+    byte[] byUuid = new byte[16];
+    long least = uuid.getLeastSignificantBits();
+    long most = uuid.getMostSignificantBits();
+    Codec.longTobytes(most, byUuid, 0);
+    Codec.longTobytes(least, byUuid, 8);
+    return Codec.bytesToBase64(byUuid);
+  }
 
-    /**
-     * 把短UUID字符串解压缩UUID对象
-     */
-    public static UUID uncompress(String compressedUuid) {
-        if (compressedUuid.length() != 22) {
-            throw new IllegalArgumentException("Invalid uuid!");
-        }
-        byte[] byUuid = Codec.base64ToBytes(compressedUuid);
-        long most = Codec.bytesTolong(byUuid, 0);
-        long least = Codec.bytesTolong(byUuid, 8);
-        return new UUID(most, least);
+  /**
+   * 把短UUID字符串解压缩UUID对象
+   */
+  public static UUID uncompress(String compressedUuid) {
+    if (compressedUuid.length() != 22) {
+      throw new IllegalArgumentException("Invalid uuid!");
     }
+    byte[] byUuid = Codec.base64ToBytes(compressedUuid);
+    long most = Codec.bytesTolong(byUuid, 0);
+    long least = Codec.bytesTolong(byUuid, 8);
+    return new UUID(most, least);
+  }
 
 }

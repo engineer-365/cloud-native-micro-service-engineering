@@ -28,9 +28,9 @@ package org.engineer365.common.bean;
  */
 public class Dumpable {
 
-    @Override
-    public String toString() {
-      return org.engineer365.common.json.JSON.pretty(this);
-    }
+  @Override
+  public String toString() {
+    return org.engineer365.common.json.JSON.pretty(this);
+  }
 
 }
