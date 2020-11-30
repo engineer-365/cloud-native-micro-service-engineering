@@ -53,7 +53,7 @@ public class GenericError extends RuntimeException {
    * @param messageFormat 消息格式，用于String.format(messageFormat, params
    * @param params 消息参数，用于String.format(messageFormat, params
    */
-  protected GenericError(HttpStatus status, String messageFormat, Object... params) {
+  public GenericError(HttpStatus status, String messageFormat, Object... params) {
     super(String.format(messageFormat, params));
 
     this.status = status;
@@ -66,7 +66,7 @@ public class GenericError extends RuntimeException {
    * @param status 错误代码
    * @param message 肩带消息文字
    */
-  protected GenericError(HttpStatus status, String message) {
+  public GenericError(HttpStatus status, String message) {
     super(message);
 
     this.status = status;
@@ -78,7 +78,7 @@ public class GenericError extends RuntimeException {
    *
    * @param status 错误代码
    */
-  protected GenericError(HttpStatus status) {
+  public GenericError(HttpStatus status) {
     this(status, status.getReasonPhrase());
   }
 
@@ -90,7 +90,7 @@ public class GenericError extends RuntimeException {
    * @param messageFormat 消息格式，用于String.format(messageFormat, params
    * @param params 消息参数，用于String.format(messageFormat, params
    */
-  protected GenericError(Exception cause, HttpStatus status, String messageFormat, Object... params) {
+  public GenericError(Throwable cause, HttpStatus status, String messageFormat, Object... params) {
     super(String.format(messageFormat, params), cause);
 
     this.status = status;
@@ -104,7 +104,7 @@ public class GenericError extends RuntimeException {
    * @param status 错误代码
    * @param message 肩带消息文字
    */
-  protected GenericError(Exception cause, HttpStatus status, String message) {
+  public GenericError(Throwable cause, HttpStatus status, String message) {
     super(message, cause);
 
     this.status = status;
@@ -117,7 +117,7 @@ public class GenericError extends RuntimeException {
    * @param cause 级联异常
    * @param status 错误代码
    */
-  protected GenericError(Exception cause, HttpStatus status) {
+  public GenericError(Throwable cause, HttpStatus status) {
     this(status, status.getReasonPhrase(), cause);
   }
 
@@ -126,10 +126,14 @@ public class GenericError extends RuntimeException {
    * @return
    */
   public Map<String, Object> toMap() {
+    return toMap(this.status, this.params, getMessage());
+  }
+
+  public static Map<String, Object> toMap(HttpStatus status, Object[] params, String note) {
     return Map.of(
       "status", status.name(),
       "params", params,
-      "message", getMessage()
+      "note", note
     );
   }
 
