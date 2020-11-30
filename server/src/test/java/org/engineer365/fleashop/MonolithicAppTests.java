@@ -1,10 +1,10 @@
-package org.engineer365.flea;
+package org.engineer365.fleashop;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class FleaApplicationTests {
+class MonolithicAppTests {
 
 	@Test
 	void contextLoads() {
