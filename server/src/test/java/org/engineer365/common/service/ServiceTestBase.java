@@ -21,38 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.engineer365.common.dao.jpa;
+package org.engineer365.common.service;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
-import org.engineer365.common.error.NotFoundError;
-import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.mockito.ArgumentMatchers;
+import org.mockito.MockitoAnnotations;
 
 /**
- * 方便使用QueryDSL实现JPA动态查询的DAO基类
- *
- * @param T 实体类的类型
- * @param ID 实体类的主键的类型
  */
-@NoRepositoryBean
-@Nullable
-public interface JpaDAO<T, ID> extends PagingAndSortingRepository<T, ID> {
+@Disabled
+public abstract class ServiceTestBase {
 
-  // TODO: 加入几个常用的接口方法
-  List<T> findAll();
 
-  default T get(boolean ensureExists, ID id) {
-    var r = findById(id);
-    if (r.isPresent()) {
-      return r.get();
-    }
-    if (ensureExists) {
-      throw new NotFoundError("id=%s", String.valueOf(id));
-    }
-    return null;
+  @org.junit.jupiter.api.BeforeEach
+  public void beforeEach() {
+    MockitoAnnotations.initMocks(this);
+  }
+
+  public static boolean matchBoolean(boolean that) {
+    return ArgumentMatchers.booleanThat(b -> {
+      Assertions.assertEquals(Boolean.valueOf(that), b);
+      return true;
+    });
+  }
+
+  public static String matchString(String that) {
+    return ArgumentMatchers.argThat((String actual) -> that.equals(actual));
+  }
+
+  public static int matchInt(int that) {
+    return ArgumentMatchers.intThat(i -> {
+      Assertions.assertEquals(Integer.valueOf(that), i);
+      return true;
+    });
   }
 
 }

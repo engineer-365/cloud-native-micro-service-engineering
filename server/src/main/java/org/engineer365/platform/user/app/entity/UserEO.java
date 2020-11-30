@@ -21,38 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.engineer365.common.dao.jpa;
+package org.engineer365.platform.user.app.entity;
 
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-import javax.annotation.Nullable;
+import org.engineer365.platform.user.api.bean.User;
+import org.engineer365.platform.user.api.req.CreateUserReq;
 
-import org.engineer365.common.error.NotFoundError;
-import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.engineer365.common.bean.BeanCopyer;
+import org.engineer365.common.entity.UpdateableEO;
 
-/**
- * 方便使用QueryDSL实现JPA动态查询的DAO基类
- *
- * @param T 实体类的类型
- * @param ID 实体类的主键的类型
- */
-@NoRepositoryBean
-@Nullable
-public interface JpaDAO<T, ID> extends PagingAndSortingRepository<T, ID> {
+@lombok.Getter
+@lombok.Setter
+@Entity
+@Table(name = "user_user")
+public class UserEO extends UpdateableEO {
 
-  // TODO: 加入几个常用的接口方法
-  List<T> findAll();
+    public static final BeanCopyer<UserEO, User> OUTPUT_COPIER = new BeanCopyer<UserEO, User>(UserEO.class, User.class,
+            User::new, User[]::new);
 
-  default T get(boolean ensureExists, ID id) {
-    var r = findById(id);
-    if (r.isPresent()) {
-      return r.get();
-    }
-    if (ensureExists) {
-      throw new NotFoundError("id=%s", String.valueOf(id));
-    }
-    return null;
-  }
+    public static final BeanCopyer<CreateUserReq, UserEO> CREATE_REQ_COPIER = new BeanCopyer<CreateUserReq, UserEO>(
+            CreateUserReq.class, UserEO.class, UserEO::new, UserEO[]::new);
+
+    @Column(length = 32, nullable = false)
+    String name;
+
+    @Column(name = "full_name", length = 64, nullable = false)
+    String fullName;
+
+    @Column(name = "primary_account_id", length = 22)
+    String primaryAccountId;
+
+    @Column(name = "is_root", nullable = false)
+    boolean root;
 
 }

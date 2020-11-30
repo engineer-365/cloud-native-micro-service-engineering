@@ -21,38 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.engineer365.common.dao.jpa;
+package org.engineer365.platform.user.api.req;
 
-import java.util.List;
+import org.engineer365.common.bean.Dumpable;
 
-import javax.annotation.Nullable;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
-import org.engineer365.common.error.NotFoundError;
-import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.data.repository.PagingAndSortingRepository;
+@lombok.Getter
+@lombok.Setter
+public class CreateAccountByEmailReq extends Dumpable {
 
-/**
- * 方便使用QueryDSL实现JPA动态查询的DAO基类
- *
- * @param T 实体类的类型
- * @param ID 实体类的主键的类型
- */
-@NoRepositoryBean
-@Nullable
-public interface JpaDAO<T, ID> extends PagingAndSortingRepository<T, ID> {
+    @NotBlank
+    @Size(max = 22)
+    String userId;
 
-  // TODO: 加入几个常用的接口方法
-  List<T> findAll();
+    @NotBlank
+    @Size(max = 64)
+    String email;
 
-  default T get(boolean ensureExists, ID id) {
-    var r = findById(id);
-    if (r.isPresent()) {
-      return r.get();
-    }
-    if (ensureExists) {
-      throw new NotFoundError("id=%s", String.valueOf(id));
-    }
-    return null;
-  }
+    @NotBlank
+    @Size(max = 64)
+    String password;
+
 
 }

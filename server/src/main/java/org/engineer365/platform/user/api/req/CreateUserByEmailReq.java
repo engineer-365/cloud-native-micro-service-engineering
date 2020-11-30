@@ -21,38 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.engineer365.common.dao.jpa;
+package org.engineer365.platform.user.api.req;
 
-import java.util.List;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
-import javax.annotation.Nullable;
+import org.engineer365.common.bean.BeanCopyer;
+import org.engineer365.common.bean.Dumpable;
 
-import org.engineer365.common.error.NotFoundError;
-import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.data.repository.PagingAndSortingRepository;
+@lombok.Getter
+@lombok.Setter
+public class CreateUserByEmailReq extends Dumpable {
 
-/**
- * 方便使用QueryDSL实现JPA动态查询的DAO基类
- *
- * @param T 实体类的类型
- * @param ID 实体类的主键的类型
- */
-@NoRepositoryBean
-@Nullable
-public interface JpaDAO<T, ID> extends PagingAndSortingRepository<T, ID> {
+  public static final BeanCopyer<CreateUserByEmailReq, CreateAccountByEmailReq> ACCOUNT_REQ_COPIER
+    = new BeanCopyer<CreateUserByEmailReq, CreateAccountByEmailReq>(
+      CreateUserByEmailReq.class, CreateAccountByEmailReq.class, CreateAccountByEmailReq::new, CreateAccountByEmailReq[]::new);
 
-  // TODO: 加入几个常用的接口方法
-  List<T> findAll();
 
-  default T get(boolean ensureExists, ID id) {
-    var r = findById(id);
-    if (r.isPresent()) {
-      return r.get();
-    }
-    if (ensureExists) {
-      throw new NotFoundError("id=%s", String.valueOf(id));
-    }
-    return null;
-  }
+  public static final BeanCopyer<CreateUserByEmailReq, CreateUserReq> USER_REQ_COPIER
+    = new BeanCopyer<CreateUserByEmailReq, CreateUserReq>(
+        CreateUserByEmailReq.class, CreateUserReq.class, CreateUserReq::new, CreateUserReq[]::new);
+
+  @NotBlank
+  @Size(max = 32)
+  String name;
+
+  @NotBlank
+  @Size(max = 64)
+  String fullName;
+
+  @NotBlank
+  @Size(max = 64)
+  String email;
+
+  @NotBlank
+  @Size(max = 64)
+  String password;
 
 }

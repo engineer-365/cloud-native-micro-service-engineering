@@ -21,38 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.engineer365.common.dao.jpa;
+package org.engineer365.platform.user.app;
 
-import java.util.List;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableAsync;
 
-import javax.annotation.Nullable;
 
-import org.engineer365.common.error.NotFoundError;
-import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
-/**
- * 方便使用QueryDSL实现JPA动态查询的DAO基类
- *
- * @param T 实体类的类型
- * @param ID 实体类的主键的类型
- */
-@NoRepositoryBean
-@Nullable
-public interface JpaDAO<T, ID> extends PagingAndSortingRepository<T, ID> {
+@SpringBootApplication(scanBasePackages = {"org.engineer365.common", "wxcount"})
+@EntityScan("org.engineer365.platform.user.app.entity")
+@EnableJpaRepositories(basePackages = {"org.engineer365.platform.user.app.dao"})
+@EnableJpaAuditing //TODO: AuditorAware
+@EnableAsync
+@EnableCaching
+public class UserAppTest {
 
-  // TODO: 加入几个常用的接口方法
-  List<T> findAll();
-
-  default T get(boolean ensureExists, ID id) {
-    var r = findById(id);
-    if (r.isPresent()) {
-      return r.get();
-    }
-    if (ensureExists) {
-      throw new NotFoundError("id=%s", String.valueOf(id));
-    }
-    return null;
-  }
 
 }
