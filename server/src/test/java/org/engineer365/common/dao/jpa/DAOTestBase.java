@@ -68,6 +68,7 @@ public class DAOTestBase<T, ID, R extends JpaDAO<T, ID>> {
    * @param actuals 待验证的一组实体对象
    * @param expecteds 用于对比的一组实体对象（期望值）
    */
+  @SuppressWarnings("unchecked")
   public void assertEntities(List<T> actuals, T... expecteds) {
     assertEntities(actuals, Arrays.asList(expecteds));
   }
@@ -127,6 +128,7 @@ public class DAOTestBase<T, ID, R extends JpaDAO<T, ID>> {
    * @param byId 是否以id值为map的key
    * @param entities 一组实体对象
    */
+  @SuppressWarnings("unchecked")
   public Map<String, Object> toMap(T entity) {
     var r = JSON.from(JSON.to(entity), Map.class);
     r.remove("createdAt");

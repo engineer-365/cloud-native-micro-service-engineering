@@ -30,7 +30,6 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.MockitoAnnotations;
 import org.opentest4j.AssertionFailedError;
 import org.junit.jupiter.api.function.Executable;
-import org.junit.platform.commons.util.UnrecoverableExceptions;
 import org.junit.jupiter.api.BeforeEach;
 
 /**
@@ -41,7 +40,7 @@ public abstract class ServiceTestBase {
 
   @BeforeEach
   public void beforeEach() {
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
   }
 
   public static boolean matchBoolean(boolean that) {
@@ -62,6 +61,7 @@ public abstract class ServiceTestBase {
     });
   }
 
+  @SuppressWarnings("unchecked")
   public static <T extends GenericError> T assertThrows (Class<T> expectedType, Enum<?> code, Executable executable) {
       try {
         executable.execute();

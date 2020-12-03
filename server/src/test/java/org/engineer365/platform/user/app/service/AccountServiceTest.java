@@ -23,9 +23,6 @@
  */
 package org.engineer365.platform.user.app.service;
 
-import java.time.Duration;
-import java.util.Date;
-
 import org.engineer365.platform.user.api.enums.AccountType;
 import org.engineer365.platform.user.api.enums.ErrorCode;
 import org.engineer365.platform.user.api.req.AccountAuthReq;
@@ -44,7 +41,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.engineer365.common.error.BadRequestError;
-import org.engineer365.common.misc.DateHelper;
 import org.engineer365.common.service.ServiceTestBase;
 
 
@@ -78,8 +74,6 @@ public class AccountServiceTest extends ServiceTestBase {
 
     @Test
     void test_checkRequestWithAccount_OK() {
-        var now = DateHelper.now();
-
         var a = new AccountEO();
         a.setPassword("abc");
 
@@ -121,8 +115,6 @@ public class AccountServiceTest extends ServiceTestBase {
 
     @Test
     void test_createAccountByEmail_happy() {
-        var now = DateHelper.now();
-
         var accountId = "a-1";
         var user = new UserEO();
         user.setId("u-1");
