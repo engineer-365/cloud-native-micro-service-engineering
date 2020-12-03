@@ -2,6 +2,17 @@
 
 ## 示范的技术
 
+  - Spring Boot:
+    - 官网：https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/
+  
+  - JaCoCo:
+    测试覆盖率工具
+    - 官方文档： https://www.jacoco.org/jacoco/trunk/doc/
+  
+  - Flyway:
+    数据库初始化和升级管理
+    - 官网：https://flywaydb.org/
+  
   - QueryDSL:
     替代JPA自身的Criteria API，和Criteria API一样支持灵活的动态数据库查询语句，但相比JPA Criteria API：
     1. 通过插件把数据库表的表名和列名绑定到类型安全的Java Bean property，方便重构，也减少直接使用字符串时容易发生的拼写错误

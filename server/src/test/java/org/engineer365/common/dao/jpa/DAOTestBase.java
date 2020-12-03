@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Assertions;
 import org.engineer365.common.json.JSON;
 
@@ -40,6 +41,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 /**
  * JPA DAO的单元测试用的基类，包含数据导入和实体对象数据验证等一些工具性方法
  */
+@Disabled
 @DataJpaTest
 @lombok.Getter
 public class DAOTestBase<T, ID, R extends JpaDAO<T, ID>> {

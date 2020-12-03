@@ -1,0 +1,140 @@
+# 
+#  MIT License
+# 
+#  Copyright (c) 2020 engineer365.org
+# 
+#  Permission is hereby granted, free of charge, to any person obtaining a copy
+#  of this software and associated documentation files (the "Software"), to deal
+#  in the Software without restriction, including without limitation the rights
+#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#  copies of the Software, and to permit persons to whom the Software is
+#  furnished to do so, subject to the following conditions:
+# 
+#  The above copyright notice and this permission notice shall be included in all
+#  copies or substantial portions of the Software.
+# 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+#  SOFTWARE.
+debug: false
+
+logging:
+  group:
+    library:
+      - com
+      - io
+      - javax
+      - net
+      - org
+      - springfox
+    engineer365:
+      - org.engineer365
+  level:
+    root: INFO
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      base-path: /manage
+      exposure.include: "*"
+  endpoint:
+    health:
+      show-details: always
+    group:
+        liveness:
+          include: ping
+          show-details: always
+        readiness:
+          include: "*"
+          show-details: always
+    metrics.enabled: true
+    prometheus.enabled: true
+  health.diskspace.threshold: 1000MB
+  metrics:
+    distribution:
+      percentiles-histogram.http.server.requests: true
+      percentiles.http.server.requests: 0.5, 0.95, 0.99
+      sla.http.server.requests: 10ms, 25ms, 50ms, 100ms, 500ms, 1s, 5s
+    enable:
+      tomcat: true
+      jvm: true
+    export:
+      prometheus.enabled: true
+    tags.common.enabled: true
+  server:
+    port: 8081
+    ssl.enabled: false
+  trace:
+    http:
+      enabled: ${MANAGEMENT_TRACE_HTTP_ENABLED:true} # Whether to enable HTTP request-response tracing.
+      paths-to-exclude: ${MANAGEMENT_TRACE_HTTP_PATH_TO_EXCLUDED:/manage/health}
+      log-enabled: ${MANAGEMENT_TRACE_HTTP_LOG_ENABLED:true}
+      log-header: ${MANAGEMENT_TRACE_HTTP_LOG_HEADER:true}
+      log-body: ${MANAGEMENT_TRACE_HTTP_LOG_BODY:false}
+
+org.engineer365.common:
+  rest:
+    request-context.interceptor:
+      path-patterns: /**
+
+server:
+  port: ${SERVER_PORT:8080}
+  compression.enabled: false
+  error:
+    include-stacktrace: never # always
+    include-exception: false
+  ssl.enabled: false
+  servlet.context-path: /
+
+spring:
+  admin.enabled: true
+
+  datasource:
+    url: ${service.rdbms.url}
+    username: ${service.rdbms.username}
+    password: ${service.rdbms.password}
+
+  flyway:
+    enabled: ${SPRING_FLYWAY_ENABLED:false}
+    clean-disabled: true
+    url: ${service.rdbms.url}
+    user: ${service.rdbms.username}
+    password: ${service.rdbms.password}
+    schemas: ${service.rdbms.database}
+
+  hikari:
+    maximumPoolSize: ${service.rdbms.pool-size:50}
+    minimumIdle: ${service.rdbms.pool-size:50}
+
+  http.log-request-details: ${MANAGEMENT_TRACE_HTTP_LOG_BODY:false}
+
+  jackson:
+    default-property-inclusion: NON_ABSENT
+    time-zone: GMT+0000
+
+
+  jpa:
+    open-in-view: false
+    database-platform:
+    properties:
+      hibernate:
+        generate_statistics: false
+        dialect_resolvers: org.engineer365.common.dao.jpa.DialectResolverEx
+    hibernate:
+      use-new-id-generator-mappings: true
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+  mvc.favicon.enabled: false
+
+springfox:
+  documentation:
+    auto-startup: true
+    swagger.v2.path: ${server.servlet.context-path:/api}/docs
+
+trace: false

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # 
 #  MIT License
 # 
@@ -21,27 +23,29 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-# 开发环境使用的Dockerfile
-#
-# 和非开发环境的主要区别在于：
-# 1）依赖于宿主机做构建而容器内不做构建，直接从宿主机复制构建好的jar文件，开发迭代快速
-# 2）构建出的容器使用完整的openjdk镜像，并可加入一些开发工具，开发时更方便
+set -e
 
-# 1. stage: build --------------------------------------------------------------
-FROM openjdk:11.0.9.1-jdk
+work_dir=$dev_dir/work
+mysql_dir=$work_dir/mysql
 
-WORKDIR /opt
-EXPOSE 8080
+# 'Darwin' or 'Linux'
+export OS=`uname -s`
+case "$OS" in
+  "Darwin" )
+  _sudo=''
+  ;;
+  "Linux" )
+  _sudo='sudo'
+  # sudo chown -R $USER:$USER $data_dir
+  ;;
+  * )
+    echo "Support MAC-OS-X or Linux only"
+    exit 1
+  ;;
+esac
 
-COPY target/*.jar ./server.jar
-
-ENV SPRING_PROFILES_ACTIVE dev
-
-ENTRYPOINT []
-
-CMD [\
-    "java", \
-    "-Dspring.profiles.active=${SPRING_PROFILES_ACTIVE}", \
-    "-Djava.security.egd=file:/dev/./urandom", \
-    "-jar", "server.jar" \
-]
+# print the environment
+echo ''
+echo 'Work directory: ' $work_dir
+echo 'MySQL data directory: ' $mysql_dir
+echo ''

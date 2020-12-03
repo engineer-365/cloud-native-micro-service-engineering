@@ -21,27 +21,32 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-# 开发环境使用的Dockerfile
-#
-# 和非开发环境的主要区别在于：
-# 1）依赖于宿主机做构建而容器内不做构建，直接从宿主机复制构建好的jar文件，开发迭代快速
-# 2）构建出的容器使用完整的openjdk镜像，并可加入一些开发工具，开发时更方便
+version: '2.2'
 
-# 1. stage: build --------------------------------------------------------------
-FROM openjdk:11.0.9.1-jdk
+services:
 
-WORKDIR /opt
-EXPOSE 8080
+  mysql:
+    image: mysql:8.0.22
+    env_file:  ./.env
+    volumes:
+      - ./mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
+      - ./work/mysql:/var/lib/mysql:rw
+    healthcheck:
+      test: "mysql --user=fleashop_user --password=fleashop_password -D fleashop --execute \"SHOW TABLES;\""
+      interval: 3s
+      timeout: 1s
+      retries: 60
 
-COPY target/*.jar ./server.jar
+  server:
+    build:
+      context: ../
+      dockerfile: Dockerfile.dev
+    ports:
+      - 28080:8080
+      - 28081:8081
+      - 127.0.0.1:28888:8888
+    env_file:  ./.env
+    environment: 
+      - JAVA_OPTS=-Djava.compiler=NONE -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=0.0.0.0:8888 -Xnoagent
 
-ENV SPRING_PROFILES_ACTIVE dev
 
-ENTRYPOINT []
-
-CMD [\
-    "java", \
-    "-Dspring.profiles.active=${SPRING_PROFILES_ACTIVE}", \
-    "-Djava.security.egd=file:/dev/./urandom", \
-    "-jar", "server.jar" \
-]
