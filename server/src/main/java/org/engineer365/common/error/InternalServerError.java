@@ -21,39 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.engineer365.common.dao.jpa;
+package org.engineer365.common.error;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
-import org.engineer365.common.error.NotFoundError;
-import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.http.HttpStatus;
 
 /**
- * 方便使用QueryDSL实现JPA动态查询的DAO基类
- *
- *
- * @param T 实体类的类型
- * @param ID 实体类的主键的类型
+ * 对应HTTP INTERNAL_SERVER_ERROR
  */
-@NoRepositoryBean
-@Nullable
-public interface JpaDAO<T, ID> extends PagingAndSortingRepository<T, ID> {
+public class InternalServerError extends GenericError {
 
-  // TODO: 加入几个常用的接口方法
-  List<T> findAll();
+  public enum Code {
+    OTHER
+  }
 
-  default T get(boolean ensureExists, ID id) {
-    var r = findById(id);
-    if (r.isPresent()) {
-      return r.get();
-    }
-    if (ensureExists) {
-      throw new NotFoundError(NotFoundError.Code.ENTITY_NOT_FOUND, "id=%s", String.valueOf(id));
-    }
-    return null;
+  private static final long serialVersionUID = -5209197321059638276L;
+
+  public InternalServerError(Enum<?> code, String noteFormat, Object... noteParams) {
+    super(HttpStatus.INTERNAL_SERVER_ERROR, code, noteFormat, noteParams);
+  }
+
+  public InternalServerError(Enum<?> code, String note) {
+    super(HttpStatus.INTERNAL_SERVER_ERROR, code, note);
+  }
+
+  public InternalServerError(Enum<?> code) {
+    super(HttpStatus.INTERNAL_SERVER_ERROR, code);
+  }
+
+  public InternalServerError(Enum<?> code, Throwable cause, String noteFormat, Object... noteParams) {
+    super(HttpStatus.INTERNAL_SERVER_ERROR, code, cause, noteFormat, noteParams);
+  }
+
+  public InternalServerError(Enum<?> code, Throwable cause, String note) {
+    super(HttpStatus.INTERNAL_SERVER_ERROR, code, cause, note);
+  }
+
+  public InternalServerError(Enum<?> code, Throwable cause) {
+    super(HttpStatus.INTERNAL_SERVER_ERROR, code, cause);
   }
 
 }

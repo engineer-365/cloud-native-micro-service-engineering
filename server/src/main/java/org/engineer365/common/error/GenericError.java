@@ -34,91 +34,114 @@ import org.springframework.http.HttpStatus;
 @lombok.Getter
 public class GenericError extends RuntimeException {
 
+  public enum Code {
+    OTHER
+  }
+
   private static final long serialVersionUID = -6956880450354038826L;
+
+  /**
+   * 错误状态。
+   */
+  final HttpStatus status;
 
   /**
    * 错误代码。
    */
-  HttpStatus status;
+  final Enum<?> code;
 
   /**
    * 错误消息的参数
    */
-  Object[] params;
+  final Object[] noteParams;
 
   /**
    * 无级联异常时抛出的异常，可以定义消息格式和消息参数
    *
-   * @param status 错误代码
-   * @param messageFormat 消息格式，用于String.format(messageFormat, params
-   * @param params 消息参数，用于String.format(messageFormat, params
+   * @param status 错误状态
+   * @param code 错误代码
+   * @param noteFormat 消息格式，用于String.format(noteFormat, noteParams...)
+   * @param noteParams 消息参数，用于String.format(noteFormat, noteParams...)
    */
-  public GenericError(HttpStatus status, String messageFormat, Object... params) {
-    super(String.format(messageFormat, params));
+  public GenericError(HttpStatus status, Enum<?> code, String noteFormat, Object... noteParams) {
+    super(String.format(noteFormat, noteParams));
 
     this.status = status;
-    this.params = params;
+    this.code = code;
+    this.noteParams = noteParams;
   }
 
   /**
    * 无级联异常时抛出的异常，只可以传递简单消息文字
    *
-   * @param status 错误代码
-   * @param message 肩带消息文字
+   * @param status 错误状态
+   * @param code 错误代码
+   * @param note 消息文字
    */
-  public GenericError(HttpStatus status, String message) {
-    super(message);
+  public GenericError(HttpStatus status, Enum<?> code, String note) {
+    super(note);
 
     this.status = status;
-    this.params = new Object[0];
+    this.code = code;
+    this.noteParams = new Object[0];
   }
 
   /**
    * 无级联异常时抛出的异常，不用传递简单消息文字，消息文字直接使用错误代码所表示的错误消息
    *
-   * @param status 错误代码
+   * @param status 错误状态
+   * @param code 错误代码
    */
-  public GenericError(HttpStatus status) {
-    this(status, status.getReasonPhrase());
+  public GenericError(HttpStatus status, Enum<?> code) {
+    this(status, code, status.getReasonPhrase());
   }
 
   /**
    * 带有级联异常时抛出的异常，可以定义消息格式和消息参数
    *
    * @param cause 级联异常
-   * @param status 错误代码
-   * @param messageFormat 消息格式，用于String.format(messageFormat, params
-   * @param params 消息参数，用于String.format(messageFormat, params
+   * @param status 错误状态
+   * @param code 错误代码
+   * @param noteFormat 消息格式，用于String.format(noteFormat, noteParams
+   * @param noteParams 消息参数，用于String.format(noteFormat, noteParams
    */
-  public GenericError(Throwable cause, HttpStatus status, String messageFormat, Object... params) {
-    super(String.format(messageFormat, params), cause);
+  public GenericError(HttpStatus status, Enum<?> code, Throwable cause, String noteFormat, Object... noteParams) {
+    super(String.format(noteFormat, noteParams), cause);
 
     this.status = status;
-    this.params = params;
+    this.code = code;
+    this.noteParams = noteParams;
   }
 
   /**
    * 带有级联异常时抛出的异常，只可以传递简单消息文字
    *
    * @param cause 级联异常
-   * @param status 错误代码
-   * @param message 肩带消息文字
+   * @param status 错误状态
+   * @param code 错误代码
+   * @param message 消息文字
    */
-  public GenericError(Throwable cause, HttpStatus status, String message) {
-    super(message, cause);
+  public GenericError(HttpStatus status, Enum<?> code, Throwable cause, String note) {
+    super(note, cause);
 
     this.status = status;
-    this.params = new Object[0];
+    this.code = code;
+    this.noteParams = new Object[0];
   }
 
   /**
    * 带有级联异常时抛出的异常，不用传递简单消息文字，消息文字直接使用错误代码所表示的错误消息
    *
    * @param cause 级联异常
-   * @param status 错误代码
+   * @param status 错误状态
+   * @param code 错误代码
    */
-  public GenericError(Throwable cause, HttpStatus status) {
-    this(status, status.getReasonPhrase(), cause);
+  public GenericError(HttpStatus status, Enum<?> code, Throwable cause) {
+    this(status, code, cause, status.getReasonPhrase());
+  }
+
+  public String getNote() {
+    return getMessage();
   }
 
   /**
@@ -126,14 +149,16 @@ public class GenericError extends RuntimeException {
    * @return
    */
   public Map<String, Object> toMap() {
-    return toMap(this.status, this.params, getMessage());
+    return toMap(this.code, this.noteParams, getNote());
   }
 
-  public static Map<String, Object> toMap(HttpStatus status, Object[] params, String note) {
+  public static Map<String, Object> toMap(Enum<?> code, Object[] noteParams, String note) {
     return Map.of(
-      "status", status.name(),
-      "params", params,
-      "note", note
+      "code", code.name().toUpperCase(),
+      "note", Map.of(
+          "message", note,
+          "params", noteParams
+      )
     );
   }
 

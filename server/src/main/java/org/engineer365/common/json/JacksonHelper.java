@@ -33,7 +33,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
-import org.engineer365.common.error.InternalError;
+import org.engineer365.common.error.InternalServerError;
 import org.engineer365.common.misc.StringHelper;
 
 /**
@@ -82,7 +82,7 @@ public class JacksonHelper {
     try {
       return getMapper().readValue(text, clazz);
     } catch (IOException e) {
-      throw new InternalError(null, e);
+      throw new InternalServerError(null, e);
     }
   }
 
@@ -100,7 +100,7 @@ public class JacksonHelper {
     try {
       return getMapper().readValue(text, typeReference);
     } catch (IOException e) {
-      throw new InternalError(null, e);
+      throw new InternalServerError(null, e);
     }
   }
 
@@ -131,7 +131,7 @@ public class JacksonHelper {
       }
       return getMapper().writeValueAsString(object);
     } catch (IOException e) {
-      throw new InternalError(null, e);
+      throw new InternalServerError(null, e);
     }
   }
 }

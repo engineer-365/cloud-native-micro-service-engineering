@@ -1,3 +1,26 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2020 engineer365.org
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package org.engineer365.common.dao.jpa;
 
 import java.util.Arrays;
@@ -45,6 +68,7 @@ public class DAOTestBase<T, ID, R extends JpaDAO<T, ID>> {
    * @param actuals 待验证的一组实体对象
    * @param expecteds 用于对比的一组实体对象（期望值）
    */
+  @SuppressWarnings("unchecked")
   public void assertEntities(List<T> actuals, T... expecteds) {
     assertEntities(actuals, Arrays.asList(expecteds));
   }
@@ -104,6 +128,7 @@ public class DAOTestBase<T, ID, R extends JpaDAO<T, ID>> {
    * @param byId 是否以id值为map的key
    * @param entities 一组实体对象
    */
+  @SuppressWarnings("unchecked")
   public Map<String, Object> toMap(T entity) {
     var r = JSON.from(JSON.to(entity), Map.class);
     r.remove("createdAt");

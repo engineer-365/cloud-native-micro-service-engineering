@@ -21,39 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.engineer365.common.dao.jpa;
+package org.engineer365.platform.user.app.dao.jpa;
 
-import java.util.List;
+import javax.persistence.EntityManager;
 
-import javax.annotation.Nullable;
+import org.engineer365.common.dao.jpa.GenericJpaDAO;
+import org.engineer365.platform.user.app.dao.ex.AccountDAOEx;
+import org.engineer365.platform.user.app.entity.AccountEO;
+import org.engineer365.platform.user.app.entity.QAccountEO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import org.engineer365.common.error.NotFoundError;
-import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.data.repository.PagingAndSortingRepository;
+@Component
+public class AccountDAOImpl
+    extends GenericJpaDAO<AccountEO, String>
+    implements AccountDAOEx {
 
-/**
- * 方便使用QueryDSL实现JPA动态查询的DAO基类
- *
- *
- * @param T 实体类的类型
- * @param ID 实体类的主键的类型
- */
-@NoRepositoryBean
-@Nullable
-public interface JpaDAO<T, ID> extends PagingAndSortingRepository<T, ID> {
-
-  // TODO: 加入几个常用的接口方法
-  List<T> findAll();
-
-  default T get(boolean ensureExists, ID id) {
-    var r = findById(id);
-    if (r.isPresent()) {
-      return r.get();
-    }
-    if (ensureExists) {
-      throw new NotFoundError(NotFoundError.Code.ENTITY_NOT_FOUND, "id=%s", String.valueOf(id));
-    }
-    return null;
+  @Autowired
+  public AccountDAOImpl(EntityManager entityManager) {
+    super(AccountEO.class, QAccountEO.accountEO, entityManager);
   }
 
 }

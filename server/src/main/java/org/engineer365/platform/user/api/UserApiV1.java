@@ -21,39 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.engineer365.common.error;
+package org.engineer365.platform.user.api;
 
-import org.springframework.http.HttpStatus;
+import org.engineer365.platform.user.api.bean.Account;
+import org.engineer365.platform.user.api.bean.User;
+import org.engineer365.platform.user.api.req.AccountAuthReq;
+import org.engineer365.platform.user.api.req.CreateAccountByEmailReq;
+import org.engineer365.platform.user.api.req.CreateUserByEmailReq;
 
 /**
- * 对应HTTP INTERNAL_SERVER_ERROR
+ *
  */
-public class InternalError extends GenericError {
+public interface UserApiV1 {
 
-  private static final long serialVersionUID = -5209197321059638276L;
+    Account createUserByEmail(CreateUserByEmailReq req);
 
-  public InternalError(String messageFormat, Object... params) {
-    super(HttpStatus.INTERNAL_SERVER_ERROR, messageFormat, params);
-  }
+    Account createAccountByEmail(CreateAccountByEmailReq req);
 
-  public InternalError(String message) {
-    super(HttpStatus.INTERNAL_SERVER_ERROR, message);
-  }
+    String authByAccount(AccountAuthReq areq);
 
-  public InternalError(HttpStatus status) {
-    super(HttpStatus.INTERNAL_SERVER_ERROR);
-  }
+    User getUser(String userId);
 
-  public InternalError(Exception cause, String messageFormat, Object... params) {
-    super(cause, HttpStatus.INTERNAL_SERVER_ERROR, messageFormat, params);
-  }
+    Account getAccount(String accountId);
 
-  public InternalError(Exception cause, String message) {
-    super(cause, HttpStatus.INTERNAL_SERVER_ERROR, message);
-  }
+    Account getAccountByEmail(String email);
 
-  public InternalError(Exception cause) {
-    super(cause, HttpStatus.INTERNAL_SERVER_ERROR);
-  }
 
 }

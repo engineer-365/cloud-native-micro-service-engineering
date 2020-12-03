@@ -21,39 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.engineer365.common.dao.jpa;
-
-import java.util.List;
+package org.engineer365.platform.user.app.dao;
 
 import javax.annotation.Nullable;
 
-import org.engineer365.common.error.NotFoundError;
-import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.engineer365.common.dao.jpa.JpaDAO;
+import org.engineer365.platform.user.api.enums.AccountType;
+import org.engineer365.platform.user.app.dao.ex.AccountDAOEx;
+import org.engineer365.platform.user.app.entity.AccountEO;
+import org.springframework.stereotype.Repository;
 
-/**
- * 方便使用QueryDSL实现JPA动态查询的DAO基类
- *
- *
- * @param T 实体类的类型
- * @param ID 实体类的主键的类型
- */
-@NoRepositoryBean
+@Repository
 @Nullable
-public interface JpaDAO<T, ID> extends PagingAndSortingRepository<T, ID> {
+public interface AccountDAO
+    extends AccountDAOEx, JpaDAO<AccountEO, String> {
 
-  // TODO: 加入几个常用的接口方法
-  List<T> findAll();
-
-  default T get(boolean ensureExists, ID id) {
-    var r = findById(id);
-    if (r.isPresent()) {
-      return r.get();
-    }
-    if (ensureExists) {
-      throw new NotFoundError(NotFoundError.Code.ENTITY_NOT_FOUND, "id=%s", String.valueOf(id));
-    }
-    return null;
-  }
+    AccountEO getByCredentialAndType(String credential, AccountType type);
 
 }

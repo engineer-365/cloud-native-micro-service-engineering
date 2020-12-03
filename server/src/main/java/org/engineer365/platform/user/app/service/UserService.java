@@ -21,39 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.engineer365.common.dao.jpa;
+package org.engineer365.platform.user.app.service;
 
-import java.util.List;
+import org.engineer365.common.error.BadRequestError;
+import org.engineer365.platform.user.api.enums.ErrorCode;
+import org.engineer365.platform.user.api.req.CreateUserReq;
+import org.engineer365.platform.user.app.entity.UserEO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.engineer365.platform.user.app.dao.UserDAO;
 
-import javax.annotation.Nullable;
+@Service
+@lombok.Setter
+@lombok.Getter
+public class UserService {
 
-import org.engineer365.common.error.NotFoundError;
-import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.data.repository.PagingAndSortingRepository;
+    @Autowired
+    UserDAO dao;
 
-/**
- * 方便使用QueryDSL实现JPA动态查询的DAO基类
- *
- *
- * @param T 实体类的类型
- * @param ID 实体类的主键的类型
- */
-@NoRepositoryBean
-@Nullable
-public interface JpaDAO<T, ID> extends PagingAndSortingRepository<T, ID> {
-
-  // TODO: 加入几个常用的接口方法
-  List<T> findAll();
-
-  default T get(boolean ensureExists, ID id) {
-    var r = findById(id);
-    if (r.isPresent()) {
-      return r.get();
+    public UserEO getUser(boolean ensureExists, String userId) {
+        return getDao().get(ensureExists, userId);
     }
-    if (ensureExists) {
-      throw new NotFoundError(NotFoundError.Code.ENTITY_NOT_FOUND, "id=%s", String.valueOf(id));
+
+    public UserEO getByName(String name) {
+        return getDao().getByName(name);
     }
-    return null;
-  }
+
+    public UserEO createUser(String userId, CreateUserReq req) {
+        var d = getDao();
+        if (d.getByName(req.getName()) != null) {
+            throw new BadRequestError(ErrorCode.USER_NAME_DUPLICATES);
+        }
+
+        var r = UserEO.CREATE_REQ_COPIER.copy(req);
+        r.setId(userId);
+
+        return d.save(r);
+    }
 
 }
