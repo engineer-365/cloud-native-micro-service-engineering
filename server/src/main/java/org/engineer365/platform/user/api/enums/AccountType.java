@@ -25,6 +25,9 @@ package org.engineer365.platform.user.api.enums;
 
 public enum AccountType {
 
-    EMAIL
+    EMAIL,
+    MOBILE,
+    WECHAT,
+    TAOBAO,
 
 }

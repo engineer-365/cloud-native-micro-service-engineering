@@ -23,10 +23,11 @@
  */
 package org.engineer365.platform.user.api.enums;
 
-public enum AuthResultCode {
+public enum ErrorCode {
     USER_NOT_FOUND,
     ACCOUNT_NOT_FOUND,
-    SALT_NOT_SUPPORTED_YET,
-    PASSWORD_NOT_MATCHES,
-    OK
+    NO_ACCOUNT_WITH_SPECIFIED_EMAIL,
+    WRONG_PASSWORD,
+    ACCOUNT_EMAIL_DUPLICATES,
+    USER_NAME_DUPLICATES
 }

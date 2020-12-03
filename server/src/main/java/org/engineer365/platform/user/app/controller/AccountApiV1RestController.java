@@ -24,7 +24,6 @@
 package org.engineer365.platform.user.app.controller;
 
 import org.engineer365.platform.user.api.bean.Account;
-import org.engineer365.platform.user.api.enums.AuthResultCode;
 import org.engineer365.platform.user.api.req.AccountAuthReq;
 import org.engineer365.platform.user.api.req.CreateAccountByEmailReq;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +75,7 @@ public class AccountApiV1RestController {
 
 
     @PostMapping(path = "account/authByAccount")
-    public AuthResultCode authByAccount(@RequestBody @Valid AccountAuthReq req) {
+    public String authByAccount(@RequestBody @Valid AccountAuthReq req) {
         return getService().authByAccount(req);
     }
 

@@ -23,10 +23,15 @@
  */
 package org.engineer365.common.service;
 
+import org.engineer365.common.error.GenericError;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.mockito.ArgumentMatchers;
 import org.mockito.MockitoAnnotations;
+import org.opentest4j.AssertionFailedError;
+import org.junit.jupiter.api.function.Executable;
+import org.junit.platform.commons.util.UnrecoverableExceptions;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  */
@@ -34,7 +39,7 @@ import org.mockito.MockitoAnnotations;
 public abstract class ServiceTestBase {
 
 
-  @org.junit.jupiter.api.BeforeEach
+  @BeforeEach
   public void beforeEach() {
     MockitoAnnotations.initMocks(this);
   }
@@ -56,5 +61,21 @@ public abstract class ServiceTestBase {
       return true;
     });
   }
+
+  public static <T extends GenericError> T assertThrows (Class<T> expectedType, Enum<?> code, Executable executable) {
+      try {
+        executable.execute();
+      } catch (Throwable actualException) {
+        if (expectedType.isInstance(actualException)) {
+          return (T) actualException;
+        }
+
+        // UnrecoverableExceptions.rethrowIfUnrecoverable(actualException);
+
+        throw new AssertionFailedError("caught unexpected exception", expectedType, actualException.getClass(), actualException);
+      }
+
+      throw new AssertionFailedError("no expected exception throw", expectedType, "null");
+    }
 
 }

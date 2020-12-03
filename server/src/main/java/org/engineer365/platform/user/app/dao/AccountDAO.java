@@ -32,10 +32,10 @@ import org.engineer365.platform.user.app.entity.AccountEO;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@Nullable
 public interface AccountDAO
     extends AccountDAOEx, JpaDAO<AccountEO, String> {
 
-    @Nullable
-    AccountEO findByTypeAndKey(String key, AccountType type);
+    AccountEO getByCredentialAndType(String credential, AccountType type);
 
 }

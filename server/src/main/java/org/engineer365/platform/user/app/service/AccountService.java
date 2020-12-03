@@ -24,7 +24,7 @@
 package org.engineer365.platform.user.app.service;
 
 import org.engineer365.platform.user.api.enums.AccountType;
-import org.engineer365.platform.user.api.enums.AuthResultCode;
+import org.engineer365.platform.user.api.enums.ErrorCode;
 import org.engineer365.platform.user.api.req.AccountAuthReq;
 import org.engineer365.platform.user.api.req.CreateAccountByEmailReq;
 import org.engineer365.platform.user.app.entity.AccountEO;
@@ -33,7 +33,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.engineer365.common.error.BadRequestError;
 import org.engineer365.common.error.NotFoundError;
-import org.engineer365.common.misc.UuidHelper;
 import org.engineer365.platform.user.app.dao.AccountDAO;
 
 @Service
@@ -49,40 +48,36 @@ public class AccountService {
     }
 
     public AccountEO getAccountByEmail(boolean ensureExists, String email) {
-        var r = getAccountDao().findByTypeAndKey(email, AccountType.EMAIL);
+        var r = getAccountDao().getByCredentialAndType(email, AccountType.EMAIL);
         if (r == null && ensureExists) {
-            throw new NotFoundError("no account with this email");
+            throw new NotFoundError(ErrorCode.NO_ACCOUNT_WITH_SPECIFIED_EMAIL);
         }
         return r;
     }
 
-    public AuthResultCode authByAccount(AccountAuthReq req) {
+    public void checkRequestWithAccount(AccountEO account, AccountAuthReq req) {
+        if (account == null) {
+            throw new NotFoundError(ErrorCode.ACCOUNT_NOT_FOUND);
+        }
+
+        if (account.getPassword().equals(req.getPassword()) == false) {
+            throw new NotFoundError(ErrorCode.WRONG_PASSWORD);
+        }
+    }
+
+    public String authByAccount(AccountAuthReq req) {
         var a = getAccount(false, req.getAccountId());
-
-        if (a == null) {
-            return AuthResultCode.ACCOUNT_NOT_FOUND;
-        }
-
-        if (a.isSalted()) {
-            return AuthResultCode.SALT_NOT_SUPPORTED_YET;
-        }
-
-        if (a.getPassword().equals(req.getPassword()) == false) {
-            return AuthResultCode.PASSWORD_NOT_MATCHES;
-        }
-
-        return AuthResultCode.OK;
+        checkRequestWithAccount(a, req);
+        return a.getId(); //TODO: replace it with JWT
     }
 
     public AccountEO createAccountByEmail(String accountId, CreateAccountByEmailReq req, UserEO user) {
-        if (getAccountDao().findByTypeAndKey(req.getEmail(), AccountType.EMAIL) != null) {
-            throw new BadRequestError("duplicated account email", req.getEmail(), AccountType.EMAIL);
+        if (getAccountDao().getByCredentialAndType(req.getEmail(), AccountType.EMAIL) != null) {
+            throw new BadRequestError(ErrorCode.ACCOUNT_EMAIL_DUPLICATES);
         }
 
         var r = AccountEO.CREATE_BY_EMAIL_REQ_COPIER.copy(req); {
             r.setId(accountId);
-            r.setSalted(false);
-            r.setSalt(UuidHelper.shortUuid());
             r.setUser(user);
         }
 

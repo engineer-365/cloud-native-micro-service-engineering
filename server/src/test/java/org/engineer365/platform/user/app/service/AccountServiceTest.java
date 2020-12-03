@@ -27,7 +27,7 @@ import java.time.Duration;
 import java.util.Date;
 
 import org.engineer365.platform.user.api.enums.AccountType;
-import org.engineer365.platform.user.api.enums.AuthResultCode;
+import org.engineer365.platform.user.api.enums.ErrorCode;
 import org.engineer365.platform.user.api.req.AccountAuthReq;
 import org.engineer365.platform.user.api.req.CreateAccountByEmailReq;
 import org.engineer365.platform.user.app.dao.AccountDAO;
@@ -43,6 +43,7 @@ import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.engineer365.common.error.BadRequestError;
 import org.engineer365.common.misc.DateHelper;
 import org.engineer365.common.service.ServiceTestBase;
 
@@ -56,141 +57,66 @@ public class AccountServiceTest extends ServiceTestBase {
     AccountService target;
 
     @Test
-    void test_checkReqWithAccount_ACCOUNT_NOT_FOUND() {
-        Assertions.assertEquals(AuthResultCode.ACCOUNT_NOT_FOUND,
-                this.target.checkReqWithAccount(null, new AccountAuthReq()));
-        Assertions.assertEquals(AuthResultCode.ACCOUNT_NOT_FOUND, this.target.checkReqWithAccount(null, null));
+    void test_checkRequestWithAccount_ACCOUNT_NOT_FOUND() {
+        assertThrows (BadRequestError.class, ErrorCode.ACCOUNT_NOT_FOUND,
+            () -> this.target.checkRequestWithAccount(null, new AccountAuthReq()));
+        assertThrows (BadRequestError.class, ErrorCode.ACCOUNT_NOT_FOUND,
+            () -> this.target.checkRequestWithAccount(null, null));
     }
 
     @Test
-    void test_checkReqWithAccount_SALT_NOT_SUPPORTED_YET() {
+    void test_checkRequestWithAccount_PASSWORD_NOT_MATCHES() {
         var a = new AccountEO();
-        a.setSalted(true);
-
-        Assertions.assertEquals(AuthResultCode.SALT_NOT_SUPPORTED_YET,
-                this.target.checkReqWithAccount(a, new AccountAuthReq()));
-    }
-
-    @Test
-    void test_checkReqWithAccount_PASSWORD_NOT_MATCHES() {
-        var a = new AccountEO();
-        a.setSalted(false);
         a.setPassword("abc");
 
         var req = new AccountAuthReq();
         req.setPassword("def");
 
-        Assertions.assertEquals(AuthResultCode.PASSWORD_NOT_MATCHES, this.target.checkReqWithAccount(a, req));
+        assertThrows(BadRequestError.class, ErrorCode.WRONG_PASSWORD,
+            () -> this.target.checkRequestWithAccount(a, req));
     }
 
     @Test
-    void test_checkReqWithAccount_NOT_EFFECTIVE_YET() {
+    void test_checkRequestWithAccount_OK() {
         var now = DateHelper.now();
 
         var a = new AccountEO();
-        a.setSalted(false);
         a.setPassword("abc");
-        a.setEffectiveBegin(new Date(now.getTime() + 1000));
-        a.setEffectiveEnd(a.getEffectiveBegin());
 
         var req = new AccountAuthReq();
         req.setPassword("abc");
 
-        Assertions.assertEquals(AuthResultCode.NOT_EFFECTIVE_YET, this.target.checkReqWithAccount(a, req));
-    }
-
-    @Test
-    void test_checkReqWithAccount_EXPIRED() {
-        var now = DateHelper.now();
-
-        var a = new AccountEO();
-        a.setSalted(false);
-        a.setPassword("abc");
-        a.setEffectiveBegin(new Date(now.getTime() - 10000));
-        a.setEffectiveEnd(new Date(now.getTime() - 1000));
-
-        var req = new AccountAuthReq();
-        req.setPassword("abc");
-
-        Assertions.assertEquals(AuthResultCode.EXPIRED, this.target.checkReqWithAccount(a, req));
-    }
-
-    @Test
-    void test_checkReqWithAccount_OK() {
-        var now = DateHelper.now();
-
-        var a = new AccountEO();
-        a.setSalted(false);
-        a.setPassword("abc");
-        a.setEffectiveBegin(new Date(now.getTime() - 1000));
-        a.setEffectiveEnd(new Date(now.getTime() + 1000));
-
-        var req = new AccountAuthReq();
-        req.setPassword("abc");
-
-        Assertions.assertEquals(AuthResultCode.OK, this.target.checkReqWithAccount(a, req));
+        this.target.checkRequestWithAccount(a, req);
     }
 
     @Test
     void test_auth_accountNotFound() {
         var req = new AccountAuthReq();
         req.setAccountId("a-1");
-        req.setClientAddress("c-1");
-        req.setApp("pp5");
-        req.setService("transfer");
         req.setPassword("p");
 
         when(this.accountDao.get(false, "a-1")).thenReturn(null);
 
-        var r = this.target.authByAccount(req);
-        Assertions.assertEquals(AuthResultCode.ACCOUNT_NOT_FOUND, r);
-
-        verify(this.authHistoryDao).save(argThat((AuthHistoryEO h) -> {
-            Assertions.assertNotNull(h.getId());
-            Assertions.assertNull(h.getAccount());
-            Assertions.assertEquals(req.getClientAddress(), h.getClientAddress());
-            Assertions.assertEquals(req.getApp(), h.getApp());
-            Assertions.assertEquals(req.getService(), h.getService());
-            Assertions.assertEquals(req.getPassword(), h.getPassword());
-            Assertions.assertEquals(AuthResultCode.ACCOUNT_NOT_FOUND, h.getResultCode());
-            return true;
-        }));
+        assertThrows(BadRequestError.class, ErrorCode.ACCOUNT_NOT_FOUND,
+            () -> this.target.authByAccount(req));
     }
 
     @Test
     void test_auth_ok() {
         var req = new AccountAuthReq();
         req.setAccountId("a-1");
-        req.setClientAddress("c-1");
-        req.setApp("pp5");
-        req.setService("transfer");
         req.setPassword("p");
 
-        var now = DateHelper.now();
-
         var a = new AccountEO();
-        a.setSalted(false);
+        a.setId("a-1");
         a.setPassword("p");
-        a.setEffectiveBegin(new Date(now.getTime() - 1000));
-        a.setEffectiveEnd(new Date(now.getTime() + 1000));
-        a.setKey("noreply@wxcount.com");
+        a.setCredential("noreply@wxcount.com");
         a.setType(AccountType.EMAIL);
 
         when(this.accountDao.get(false, "a-1")).thenReturn(a);
 
         var r = this.target.authByAccount(req);
-        Assertions.assertEquals(AuthResultCode.OK, r);
-
-        verify(this.authHistoryDao).save(argThat((AuthHistoryEO h) -> {
-            Assertions.assertNotNull(h.getId());
-            Assertions.assertSame(a, h.getAccount());
-            Assertions.assertEquals(req.getClientAddress(), h.getClientAddress());
-            Assertions.assertEquals(req.getApp(), h.getApp());
-            Assertions.assertEquals(req.getService(), h.getService());
-            Assertions.assertEquals(req.getPassword(), h.getPassword());
-            Assertions.assertEquals(AuthResultCode.OK, h.getResultCode());
-            return true;
-        }));
+        Assertions.assertEquals(a.getId(), r);
     }
 
     @Test
@@ -202,8 +128,6 @@ public class AccountServiceTest extends ServiceTestBase {
         user.setId("u-1");
 
         var req = new CreateAccountByEmailReq();
-        req.setEffectiveBegin(new Date(now.getTime() - 1000));
-        req.setEffectiveEnd(new Date(now.getTime() + 1000));
         req.setPassword("p");
         req.setUserId(user.getId());
         req.setEmail("noreply@wxcount.com");
@@ -215,12 +139,8 @@ public class AccountServiceTest extends ServiceTestBase {
 
         verify(this.accountDao).save(argThat((AccountEO entity) -> {
             Assertions.assertNotNull(entity.getId());
-            Assertions.assertEquals(req.getEffectiveBegin(), entity.getEffectiveBegin());
-            Assertions.assertEquals(req.getEffectiveEnd(), entity.getEffectiveEnd());
             Assertions.assertEquals(req.getPassword(), entity.getPassword());
             Assertions.assertSame(user, entity.getUser());
-            Assertions.assertNotNull(entity.getSalt());
-            Assertions.assertFalse(entity.isSalted());
             return true;
         }));
     }

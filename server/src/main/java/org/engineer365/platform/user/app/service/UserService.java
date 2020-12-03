@@ -24,6 +24,7 @@
 package org.engineer365.platform.user.app.service;
 
 import org.engineer365.common.error.BadRequestError;
+import org.engineer365.platform.user.api.enums.ErrorCode;
 import org.engineer365.platform.user.api.req.CreateUserReq;
 import org.engineer365.platform.user.app.entity.UserEO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class UserService {
     public UserEO createUser(String userId, CreateUserReq req) {
         var d = getDao();
         if (d.getByName(req.getName()) != null) {
-            throw new BadRequestError("duplicated user name", req.getName());
+            throw new BadRequestError(ErrorCode.USER_NAME_DUPLICATES);
         }
 
         var r = UserEO.CREATE_REQ_COPIER.copy(req);

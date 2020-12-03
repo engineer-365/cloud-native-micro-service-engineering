@@ -25,7 +25,6 @@ package org.engineer365.platform.user.app.service;
 
 import org.engineer365.platform.user.api.bean.Account;
 import org.engineer365.platform.user.api.bean.User;
-import org.engineer365.platform.user.api.enums.AuthResultCode;
 import org.engineer365.platform.user.api.req.AccountAuthReq;
 import org.engineer365.platform.user.api.req.CreateAccountByEmailReq;
 import org.engineer365.platform.user.api.req.CreateUserByEmailReq;
@@ -70,7 +69,7 @@ public class UserApiV1Service implements UserApiV1 {
     }
 
     @Override
-    public AuthResultCode authByAccount(AccountAuthReq areq) {
+    public String authByAccount(AccountAuthReq areq) {
         return getAccountService().authByAccount(areq);
     }
 

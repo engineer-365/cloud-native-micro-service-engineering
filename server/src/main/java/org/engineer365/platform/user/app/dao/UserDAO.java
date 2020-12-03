@@ -32,10 +32,10 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
+@Nullable
 public interface UserDAO
     extends UserDAOEx, JpaDAO<UserEO, String> {
 
-    @Nullable
     UserEO getByName(String name);
 
 }

@@ -25,7 +25,6 @@ package org.engineer365.platform.user.api;
 
 import org.engineer365.platform.user.api.bean.Account;
 import org.engineer365.platform.user.api.bean.User;
-import org.engineer365.platform.user.api.enums.AuthResultCode;
 import org.engineer365.platform.user.api.req.AccountAuthReq;
 import org.engineer365.platform.user.api.req.CreateAccountByEmailReq;
 import org.engineer365.platform.user.api.req.CreateUserByEmailReq;
@@ -39,7 +38,7 @@ public interface UserApiV1 {
 
     Account createAccountByEmail(CreateAccountByEmailReq req);
 
-    AuthResultCode authByAccount(AccountAuthReq areq);
+    String authByAccount(AccountAuthReq areq);
 
     User getUser(String userId);
 

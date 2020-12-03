@@ -68,7 +68,7 @@ public class AccountEO extends UpdateableEO {
             super.doRender(source, target);
 
             target.setType(AccountType.EMAIL);
-            target.setKey(source.getEmail());
+            target.setCredential(source.getEmail());
         }
     };
 
@@ -80,16 +80,10 @@ public class AccountEO extends UpdateableEO {
     @Column(length = 16, name = "type", nullable = false)
     AccountType type;
 
-    @Column(length = 64, name = "account_key", nullable = false)
-    String key;
+    @Column(length = 64, name = "credential", nullable = false)
+    String credential;
 
     @Column(name = "password", length = 64, nullable = false)
     String password;
-
-    @Column(name = "salt", length = 22, nullable = false)
-    String salt;
-
-    @Column(name = "is_salted", nullable = false)
-    boolean salted;
 
 }

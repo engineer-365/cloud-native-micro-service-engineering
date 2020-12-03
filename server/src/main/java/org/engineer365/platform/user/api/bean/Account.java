@@ -23,7 +23,6 @@
  */
 package org.engineer365.platform.user.api.bean;
 
-import java.util.Date;
 import org.engineer365.common.bean.UpdateableBean;
 import org.engineer365.platform.user.api.enums.AccountType;
 
@@ -35,18 +34,6 @@ public class Account extends UpdateableBean {
 
     AccountType type;
 
-    String key;
-
-    String verifyCode;
-
-    Date verifyExpiredAt;
-
-    Date verifiedAt;
-
-    Date effectiveBegin;
-
-    Date effectiveEnd;
-
-    String locale;
+    String credential;
 
 }
