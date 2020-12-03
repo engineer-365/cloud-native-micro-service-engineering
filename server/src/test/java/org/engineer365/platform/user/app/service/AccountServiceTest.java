@@ -41,6 +41,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.engineer365.common.error.BadRequestError;
+import org.engineer365.common.error.NotFoundError;
 import org.engineer365.common.service.ServiceTestBase;
 
 
@@ -54,9 +55,9 @@ public class AccountServiceTest extends ServiceTestBase {
 
     @Test
     void test_checkRequestWithAccount_ACCOUNT_NOT_FOUND() {
-        assertThrows (BadRequestError.class, ErrorCode.ACCOUNT_NOT_FOUND,
+        assertThrows (NotFoundError.class, ErrorCode.ACCOUNT_NOT_FOUND,
             () -> this.target.checkRequestWithAccount(null, new AccountAuthReq()));
-        assertThrows (BadRequestError.class, ErrorCode.ACCOUNT_NOT_FOUND,
+        assertThrows (NotFoundError.class, ErrorCode.ACCOUNT_NOT_FOUND,
             () -> this.target.checkRequestWithAccount(null, null));
     }
 
@@ -91,7 +92,7 @@ public class AccountServiceTest extends ServiceTestBase {
 
         when(this.accountDao.get(false, "a-1")).thenReturn(null);
 
-        assertThrows(BadRequestError.class, ErrorCode.ACCOUNT_NOT_FOUND,
+        assertThrows(NotFoundError.class, ErrorCode.ACCOUNT_NOT_FOUND,
             () -> this.target.authByAccount(req));
     }
 

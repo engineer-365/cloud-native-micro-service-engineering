@@ -61,7 +61,7 @@ public class AccountService {
         }
 
         if (account.getPassword().equals(req.getPassword()) == false) {
-            throw new NotFoundError(ErrorCode.WRONG_PASSWORD);
+            throw new BadRequestError(ErrorCode.WRONG_PASSWORD);
         }
     }
 
