@@ -34,6 +34,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 /**
  * 方便使用QueryDSL实现JPA动态查询的DAO基类
  *
+ *
  * @param T 实体类的类型
  * @param ID 实体类的主键的类型
  */
@@ -50,7 +51,7 @@ public interface JpaDAO<T, ID> extends PagingAndSortingRepository<T, ID> {
       return r.get();
     }
     if (ensureExists) {
-      throw new NotFoundError("id=%s", String.valueOf(id));
+      throw new NotFoundError(NotFoundError.Code.ENTITY_NOT_FOUND, "id=%s", String.valueOf(id));
     }
     return null;
   }

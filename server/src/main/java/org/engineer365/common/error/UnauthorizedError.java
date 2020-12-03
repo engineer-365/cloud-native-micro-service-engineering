@@ -30,33 +30,37 @@ import org.springframework.http.HttpStatus;
  */
 public class UnauthorizedError extends GenericError {
 
+  public enum Code {
+    OTHER
+  }
+
   /**
    *
    */
   private static final long serialVersionUID = -6453279321344702468L;
 
-  public UnauthorizedError(String messageFormat, Object... params) {
-    super(HttpStatus.UNAUTHORIZED, messageFormat, params);
+  public UnauthorizedError(Enum<?> code, String noteFormat, Object... noteParams) {
+    super(HttpStatus.UNAUTHORIZED, code, noteFormat, noteParams);
   }
 
-  public UnauthorizedError(String message) {
-    super(HttpStatus.UNAUTHORIZED, message);
+  public UnauthorizedError(Enum<?> code, String note) {
+    super(HttpStatus.UNAUTHORIZED, code, note);
   }
 
-  public UnauthorizedError(HttpStatus status) {
-    super(HttpStatus.UNAUTHORIZED);
+  public UnauthorizedError(Enum<?> code) {
+    super(HttpStatus.UNAUTHORIZED, code);
   }
 
-  public UnauthorizedError(Exception cause, String messageFormat, Object... params) {
-    super(cause, HttpStatus.UNAUTHORIZED, messageFormat, params);
+  public UnauthorizedError(Enum<?> code, Throwable cause, String noteFormat, Object... noteParams) {
+    super(HttpStatus.UNAUTHORIZED, code, cause, noteFormat, noteParams);
   }
 
-  public UnauthorizedError(Exception cause, String message) {
-    super(cause, HttpStatus.UNAUTHORIZED, message);
+  public UnauthorizedError(Enum<?> code, Throwable cause, String note) {
+    super(HttpStatus.UNAUTHORIZED, code, cause, note);
   }
 
-  public UnauthorizedError(Exception cause) {
-    super(cause, HttpStatus.UNAUTHORIZED);
+  public UnauthorizedError(Enum<?> code, Throwable cause) {
+    super(HttpStatus.UNAUTHORIZED, code, cause);
   }
 
 }

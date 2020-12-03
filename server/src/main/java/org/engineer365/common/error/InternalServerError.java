@@ -28,32 +28,36 @@ import org.springframework.http.HttpStatus;
 /**
  * 对应HTTP INTERNAL_SERVER_ERROR
  */
-public class InternalError extends GenericError {
+public class InternalServerError extends GenericError {
+
+  public enum Code {
+    OTHER
+  }
 
   private static final long serialVersionUID = -5209197321059638276L;
 
-  public InternalError(String messageFormat, Object... params) {
-    super(HttpStatus.INTERNAL_SERVER_ERROR, messageFormat, params);
+  public InternalServerError(Enum<?> code, String noteFormat, Object... noteParams) {
+    super(HttpStatus.INTERNAL_SERVER_ERROR, code, noteFormat, noteParams);
   }
 
-  public InternalError(String message) {
-    super(HttpStatus.INTERNAL_SERVER_ERROR, message);
+  public InternalServerError(Enum<?> code, String note) {
+    super(HttpStatus.INTERNAL_SERVER_ERROR, code, note);
   }
 
-  public InternalError(HttpStatus status) {
-    super(HttpStatus.INTERNAL_SERVER_ERROR);
+  public InternalServerError(Enum<?> code) {
+    super(HttpStatus.INTERNAL_SERVER_ERROR, code);
   }
 
-  public InternalError(Exception cause, String messageFormat, Object... params) {
-    super(cause, HttpStatus.INTERNAL_SERVER_ERROR, messageFormat, params);
+  public InternalServerError(Enum<?> code, Throwable cause, String noteFormat, Object... noteParams) {
+    super(HttpStatus.INTERNAL_SERVER_ERROR, code, cause, noteFormat, noteParams);
   }
 
-  public InternalError(Exception cause, String message) {
-    super(cause, HttpStatus.INTERNAL_SERVER_ERROR, message);
+  public InternalServerError(Enum<?> code, Throwable cause, String note) {
+    super(HttpStatus.INTERNAL_SERVER_ERROR, code, cause, note);
   }
 
-  public InternalError(Exception cause) {
-    super(cause, HttpStatus.INTERNAL_SERVER_ERROR);
+  public InternalServerError(Enum<?> code, Throwable cause) {
+    super(HttpStatus.INTERNAL_SERVER_ERROR, code, cause);
   }
 
 }

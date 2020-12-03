@@ -23,12 +23,8 @@
  */
 package org.engineer365.common;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Consumer;
-import java.util.function.Function;
+
 
 import org.engineer365.common.error.ForbiddenError;
 import org.engineer365.common.misc.StringHelper;
@@ -79,11 +75,11 @@ public class RequestContext extends Dumpable {
   public static RequestContext load(boolean ensureHasUserId) {
     var r = current();
     if (r == null) {
-      throw new ForbiddenError("context not found");
+      throw new ForbiddenError(ForbiddenError.Code.CONTEXT_NOT_FOUND);
     }
 
     if (ensureHasUserId && StringHelper.isBlank(r.getUserId())) {
-      throw new ForbiddenError("no user id in request context");
+      throw new ForbiddenError(ForbiddenError.Code.USER_ID_NOT_FOUND_IN_CONTEXT);
     }
 
     return r;

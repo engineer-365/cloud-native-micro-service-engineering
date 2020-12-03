@@ -44,21 +44,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.engineer365.common.error.BadRequestError;
 import org.engineer365.common.error.GenericError;
+import org.engineer365.common.error.InternalServerError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
  * 拦截处理RestController抛出的异常。
- * 抛出的异常输出成HTTP response body：
- * {
- *    "status": "...",
- *    "params": [...],
- *    "note": "..."
- * }
+ * 抛出的异常输出成HTTP response body。
  *
- * @see org.engineer365.common.error.GenericError
+ * @see org.engineer365.common.error.GenericError#toMap()
  */
 @lombok.extern.slf4j.Slf4j
 @ControllerAdvice(annotations = { RestController.class })
@@ -92,7 +89,7 @@ public class ExceptionAdvise {
         return String.format("%s: %s", List.of(objErr.getArguments()), objErr.getDefaultMessage());
       }).collect(Collectors.toList());
 
-      return new GenericError(ex, HttpStatus.BAD_REQUEST, "method argument not valid", errors);
+      return new BadRequestError(BadRequestError.Code.METHOD_ARGUMENT_NOT_VALID, ex, "method argument not valid", errors);
     }
 
     if (ex instanceof ConstraintViolationException) {
@@ -102,7 +99,7 @@ public class ExceptionAdvise {
         return String.format("%s: %s", violation.getPropertyPath(), violation.getMessage());
       }).collect(Collectors.toList());
 
-      return new GenericError(ex, HttpStatus.BAD_REQUEST, "constraint violated", errors);
+      return new BadRequestError(BadRequestError.Code.CONSTRAINT_VIOLATION, ex, "constraint violated", errors);
     }
 
     if (ex instanceof BindException ||
@@ -110,24 +107,24 @@ public class ExceptionAdvise {
         ex instanceof MissingServletRequestParameterException ||
         ex instanceof MissingServletRequestPartException ||
         ex instanceof TypeMismatchException) {
-      return new GenericError(ex, HttpStatus.BAD_REQUEST);
+      return new BadRequestError(BadRequestError.Code.OTHER);
     }
 
     if (ex instanceof HttpMediaTypeNotAcceptableException) {
-      return new GenericError(ex, HttpStatus.NOT_ACCEPTABLE);
+      return new GenericError(HttpStatus.NOT_ACCEPTABLE, GenericError.Code.OTHER, ex);
     }
     if (ex instanceof HttpRequestMethodNotSupportedException) {
-      return new GenericError(ex, HttpStatus.METHOD_NOT_ALLOWED);
+      return new GenericError(HttpStatus.METHOD_NOT_ALLOWED, GenericError.Code.OTHER, ex);
     }
     if (ex instanceof HttpMediaTypeNotSupportedException) {
-      return new GenericError(ex, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+      return new GenericError(HttpStatus.UNSUPPORTED_MEDIA_TYPE, GenericError.Code.OTHER, ex);
     }
 
     if (ex instanceof AsyncRequestTimeoutException) {
-      return new GenericError(ex, HttpStatus.REQUEST_TIMEOUT);
+      return new GenericError(HttpStatus.REQUEST_TIMEOUT, GenericError.Code.OTHER, ex);
     }
 
-    return new GenericError(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+    return new InternalServerError(InternalServerError.Code.OTHER, ex);
   }
 
 }

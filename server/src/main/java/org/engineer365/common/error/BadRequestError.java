@@ -32,28 +32,35 @@ public class BadRequestError extends GenericError {
 
   private static final long serialVersionUID = -7899971579299772118L;
 
-  public BadRequestError(String messageFormat, Object... params) {
-    super(HttpStatus.BAD_REQUEST, messageFormat, params);
+  public enum Code {
+    OTHER,
+    METHOD_ARGUMENT_NOT_VALID,
+    CONSTRAINT_VIOLATION,
+    WRONG_FORMAT,
   }
 
-  public BadRequestError(String message) {
-    super(HttpStatus.BAD_REQUEST, message);
+  public BadRequestError(Enum<?> code, String noteFormat, Object... noteParams) {
+    super(HttpStatus.BAD_REQUEST, code, noteFormat, noteParams);
   }
 
-  public BadRequestError(HttpStatus status) {
-    super(HttpStatus.BAD_REQUEST);
+  public BadRequestError(Enum<?> code, String note) {
+    super(HttpStatus.BAD_REQUEST, code, note);
   }
 
-  public BadRequestError(Exception cause, String messageFormat, Object... params) {
-    super(cause, HttpStatus.BAD_REQUEST, messageFormat, params);
+  public BadRequestError(Enum<?> code) {
+    super(HttpStatus.BAD_REQUEST, code);
   }
 
-  public BadRequestError(Exception cause, String message) {
-    super(cause, HttpStatus.BAD_REQUEST, message);
+  public BadRequestError(Enum<?> code, Throwable cause, String noteFormat, Object... noteParams) {
+    super(HttpStatus.BAD_REQUEST, code, cause, noteFormat, noteParams);
   }
 
-  public BadRequestError(Exception cause) {
-    super(cause, HttpStatus.BAD_REQUEST);
+  public BadRequestError(Enum<?> code, Throwable cause, String note) {
+    super(HttpStatus.BAD_REQUEST, code, cause, note);
+  }
+
+  public BadRequestError(Enum<?> code, Throwable cause) {
+    super(HttpStatus.BAD_REQUEST, code, cause);
   }
 
 }
