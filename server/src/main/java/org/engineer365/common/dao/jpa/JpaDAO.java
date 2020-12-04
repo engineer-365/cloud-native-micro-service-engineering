@@ -23,13 +23,17 @@
  */
 package org.engineer365.common.dao.jpa;
 
+import java.util.List;
+
 import javax.annotation.Nullable;
 
+import org.engineer365.common.error.NotFoundError;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
  * 方便使用QueryDSL实现JPA动态查询的DAO基类
+ *
  *
  * @param T 实体类的类型
  * @param ID 实体类的主键的类型
@@ -39,5 +43,17 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface JpaDAO<T, ID> extends PagingAndSortingRepository<T, ID> {
 
   // TODO: 加入几个常用的接口方法
+  List<T> findAll();
+
+  default T get(boolean ensureExists, ID id) {
+    var r = findById(id);
+    if (r.isPresent()) {
+      return r.get();
+    }
+    if (ensureExists) {
+      throw new NotFoundError(NotFoundError.Code.ENTITY_NOT_FOUND, "id=%s", String.valueOf(id));
+    }
+    return null;
+  }
 
 }

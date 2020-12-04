@@ -28,9 +28,11 @@ package org.engineer365.common.error;
  *
  * 遵循以下原则：
  *
- * 1. 借鉴HTTP status成熟的出错状态分类设计，分为BadRequestErro（HTTP 4xx）和InternalError（HTTP 5xx）等几大类。
- * 2. 并不提倡使用更多自定义的子类。
- * 3. 服务器端不处理错误消息的i18n，i18n由前端根据出错的key翻译成合适的用户语言。
+ * 1. 借鉴HTTP status成熟的出错状态分类，分为BadRequestErro（HTTP 4xx）和InternalError（HTTP 5xx）等几大类。
+ * 2. 详细的错误代码用enum表示，每个模块/微服务可以有自己的错误代码枚举类，尽量但不强求跨模块/微服务时不重复
+ * 3. 透明地传递跨模块/微服务的错误
+ * 4. 并不提倡使用更多自定义的子类。
+ * 5. 服务器端不处理错误消息的i18n，i18n由前端根据出错的key翻译成合适的用户语言。
  *
  * TODO：目前还不完整，需要再增加一些预定义子类。
  *

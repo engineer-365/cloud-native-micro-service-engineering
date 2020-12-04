@@ -26,7 +26,7 @@ package org.engineer365.common.misc;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.engineer365.common.error.InternalError;
+import org.engineer365.common.error.InternalServerError;
 import org.springframework.stereotype.Component;
 
 /**
@@ -48,7 +48,7 @@ public class SpringBeanHolder implements ApplicationContextAware {
   @Override
   public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
     if (context != null) {
-      throw new InternalError("context already initialized");
+      throw new InternalServerError(InternalServerError.Code.OTHER, "context already initialized");
     }
     SpringBeanHolder.context = applicationContext;
   }

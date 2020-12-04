@@ -30,30 +30,35 @@ import org.springframework.http.HttpStatus;
  */
 public class NotFoundError extends GenericError {
 
+  public enum Code {
+    OTHER,
+    ENTITY_NOT_FOUND
+  }
+
   private static final long serialVersionUID = -6244828726201482351L;
 
-  public NotFoundError(String messageFormat, Object... params) {
-    super(HttpStatus.NOT_FOUND, messageFormat, params);
+  public NotFoundError(Enum<?> code, String noteFormat, Object... noteParams) {
+    super(HttpStatus.NOT_FOUND, code, noteFormat, noteParams);
   }
 
-  public NotFoundError(String message) {
-    super(HttpStatus.NOT_FOUND, message);
+  public NotFoundError(Enum<?> code, String note) {
+    super(HttpStatus.NOT_FOUND, code, note);
   }
 
-  public NotFoundError(HttpStatus status) {
-    super(HttpStatus.NOT_FOUND);
+  public NotFoundError(Enum<?> code) {
+    super(HttpStatus.NOT_FOUND, code);
   }
 
-  public NotFoundError(Exception cause, String messageFormat, Object... params) {
-    super(cause, HttpStatus.NOT_FOUND, messageFormat, params);
+  public NotFoundError(Enum<?> code, Throwable cause, String noteFormat, Object... noteParams) {
+    super(HttpStatus.NOT_FOUND, code, cause, noteFormat, noteParams);
   }
 
-  public NotFoundError(Exception cause, String message) {
-    super(cause, HttpStatus.NOT_FOUND, message);
+  public NotFoundError(Enum<?> code, Throwable cause, String note) {
+    super(HttpStatus.NOT_FOUND, code, cause, note);
   }
 
-  public NotFoundError(Exception cause) {
-    super(cause, HttpStatus.NOT_FOUND);
+  public NotFoundError(Enum<?> code, Throwable cause) {
+    super(HttpStatus.NOT_FOUND, code, cause);
   }
 
 }

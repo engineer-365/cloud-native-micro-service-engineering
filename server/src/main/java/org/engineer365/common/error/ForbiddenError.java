@@ -30,32 +30,38 @@ import org.springframework.http.HttpStatus;
  */
 public class ForbiddenError extends GenericError {
 
+  public static enum Code {
+    OTHER,
+    CONTEXT_NOT_FOUND,
+    USER_ID_NOT_FOUND_IN_CONTEXT,
+  }
+
   /**
    *
    */
   private static final long serialVersionUID = -4509198240300211902L;
 
-  public ForbiddenError(String messageFormat, Object... params) {
-    super(HttpStatus.FORBIDDEN, messageFormat, params);
+  public ForbiddenError(Enum<?> code, String noteFormat, Object... noteParams) {
+    super(HttpStatus.FORBIDDEN, code, noteFormat, noteParams);
   }
 
-  public ForbiddenError(String message) {
-    super(HttpStatus.FORBIDDEN, message);
+  public ForbiddenError(Enum<?> code, String note) {
+    super(HttpStatus.FORBIDDEN, code, note);
   }
 
-  public ForbiddenError(HttpStatus status) {
-    super(HttpStatus.FORBIDDEN);
+  public ForbiddenError(Enum<?> code) {
+    super(HttpStatus.FORBIDDEN, code);
   }
 
-  public ForbiddenError(Exception cause, String messageFormat, Object... params) {
-    super(cause, HttpStatus.FORBIDDEN, messageFormat, params);
+  public ForbiddenError(Enum<?> code, Throwable cause, String noteFormat, Object... noteParams) {
+    super(HttpStatus.FORBIDDEN, code, cause, noteFormat, noteParams);
   }
 
-  public ForbiddenError(Exception cause, String message) {
-    super(cause, HttpStatus.FORBIDDEN, message);
+  public ForbiddenError(Enum<?> code, Throwable cause, String note) {
+    super(HttpStatus.FORBIDDEN, code, cause, note);
   }
 
-  public ForbiddenError(Exception cause) {
-    super(cause, HttpStatus.FORBIDDEN);
+  public ForbiddenError(Enum<?> code, Throwable cause) {
+    super(HttpStatus.FORBIDDEN, code, cause);
   }
 }

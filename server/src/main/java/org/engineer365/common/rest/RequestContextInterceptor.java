@@ -28,15 +28,10 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.common.net.HttpHeaders;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
+import org.springframework.web.servlet.AsyncHandlerInterceptor;
 import org.engineer365.common.RequestContext;
-import org.engineer365.common.error.ForbiddenError;
 import org.engineer365.common.security.Role;
 
 /**
@@ -44,7 +39,7 @@ import org.engineer365.common.security.Role;
 @lombok.Getter
 @lombok.Setter
 @Component
-public class RequestContextInterceptor extends HandlerInterceptorAdapter {
+public class RequestContextInterceptor implements AsyncHandlerInterceptor {
 
   @Value("${org.engineer365.common.rest.request-context.interceptor.path-patterns}")
   String pathPatterns;

@@ -21,7 +21,7 @@ public class DateDeserialize extends com.fasterxml.jackson.databind.JsonDeserial
     try {
       return new Date(Long.valueOf(valueText));
     } catch (NumberFormatException ex) {
-      throw new BadRequestError(ex, "%s is NOT a long value", valueText);
+      throw new BadRequestError(BadRequestError.Code.WRONG_FORMAT, ex, "%s is NOT a long value", valueText);
     }
   }
 }

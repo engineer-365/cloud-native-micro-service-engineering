@@ -26,28 +26,32 @@ package org.engineer365.common.error;
 /**
  * 代表由外部第三方服务引发的异常
  */
-public class ThirdPartyError extends InternalError {
+public class ThirdPartyError extends InternalServerError {
+
+  public enum Code {
+    OTHER
+  }
 
   private static final long serialVersionUID = 2392404936091322485L;
 
-  public ThirdPartyError(String messageFormat, Object... params) {
-    super(messageFormat, params);
+  public ThirdPartyError(Enum<?> code, String noteFormat, Object... noteParams) {
+    super(code, noteFormat, noteParams);
   }
 
-  public ThirdPartyError(String message) {
-    super(message);
+  public ThirdPartyError(Enum<?> code, String note) {
+    super(code, note);
   }
 
-  public ThirdPartyError(Exception cause, String messageFormat, Object... params) {
-    super(cause, messageFormat, params);
+  public ThirdPartyError(Enum<?> code, Throwable cause, String noteFormat, Object... noteParams) {
+    super(code, cause, noteFormat, noteParams);
   }
 
-  public ThirdPartyError(Exception cause, String message) {
-    super(cause, message);
+  public ThirdPartyError(Enum<?> code, Throwable cause, String note) {
+    super(code, cause, note);
   }
 
-  public ThirdPartyError(Exception cause) {
-    super(cause, "");
+  public ThirdPartyError(Enum<?> code, Throwable cause) {
+    super(code, cause);
   }
 
 }

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>2.4.0</version>
-    <relativePath/> <!-- lookup parent from repository -->
+    <relativePath /> <!-- lookup parent from repository -->
   </parent>
   <groupId>org.engineer365</groupId>
   <artifactId>fleashop</artifactId>
@@ -18,14 +17,16 @@
     <java.version>11</java.version>
   </properties>
 
-  <dependencies> <!-- 按字母排序 -->
+  <dependencies>
+    <!-- 按字母排序 -->
 
     <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
     </dependency>
 
-    <dependency> <!-- 仅用于单元测试 -->
+    <dependency>
+      <!-- 仅用于单元测试 -->
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <scope>test</scope>
@@ -48,12 +49,14 @@
       <scope>runtime</scope>
     </dependency>
 
-    <dependency> <!-- 管理数据库初始化和升级 -->
+    <dependency>
+      <!-- 管理数据库初始化和升级 -->
       <groupId>org.flywaydb</groupId>
       <artifactId>flyway-core</artifactId>
     </dependency>
 
-    <dependency> <!-- java bean代码生成 -->
+    <dependency>
+      <!-- java bean代码生成 -->
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <optional>true</optional>
@@ -94,11 +97,14 @@
 
   <build>
 
-    <plugins> <!-- 按字母排序 -->
+    <plugins>
+      <!-- 按字母排序 -->
 
-      <plugin> <!-- QueryDSL插件，用于在build过程中生成类型安全的JPA查询用Java Bean -->
+      <plugin>
+        <!-- QueryDSL插件，用于在build过程中生成类型安全的JPA查询用Java Bean -->
         <groupId>com.mysema.maven</groupId>
         <artifactId>apt-maven-plugin</artifactId>
+        <version>1.1.3</version>
         <executions>
           <execution>
             <goals>
@@ -110,6 +116,27 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+
+      <!-- https://www.jacoco.org/jacoco/trunk/doc/ -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.6</version>
+        <executions>
+          <execution>
+              <goals>
+                  <goal>prepare-agent</goal>
+              </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+                <goal>report</goal>
+            </goals>
+        </execution>
+      </executions>
       </plugin>
 
       <plugin>
