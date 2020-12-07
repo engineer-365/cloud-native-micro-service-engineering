@@ -25,8 +25,6 @@ package org.engineer365.common.bean;
 
 import java.util.Date;
 
-import lombok.experimental.Accessors;
-
 /**
  * 具有唯一性id标示的基类，主要用于实体类的VO。
  * 所有property必须和@see org.engineer365.common.entity.GenericEO一一对应，因为
@@ -38,7 +36,6 @@ import lombok.experimental.Accessors;
 @lombok.Getter
 @lombok.Setter
 @lombok.NoArgsConstructor
-@Accessors(chain = true)
 public class GenericBean extends Dumpable {
 
   /**

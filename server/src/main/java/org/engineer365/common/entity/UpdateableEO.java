@@ -31,8 +31,6 @@ import javax.persistence.Version;
 
 import org.springframework.data.annotation.LastModifiedDate;
 
-import lombok.experimental.Accessors;
-
 /**
  * 可修改的实体类的VO。
  *
@@ -44,7 +42,6 @@ import lombok.experimental.Accessors;
 @lombok.Setter
 @lombok.NoArgsConstructor
 @MappedSuperclass
-@Accessors(chain = true)
 public class UpdateableEO extends GenericEO {
 
   /**

@@ -34,8 +34,6 @@ import org.engineer365.common.bean.Dumpable;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import lombok.experimental.Accessors;
-
 /**
  * 具有唯一性id标示的实体类的基类。
  * 所有property必须和@see org.engineer365.common.bean.GenericBean一一对应，因为
@@ -48,7 +46,6 @@ import lombok.experimental.Accessors;
 @lombok.Setter
 @lombok.NoArgsConstructor
 @MappedSuperclass
-@Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 public class GenericEO extends Dumpable {
 
