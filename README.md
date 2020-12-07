@@ -1,5 +1,5 @@
 # 一个示范性项目：云原生的微服务开发工程
-  
+
   （项目刚启动，组队中，欢迎加入）
 
 ## 两个出发点
@@ -34,15 +34,15 @@
   我已经根据一期开发的目标动手在写代码了。我相信大家肯定是很感兴趣的，但必然有很多人会因为时间精力等各种原因还没法直接参与开发。其实做贡献的方式有很多种，不是只有PR才算是参与了，很欢迎大家能提出建议、提出需求、帮助测试提BUG、帮助写文档，等等。所以，只要你有一定兴趣，那么：
 
   1. 请Fork这个项目，把你的GITHUB账号名加到[./members.md](./members.md)那个文件，然后提交PR，等待合并。
-  
+
   2. Watch这个项目，任何项目变动都能得到邮件通知。
 
   3. PR合并成功后，加入QQ群1033056382（目前不打算用微信）。加群时需要回答你提交PR时用的GITHUB账号。
- 
+
   4. 入群后，请把你的群内昵称改为GITHUB账号名，否则会被踢出。
-  
+
   5. 可选：Star一下，有助于我们找到更多参与者
-  
+
   对这个过程如果有什么问题，可以提交Issue [https://github.com/engineer-365/cloud-native-micro-service-engineering/issues]
 
 ## 目标：
@@ -77,6 +77,7 @@
       - [ ] 开发者本地Docker开发环境：Docker-compose
       - [ ] 用Helm或Kustomize手动部署到Kubernetes
       - [ ] Spring Boot Admin
+  <img src="./doc/phases/phase-1.png" alt="image"/>
 
   - 二期开发：
     - 阶段性目标：
@@ -105,6 +106,7 @@
     - [ ] 分布式调用链路追踪：OpenTracing, Jaeger
     - [ ] 监控报警：Prometheus，Grafana
     - [ ] Skaffold
+  <img src="./doc/phases/phase-2.png" alt="image"/>
 
   - 三期开发：
     - 阶段性目标：
@@ -129,6 +131,7 @@
       - [ ] NoSQL数据库：MongoDB, Neo4J
       - [ ] 自动化运维：Ansible，Vagrant，Terraform
       - [ ] Jenkins-X
+  <img src="./doc/phases/phase-3.png" alt="image"/>
 
   - 四期开发：
     - 阶段性目标：
@@ -143,6 +146,7 @@
       - Crossplane
       - chaos-mesh
       - TiDB, PostgreSQL/Cockroachdb
+  <img src="./doc/phases/phase-4.png" alt="image"/>
 
 ## 问答：
 
