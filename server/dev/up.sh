@@ -26,10 +26,11 @@
 set -e
 
 dev_dir=$(cd "$(dirname $0)";pwd)
+echo $dev_dir
 source $dev_dir/common.sh
 
 echo "Launch..."
-$_sudo docker-compose up -f $dev_dir/docker-compose.yml --build -d --remove-orphans
+$_sudo docker-compose -f $dev_dir/docker-compose.yml up --build -d --remove-orphans
 echo ''
 
 sleep 2

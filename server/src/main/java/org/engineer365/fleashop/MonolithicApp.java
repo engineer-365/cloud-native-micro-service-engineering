@@ -25,11 +25,13 @@ package org.engineer365.fleashop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication(scanBasePackages = "package org.engineer365")
-@EnableJpaRepositories
+@SpringBootApplication(scanBasePackages = "org.engineer365")
+@EntityScan({"org.engineer365.platform.user.app.entity"})
+@EnableJpaRepositories(basePackages = {"org.engineer365.platform.user.app.dao"})
 @EnableJpaAuditing
 public class MonolithicApp {
 

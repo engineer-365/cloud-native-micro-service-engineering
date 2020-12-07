@@ -45,10 +45,35 @@
 
 ## 本地构建
 
-   - ```./mvnw package```
+  - 编译打包：
+     ```./mvnw package```
      第一次构建会从maven官网下载依赖到的很多第三方包，会很慢，最好是开着梯子。
      后续会搭建自己的代理/镜像服务器，因为代理/镜像服务器也是实际工程（国内）的一部分
 
-   - ```mvn dependency:sources```
+  -  可选：下载第三方包的源代码和javadoc，方便调试和学习
+     ```mvn dependency:sources```
      ```mvn dependency:resolve -Dclassifier=javadoc```
-     下载第三方包的源代码和javadoc，方便调试和学习
+     
+  - 启动/查看log／停止
+    - Mac或Linux
+      - ```dev/up.sh```
+      - ```dev/log.sh```
+      - ```dev/down.sh```
+    - Windows
+      - TODO：bat脚本待写，以下命令待验证
+        ```shell
+        cd dev
+        docker-compose up --build -d --remove-orphans
+        ```
+        ```shell
+        cd dev
+        docker-compose logs
+        ```
+        ```shell
+        cd dev
+        docker-compose down --remove-orphans
+        ```
+   
+  - 简单验证RESTful API：
+    - VSCode的REST插件: 见[./manual-test.rest](./manual-test.rest)
+    - Curl: ```curl -v --request GET --header 'content-type: application/json' --url http://localhost:28080/platform/user/api/v1/rest/user/_/xxx```
