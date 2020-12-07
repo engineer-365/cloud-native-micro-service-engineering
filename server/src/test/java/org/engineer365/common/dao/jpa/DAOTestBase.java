@@ -40,18 +40,22 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 /**
  * JPA DAO的单元测试用的基类，包含数据导入和实体对象数据验证等一些工具性方法
+ *
+ * @param E - 实体类
+ * @param ID - 实体类的主键
+ * @param D - DAO类
  */
 @Disabled
 @DataJpaTest
 @lombok.Getter
-public class DAOTestBase<T, ID, R extends JpaDAO<T, ID>> {
+public class DAOTestBase<E, ID, D extends JpaDAO<E, ID>> {
 
   @Autowired
   TestEntityManager entityManager;
 
-  final R dao;
+  final D dao;
 
-  protected DAOTestBase(R dao) {
+  protected DAOTestBase(D dao) {
     this.dao = dao;
   }
 
@@ -59,7 +63,7 @@ public class DAOTestBase<T, ID, R extends JpaDAO<T, ID>> {
     return this.entityManager;
   }
 
-  protected R dao() {
+  protected D dao() {
     return this.dao;
   }
 
@@ -71,7 +75,7 @@ public class DAOTestBase<T, ID, R extends JpaDAO<T, ID>> {
    * @param expecteds 用于对比的一组实体对象（期望值）
    */
   @SuppressWarnings("unchecked")
-  public void assertEntities(List<T> actuals, T... expecteds) {
+  public void assertEntities(List<E> actuals, E... expecteds) {
     assertEntities(actuals, Arrays.asList(expecteds));
   }
 
@@ -82,7 +86,7 @@ public class DAOTestBase<T, ID, R extends JpaDAO<T, ID>> {
    * @param actuals 待验证的一组实体对象
    * @param expecteds 用于对比的一组实体对象（期望值）
    */
-  public void assertEntities(List<T> actuals, List<T> expecteds) {
+  public void assertEntities(List<E> actuals, List<E> expecteds) {
 
     var actualM = mapEntitiesById(actuals);
     var expectedM = mapEntitiesById(expecteds);
@@ -113,8 +117,8 @@ public class DAOTestBase<T, ID, R extends JpaDAO<T, ID>> {
    * @param entities 一组实体对象
    * @return
    */
-  public Map<String, T> mapEntitiesById(List<T> entities) {
-    var r = new HashMap<String, T>();
+  public Map<String, E> mapEntitiesById(List<E> entities) {
+    var r = new HashMap<String, E>();
 
     for (var entity : entities) {
       var map = toMap(entity);
@@ -131,7 +135,7 @@ public class DAOTestBase<T, ID, R extends JpaDAO<T, ID>> {
    * @param entities 一组实体对象
    */
   @SuppressWarnings("unchecked")
-  public Map<String, Object> toMap(T entity) {
+  public Map<String, Object> toMap(E entity) {
     var r = JSON.from(JSON.to(entity), Map.class);
     r.remove("createdAt");
     r.remove("modifiedAt");
@@ -141,7 +145,7 @@ public class DAOTestBase<T, ID, R extends JpaDAO<T, ID>> {
   /**
    * 验证两个实体对象数据是否相同
    */
-  public void assertEntity(T expected, T actual) {
+  public void assertEntity(E expected, E actual) {
 
     var expectedM = toMap(expected);
     var actualM = toMap(actual);
@@ -160,7 +164,7 @@ public class DAOTestBase<T, ID, R extends JpaDAO<T, ID>> {
     }
   }
 
-  public T importEntity(T entity) {
+  public E importEntity(E entity) {
     return dao().save(entity);
   }
 

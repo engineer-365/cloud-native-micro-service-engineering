@@ -25,8 +25,12 @@ package org.engineer365.fleashop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "package org.engineer365")
+@EnableJpaRepositories
+@EnableJpaAuditing
 public class MonolithicApp {
 
 	public static void main(String[] args) {
