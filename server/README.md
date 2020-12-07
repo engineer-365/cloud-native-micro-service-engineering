@@ -4,15 +4,15 @@
 
   - Spring Boot:
     - 官网：https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/
-  
+
   - JaCoCo:
     测试覆盖率工具
     - 官方文档： https://www.jacoco.org/jacoco/trunk/doc/
-  
+
   - Flyway:
     数据库初始化和升级管理
     - 官网：https://flywaydb.org/
-  
+
   - QueryDSL:
     替代JPA自身的Criteria API，和Criteria API一样支持灵活的动态数据库查询语句，但相比JPA Criteria API：
     1. 通过插件把数据库表的表名和列名绑定到类型安全的Java Bean property，方便重构，也减少直接使用字符串时容易发生的拼写错误
@@ -41,3 +41,14 @@
       1. VS Code：https://marketplace.visualstudio.com/items?itemName=GabrielBB.vscode-lombok
       2. IDEA：待补充
       3. Eclipse：待补充
+
+
+## 本地构建
+
+   - ```./mvnw package```
+     第一次构建会从maven官网下载依赖到的很多第三方包，会很慢，最好是开着梯子。
+     后续会搭建自己的代理/镜像服务器，因为代理/镜像服务器也是实际工程（国内）的一部分
+
+   - ```mvn dependency:sources```
+     ```mvn dependency:resolve -Dclassifier=javadoc```
+     下载第三方包的源代码和javadoc，方便调试和学习
