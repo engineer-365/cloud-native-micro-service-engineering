@@ -25,6 +25,8 @@ package org.engineer365.common.bean;
 
 import java.util.Date;
 
+import lombok.experimental.Accessors;
+
 /**
  * 可修改的实体类的VO。
  *
@@ -34,6 +36,8 @@ import java.util.Date;
  */
 @lombok.Getter
 @lombok.Setter
+@lombok.NoArgsConstructor
+@Accessors(chain = true)
 public class UpdateableBean extends GenericBean {
 
   /**

@@ -30,11 +30,15 @@ import javax.persistence.Table;
 import org.engineer365.platform.user.api.bean.User;
 import org.engineer365.platform.user.api.req.CreateUserReq;
 
+import lombok.experimental.Accessors;
+
 import org.engineer365.common.bean.BeanCopyer;
 import org.engineer365.common.entity.UpdateableEO;
 
 @lombok.Getter
 @lombok.Setter
+@lombok.NoArgsConstructor
+@Accessors(chain = true)
 @Entity
 @Table(name = "user_user")
 public class UserEO extends UpdateableEO {
