@@ -35,6 +35,7 @@ import org.engineer365.common.entity.UpdateableEO;
 
 @lombok.Getter
 @lombok.Setter
+@lombok.NoArgsConstructor
 @Entity
 @Table(name = "user_user")
 public class UserEO extends UpdateableEO {

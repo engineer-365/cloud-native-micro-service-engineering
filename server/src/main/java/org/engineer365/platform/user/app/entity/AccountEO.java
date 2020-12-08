@@ -35,12 +35,13 @@ import org.engineer365.platform.user.api.bean.Account;
 import org.engineer365.platform.user.api.enums.AccountType;
 import org.engineer365.platform.user.api.req.CreateAccountByEmailReq;
 
+
 import org.engineer365.common.bean.BeanCopyer;
 import org.engineer365.common.entity.UpdateableEO;
 
-
 @lombok.Getter
 @lombok.Setter
+@lombok.NoArgsConstructor
 @Entity
 @Table(name = "user_account")
 public class AccountEO extends UpdateableEO {

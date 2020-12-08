@@ -26,10 +26,13 @@ package org.engineer365.common.entity;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Id;
 
 import org.engineer365.common.bean.Dumpable;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * 具有唯一性id标示的实体类的基类。
@@ -43,6 +46,7 @@ import org.engineer365.common.bean.Dumpable;
 @lombok.Setter
 @lombok.NoArgsConstructor
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 public class GenericEO extends Dumpable {
 
   /**
@@ -55,6 +59,7 @@ public class GenericEO extends Dumpable {
   /**
    * 创建时间
    */
+  @CreatedDate
   @Column(name = "created_at", nullable = false)
   Date createdAt;
 

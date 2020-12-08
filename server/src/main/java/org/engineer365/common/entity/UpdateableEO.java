@@ -29,6 +29,8 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
+import org.springframework.data.annotation.LastModifiedDate;
+
 /**
  * 可修改的实体类的VO。
  *
@@ -38,6 +40,7 @@ import javax.persistence.Version;
  */
 @lombok.Getter
 @lombok.Setter
+@lombok.NoArgsConstructor
 @MappedSuperclass
 public class UpdateableEO extends GenericEO {
 
@@ -50,6 +53,7 @@ public class UpdateableEO extends GenericEO {
   /**
    * 修改时间
    */
+  @LastModifiedDate
   @Column(name = "modified_at", nullable = false)
   Date modifiedAt;
 
