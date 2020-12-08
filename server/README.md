@@ -75,5 +75,5 @@
         ```
    
   - 简单验证RESTful API：
-    - VSCode的REST插件: 见[./manual-test.rest](./manual-test.rest)
+    - VSCode的REST插件: 见[./dev/manual-test.rest](./dev/manual-test.rest)
     - Curl: ```curl -v --request GET --header 'content-type: application/json' --url http://localhost:28080/platform/user/api/v1/rest/user/_/xxx```
