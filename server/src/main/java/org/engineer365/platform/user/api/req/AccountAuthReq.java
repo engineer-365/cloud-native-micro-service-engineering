@@ -29,6 +29,7 @@ import org.engineer365.common.bean.Dumpable;
 
 @lombok.Getter
 @lombok.Setter
+@lombok.EqualsAndHashCode(callSuper=false)
 public class AccountAuthReq extends Dumpable {
 
     @NotBlank

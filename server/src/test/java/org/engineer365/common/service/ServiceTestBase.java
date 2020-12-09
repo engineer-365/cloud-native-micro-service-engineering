@@ -32,7 +32,11 @@ import org.opentest4j.AssertionFailedError;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.api.BeforeEach;
 
+
 /**
+ * Service单元测试的基类，封装了一些浅层次的对Mockito的使用方法。
+ *
+ * Service单元测试的目的是验证service代码的逻辑正确性，包括和dao的参数/结果的传递。
  */
 @Disabled
 public abstract class ServiceTestBase {
