@@ -26,6 +26,8 @@ package org.engineer365.common.bean;
 /**
  * 支持调试输出（JSON格式）
  */
+@lombok.NoArgsConstructor
+@lombok.experimental.SuperBuilder
 public class Dumpable {
 
   @Override

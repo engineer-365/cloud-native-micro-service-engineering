@@ -27,6 +27,8 @@ import org.engineer365.common.bean.UpdateableBean;
 
 @lombok.Getter
 @lombok.Setter
+@lombok.NoArgsConstructor
+@lombok.experimental.SuperBuilder
 public class User extends UpdateableBean {
 
     String fullName;

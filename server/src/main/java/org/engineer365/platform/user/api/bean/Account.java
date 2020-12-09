@@ -28,6 +28,8 @@ import org.engineer365.platform.user.api.enums.AccountType;
 
 @lombok.Getter
 @lombok.Setter
+@lombok.NoArgsConstructor
+@lombok.experimental.SuperBuilder
 public class Account extends UpdateableBean {
 
     String userId;

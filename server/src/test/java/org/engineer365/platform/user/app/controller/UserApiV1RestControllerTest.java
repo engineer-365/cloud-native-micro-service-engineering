@@ -57,13 +57,8 @@ public class UserApiV1RestControllerTest extends RestTestBase {
 
         String id = UuidHelper.shortUuid();
 
-        var user = new User();
-        user.setId(id);
-        user.setFullName("fn");
-        user.setVersion(123);
-        user.setPrimaryAccountId(UuidHelper.shortUuid());
-        user.setCreatedAt(new Date());
-        user.setUpdatedAt(new Date());
+        var user = User.builder().id(id).fullName("fn").version(123).primaryAccountId(UuidHelper.shortUuid())
+                .createdAt(new Date()).updatedAt(new Date()).build();
 
         when(this.service.getUser(id)).thenReturn(user);
 
@@ -72,20 +67,11 @@ public class UserApiV1RestControllerTest extends RestTestBase {
 
     @Test
     void test_createUserByEmail() {
-        var req = new CreateUserByEmailReq();
-        req.setEmail("engineers@engineer-365");
-        req.setFullName("engineer-365 engineers");
-        req.setName("engineers");
-        req.setPassword("blah");
+        var req = CreateUserByEmailReq.builder().email("engineers@engineer-365").fullName("engineer-365 engineers")
+                .name("engineers").password("blah").build();
 
-        var account = new Account();
-        account.setId(UuidHelper.shortUuid());
-        account.setCredential(req.getEmail());
-        account.setType(AccountType.EMAIL);
-        account.setUserId(UuidHelper.shortUuid());
-        account.setVersion(234);
-        account.setCreatedAt(new Date());
-        account.setUpdatedAt(new Date());
+        var account = Account.builder().id(UuidHelper.shortUuid()).credential(req.getEmail()).type(AccountType.EMAIL)
+                .userId(UuidHelper.shortUuid()).version(234).createdAt(new Date()).updatedAt(new Date()).build();
 
         when(this.service.createUserByEmail(req)).thenReturn(account);
 

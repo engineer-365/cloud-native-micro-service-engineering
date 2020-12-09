@@ -40,47 +40,27 @@ public class AccountDAOTest extends DAOTestBase<AccountEO, String, AccountDAO> {
 
   @Test
   void test_getByCredentialAndType_happy() {
-    var u = new UserEO();
-    u.setName("n");
-    u.setFullName("fn");
-    u.setRoot(false);
-    u.setId(UuidHelper.shortUuid());
+    var u = UserEO.builder().name("n").fullName("fn").root(false).id(UuidHelper.shortUuid()).build();
     getEntityManager().persist(u);
 
     // 匹配
-    var a1 = new AccountEO();
-    a1.setCredential("c");
-    a1.setUser(u);
-    a1.setType(AccountType.EMAIL);
-    a1.setPassword("p1");
-    a1.setId(UuidHelper.shortUuid());
+    var a1 = AccountEO.builder().credential("c").user(u).type(AccountType.EMAIL).password("p1")
+        .id(UuidHelper.shortUuid()).build();
     a1 = importEntity(a1);
 
     // type不匹配
-    var a2 = new AccountEO();
-    a2.setCredential("c");
-    a2.setUser(u);
-    a2.setType(AccountType.MOBILE);
-    a2.setPassword("p2");
-    a2.setId(UuidHelper.shortUuid());
+    var a2 = AccountEO.builder().credential("c").user(u).type(AccountType.MOBILE).password("p2")
+        .id(UuidHelper.shortUuid()).build();
     a2 = importEntity(a2);
 
     // credential不匹配
-    var a3 = new AccountEO();
-    a3.setCredential("c-X");
-    a3.setUser(u);
-    a3.setType(AccountType.EMAIL);
-    a3.setPassword("p3");
-    a3.setId(UuidHelper.shortUuid());
+    var a3 = AccountEO.builder().credential("c-X").user(u).type(AccountType.EMAIL).password("p3")
+        .id(UuidHelper.shortUuid()).build();
     a3 = importEntity(a3);
 
     // credential和type都不匹配
-    var a4 = new AccountEO();
-    a4.setCredential("c-X");
-    a4.setUser(u);
-    a4.setType(AccountType.MOBILE);
-    a4.setPassword("p4");
-    a4.setId(UuidHelper.shortUuid());
+    var a4 = AccountEO.builder().credential("c-X").user(u).type(AccountType.MOBILE).password("p4")
+        .id(UuidHelper.shortUuid()).build();
     a4 = importEntity(a4);
 
     var actual = dao().getByCredentialAndType("c", AccountType.EMAIL);

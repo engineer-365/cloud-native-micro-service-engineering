@@ -58,13 +58,8 @@ public class AccountApiV1RestControllerTest extends RestTestBase {
 
         String id = UuidHelper.shortUuid();
 
-        var account = new Account();
-        account.setId(id);
-        account.setType(AccountType.EMAIL);
-        account.setVersion(123);
-        account.setCredential("engineers@engineer-365");
-        account.setCreatedAt(new Date());
-        account.setUpdatedAt(new Date());
+        var account = Account.builder().id(id).type(AccountType.EMAIL).version(123).credential("engineers@engineer-365")
+                .createdAt(new Date()).updatedAt(new Date()).build();
 
         when(this.service.getAccount(id)).thenReturn(account);
 
@@ -73,19 +68,11 @@ public class AccountApiV1RestControllerTest extends RestTestBase {
 
     @Test
     void test_createAccountByEmail() {
-        var req = new CreateAccountByEmailReq();
-        req.setEmail("engineers@engineer-365");
-        req.setUserId(UuidHelper.shortUuid());
-        req.setPassword("blah");
+        var req = CreateAccountByEmailReq.builder().email("engineers@engineer-365").userId(UuidHelper.shortUuid())
+                .password("blah").build();
 
-        var account = new Account();
-        account.setId(UuidHelper.shortUuid());
-        account.setCredential(req.getEmail());
-        account.setType(AccountType.EMAIL);
-        account.setUserId(req.getUserId());
-        account.setVersion(345);
-        account.setCreatedAt(new Date());
-        account.setUpdatedAt(new Date());
+        var account = Account.builder().id(UuidHelper.shortUuid()).credential(req.getEmail()).type(AccountType.EMAIL)
+                .userId(req.getUserId()).version(345).createdAt(new Date()).updatedAt(new Date()).build();
 
         when(this.service.createAccountByEmail(req)).thenReturn(account);
 
@@ -98,13 +85,8 @@ public class AccountApiV1RestControllerTest extends RestTestBase {
 
         String email = "engineers@engineer-365";
 
-        var account = new Account();
-        account.setId(UuidHelper.shortUuid());
-        account.setType(AccountType.EMAIL);
-        account.setVersion(123);
-        account.setCredential(email);
-        account.setCreatedAt(new Date());
-        account.setUpdatedAt(new Date());
+        var account = Account.builder().id(UuidHelper.shortUuid()).type(AccountType.EMAIL).version(123)
+                .credential(email).createdAt(new Date()).updatedAt(new Date()).build();
 
         when(this.service.getAccountByEmail(email)).thenReturn(account);
 
@@ -113,9 +95,7 @@ public class AccountApiV1RestControllerTest extends RestTestBase {
 
     @Test
     void test_authByAccount() {
-        var req = new AccountAuthReq();
-        req.setAccountId(UuidHelper.shortUuid());
-        req.setPassword("blah");
+        var req = AccountAuthReq.builder().accountId(UuidHelper.shortUuid()).password("blah").build();
 
         String pseudoToken = UuidHelper.shortUuid();
 
