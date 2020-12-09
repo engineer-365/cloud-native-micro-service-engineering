@@ -35,6 +35,7 @@ import java.util.Date;
 @lombok.Getter
 @lombok.Setter
 @lombok.NoArgsConstructor
+@lombok.experimental.SuperBuilder
 public class UpdateableBean extends GenericBean {
 
   /**

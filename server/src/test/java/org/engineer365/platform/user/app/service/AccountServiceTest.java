@@ -63,11 +63,8 @@ public class AccountServiceTest extends ServiceTestBase {
 
     @Test
     void test_checkRequestWithAccount_PASSWORD_NOT_MATCHES() {
-        var a = new AccountEO();
-        a.setPassword("abc");
-
-        var req = new AccountAuthReq();
-        req.setPassword("def");
+        var a = AccountEO.builder().password("abc").build();
+        var req = AccountAuthReq.builder().password("def").build();
 
         assertThrows(BadRequestError.class, ErrorCode.WRONG_PASSWORD,
             () -> this.target.checkRequestWithAccount(a, req));
@@ -75,20 +72,15 @@ public class AccountServiceTest extends ServiceTestBase {
 
     @Test
     void test_checkRequestWithAccount_OK() {
-        var a = new AccountEO();
-        a.setPassword("abc");
-
-        var req = new AccountAuthReq();
-        req.setPassword("abc");
+        var a = AccountEO.builder().password("abc").build();
+        var req = AccountAuthReq.builder().password("abc").build();
 
         this.target.checkRequestWithAccount(a, req);
     }
 
     @Test
     void test_auth_accountNotFound() {
-        var req = new AccountAuthReq();
-        req.setAccountId("a-1");
-        req.setPassword("p");
+        var req = AccountAuthReq.builder().accountId("a-1").password("p").build();
 
         when(this.accountDao.get(false, "a-1")).thenReturn(null);
 
@@ -98,15 +90,8 @@ public class AccountServiceTest extends ServiceTestBase {
 
     @Test
     void test_auth_ok() {
-        var req = new AccountAuthReq();
-        req.setAccountId("a-1");
-        req.setPassword("p");
-
-        var a = new AccountEO();
-        a.setId("a-1");
-        a.setPassword("p");
-        a.setCredential("noreply@wxcount.com");
-        a.setType(AccountType.EMAIL);
+        var req = AccountAuthReq.builder().accountId("a-1").password("p").build();
+        var a = AccountEO.builder().id("a-1").password("p").credential("noreply@wxcount.com").type(AccountType.EMAIL).build();
 
         when(this.accountDao.get(false, "a-1")).thenReturn(a);
 
@@ -117,13 +102,9 @@ public class AccountServiceTest extends ServiceTestBase {
     @Test
     void test_createAccountByEmail_happy() {
         var accountId = "a-1";
-        var user = new UserEO();
-        user.setId("u-1");
+        var user = UserEO.builder().id("u-1").build();
 
-        var req = new CreateAccountByEmailReq();
-        req.setPassword("p");
-        req.setUserId(user.getId());
-        req.setEmail("noreply@wxcount.com");
+        var req = CreateAccountByEmailReq.builder().password("p").userId(user.getId()).email("noreply@wxcount.com").build();
 
         when(this.accountDao.save(ArgumentMatchers.any())).thenReturn(new AccountEO());
         //when(this.emailSender.send(ArgumentMatchers.any())).thenReturn(null);

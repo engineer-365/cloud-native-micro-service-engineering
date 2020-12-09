@@ -36,6 +36,7 @@ import java.util.Date;
 @lombok.Getter
 @lombok.Setter
 @lombok.NoArgsConstructor
+@lombok.experimental.SuperBuilder
 public class GenericBean extends Dumpable {
 
   /**

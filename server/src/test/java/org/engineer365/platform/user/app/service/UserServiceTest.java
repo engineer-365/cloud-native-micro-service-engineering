@@ -52,8 +52,7 @@ public class UserServiceTest extends ServiceTestBase {
     void test_createAccount_happy() {
         var userId = "u-1";
 
-        var req = new CreateUserReq();
-        req.setFullName("n-1");
+        var req = CreateUserReq.builder().fullName("n-1").build();
 
         when(this.dao.save(ArgumentMatchers.any())).thenReturn(new UserEO());
         this.target.createUser(userId, req);
