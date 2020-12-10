@@ -38,3 +38,4 @@ service:
     database: ${MYSQL_DATABASE:fleashop}
     username: ${MYSQL_USER:fleashop_user}
     password: ${MYSQL_PASSWORD:fleashop_password}
+
