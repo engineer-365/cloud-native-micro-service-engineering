@@ -31,6 +31,9 @@ import org.engineer365.common.bean.Dumpable;
 
 @lombok.Getter
 @lombok.Setter
+@lombok.NoArgsConstructor
+@lombok.experimental.SuperBuilder
+@lombok.EqualsAndHashCode(callSuper=false)
 public class CreateUserByEmailReq extends Dumpable {
 
   public static final BeanCopyer<CreateUserByEmailReq, CreateAccountByEmailReq> ACCOUNT_REQ_COPIER

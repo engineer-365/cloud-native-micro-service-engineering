@@ -68,7 +68,7 @@ public class AccountApiV1RestController {
     }
 
 
-    @GetMapping(path = "account/getAccountByEmail?email={email}")
+    @GetMapping(path = "account/getAccountByEmail")
     public Account getAccountByEmail(@RequestParam @NotBlank String email) {
         return getService().getAccountByEmail(email);
     }

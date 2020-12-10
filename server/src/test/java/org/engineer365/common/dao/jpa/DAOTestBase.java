@@ -41,6 +41,12 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 /**
  * JPA DAO的单元测试用的基类，包含数据导入和实体对象数据验证等一些工具性方法
  *
+ * 遵循spring里JPA repository的做法，case执行完成后事务由spring控制做回滚，
+ * 以此实现case之间的测试数据的隔离。
+ *
+ * 测试的目标数据库是H2（内存数据库），大部分case已经足够。如果有些native SQL
+ * 测试，可以放到integration test里做。
+ *
  * @param E - 实体类
  * @param ID - 实体类的主键
  * @param D - DAO类

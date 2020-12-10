@@ -3,3 +3,8 @@
 ###
 GET http://localhost:28080/platform/user/api/v1/rest/user/_/xxx
 Content-Type: application/json
+
+
+###
+GET http://localhost:28080/platform/user/api/v1/rest/account/getAccountByEmail?email=xxx
+Content-Type: application/json

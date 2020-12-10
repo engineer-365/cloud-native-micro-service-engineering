@@ -41,6 +41,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 @lombok.Getter
 @lombok.Setter
 @lombok.NoArgsConstructor
+@lombok.experimental.SuperBuilder
 @MappedSuperclass
 public class UpdateableEO extends GenericEO {
 
