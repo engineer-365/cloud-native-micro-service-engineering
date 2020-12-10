@@ -45,6 +45,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @lombok.Getter
 @lombok.Setter
 @lombok.NoArgsConstructor
+@lombok.experimental.SuperBuilder
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class GenericEO extends Dumpable {
