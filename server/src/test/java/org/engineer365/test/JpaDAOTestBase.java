@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.engineer365.common.dao.jpa;
+package org.engineer365.test;
 
 import java.util.Arrays;
 
@@ -32,10 +32,12 @@ import java.util.Objects;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Assertions;
+import org.engineer365.common.dao.jpa.JpaDAO;
 import org.engineer365.common.json.JSON;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 /**
@@ -44,7 +46,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
  * 遵循spring里JPA repository的做法，case执行完成后事务由spring控制做回滚，
  * 以此实现case之间的测试数据的隔离。
  *
- * 测试的目标数据库是H2（内存数据库），大部分case已经足够。如果有些native SQL
+ * 测试的目标数据库是H2（内存数据库），大部分case已经足够。如果有native SQL
  * 测试，可以放到integration test里做。
  *
  * @param E - 实体类
@@ -53,15 +55,16 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
  */
 @Disabled
 @DataJpaTest
+@EnableJpaAuditing
 @lombok.Getter
-public class DAOTestBase<E, ID, D extends JpaDAO<E, ID>> {
+public class JpaDAOTestBase<E, ID, D extends JpaDAO<E, ID>> {
 
   @Autowired
   TestEntityManager entityManager;
 
   final D dao;
 
-  protected DAOTestBase(D dao) {
+  protected JpaDAOTestBase(D dao) {
     this.dao = dao;
   }
 

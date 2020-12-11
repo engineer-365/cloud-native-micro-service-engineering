@@ -38,7 +38,7 @@ import org.engineer365.platform.user.api.req.CreateUserReq;
 import org.engineer365.platform.user.app.dao.UserDAO;
 import org.engineer365.platform.user.app.entity.UserEO;
 
-import org.engineer365.common.service.ServiceTestBase;
+import org.engineer365.test.ServiceTestBase;
 
 public class UserServiceTest extends ServiceTestBase {
 

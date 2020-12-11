@@ -42,7 +42,7 @@ import static org.mockito.Mockito.when;
 
 import org.engineer365.common.error.BadRequestError;
 import org.engineer365.common.error.NotFoundError;
-import org.engineer365.common.service.ServiceTestBase;
+import org.engineer365.test.ServiceTestBase;
 
 
 public class AccountServiceTest extends ServiceTestBase {
