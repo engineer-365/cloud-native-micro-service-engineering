@@ -26,7 +26,7 @@ package org.engineer365.platform.user.app.service;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import org.engineer365.common.service.ServiceTestBase;
+import org.engineer365.test.ServiceTestBase;
 
 public class UserApiV1ServiceTest extends ServiceTestBase {
 

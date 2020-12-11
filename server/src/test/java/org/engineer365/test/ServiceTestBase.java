@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.engineer365.common.service;
+package org.engineer365.test;
 
 import org.engineer365.common.error.GenericError;
 import org.junit.jupiter.api.Assertions;

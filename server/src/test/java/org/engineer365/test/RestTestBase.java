@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.engineer365.common.rest;
+package org.engineer365.test;
 
 import org.junit.jupiter.api.Disabled;
 
-
 import org.engineer365.common.json.JSON;
+import org.engineer365.common.rest.RestConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 

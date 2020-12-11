@@ -24,7 +24,7 @@
 package org.engineer365.platform.user.app.controller;
 
 import org.engineer365.common.misc.UuidHelper;
-import org.engineer365.common.rest.RestTestBase;
+import org.engineer365.test.RestTestBase;
 import org.engineer365.platform.user.api.bean.Account;
 import org.engineer365.platform.user.api.enums.AccountType;
 import org.engineer365.platform.user.api.req.AccountAuthReq;

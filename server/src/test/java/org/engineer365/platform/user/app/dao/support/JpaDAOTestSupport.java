@@ -21,24 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.engineer365.platform.user.app;
+package org.engineer365.platform.user.app.dao.support;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.engineer365.test.JpaDAOTestBase;
+import org.engineer365.common.dao.jpa.JpaDAO;
+import org.engineer365.platform.user.app.dao.UserDAO;
+import org.engineer365.platform.user.app.entity.UserEO;
+import org.junit.jupiter.api.Disabled;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.test.context.ContextConfiguration;
 
 
+/**
+ * User模块的JPA DAO的单元测试用的基类
+ *
+ * @param E - 实体类
+ * @param ID - 实体类的主键
+ * @param D - DAO类
+ */
+@Disabled
+@EntityScan(basePackageClasses = UserEO.class)
+@EnableJpaRepositories(basePackageClasses = UserDAO.class)
+@ContextConfiguration(classes = UserDAO.class)
+public class JpaDAOTestSupport<E, ID, D extends JpaDAO<E, ID>> extends JpaDAOTestBase<E, ID, D> {
 
-@SpringBootApplication(scanBasePackages = {"org.engineer365.common", "wxcount"})
-@EntityScan("org.engineer365.platform.user.app.entity")
-@EnableJpaRepositories(basePackages = {"org.engineer365.platform.user.app.dao"})
-@EnableJpaAuditing //TODO: AuditorAware
-@EnableAsync
-@EnableCaching
-public class UserAppTest {
-
+  protected JpaDAOTestSupport(D dao) {
+    super(dao);
+  }
 
 }

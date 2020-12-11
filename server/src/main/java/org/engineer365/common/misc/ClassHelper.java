@@ -21,24 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.engineer365.fleashop;
+package org.engineer365.common.misc;
 
-import org.engineer365.platform.user.app.dao.UserDAO;
-import org.engineer365.platform.user.app.entity.UserEO;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+/**
+ *
+ */
+public class ClassHelper {
 
-@SpringBootApplication(scanBasePackages = "org.engineer365")
-@EntityScan(basePackageClasses = UserEO.class)
-@EnableJpaRepositories(basePackageClasses = UserDAO.class)
-@EnableJpaAuditing
-public class MonolithicApp {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MonolithicApp.class, args);
-	}
+  public static String parseNameSuffix(Class<?> clazz) {
+    var n = clazz.getSimpleName();
+    int pos = n.lastIndexOf('.');
+    if (pos < 0) {
+      return n;
+    }
+    return n.substring(pos + 1);
+  }
 
 }
