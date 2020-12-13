@@ -23,15 +23,15 @@
  */
 package org.engineer365.platform.user.app.dao;
 
-import org.engineer365.common.dao.jpa.DAOTestBase;
 import org.engineer365.common.misc.UuidHelper;
 import org.engineer365.platform.user.api.enums.AccountType;
+import org.engineer365.platform.user.app.dao.support.JpaDAOTestSupport;
 import org.engineer365.platform.user.app.entity.AccountEO;
 import org.engineer365.platform.user.app.entity.UserEO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class AccountDAOTest extends DAOTestBase<AccountEO, String, AccountDAO> {
+public class AccountDAOTest extends JpaDAOTestSupport<AccountEO, String, AccountDAO> {
 
   @Autowired
   public AccountDAOTest(AccountDAO dao) {

@@ -21,24 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.engineer365.fleashop;
+package org.engineer365.platform.user.test;
 
-import org.engineer365.platform.user.app.dao.UserDAO;
-import org.engineer365.platform.user.app.entity.UserEO;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.engineer365.platform.user.test.support.UserApiV1TestSupport;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
-@SpringBootApplication(scanBasePackages = "org.engineer365")
-@EntityScan(basePackageClasses = UserEO.class)
-@EnableJpaRepositories(basePackageClasses = UserDAO.class)
-@EnableJpaAuditing
-public class MonolithicApp {
+@Testcontainers
+@Execution(ExecutionMode.SAME_THREAD) // testcontainers junit5模块不支持parallel
+public class UserApiV1IT extends UserApiV1TestSupport {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MonolithicApp.class, args);
-	}
+  @Test
+  public void test_getUser_notFound() throws Exception {
+    var user = getUser("xxx");
+    Assertions.assertNull(user);
+  }
 
 }

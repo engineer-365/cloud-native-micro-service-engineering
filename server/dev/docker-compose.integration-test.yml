@@ -20,22 +20,31 @@
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
-spring.application.name: fleashop
 
-spring.profiles.include:
-  - common
+version: '2.2'
 
-org.engineer365.platform:
-  user:
-    api:
-      host:
-        internal: ${ENGINEER365_PLATFORM_USER_API_HOST_INTERNAL:http://fleashop.engineer365.org}
-        external: ${ENGINEER365_PLATFORM_USER_API_HOST_EXTERNAL:https://fleashop.engineer365.org}
+networks:
+  default:
 
-service:
-  rdbms:
-    url: jdbc:mysql://${MYSQL_HOST:mysql.fleashop.engineer365.org}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:fleashop}?${MYSQL_JDBC_OPTIONS}
-    database: ${MYSQL_DATABASE:fleashop}
-    username: ${MYSQL_USER:fleashop_user}
-    password: ${MYSQL_PASSWORD:fleashop_password}
+services:
 
+  mysql: # don't change the name, integration-test depends on this to look up MySQL container
+    extends:
+      file:   ./docker-compose.base.yml
+      service: mysql
+    networks:
+      default:
+        aliases:
+          - mysql.fleashop.engineer365.org
+
+  server: # don't change the name, integration-test depends on this to look up server container
+    extends:
+      file:   ./docker-compose.base.yml
+      service: server
+    networks:
+      default:
+        aliases:
+          - server.fleashop.engineer365.org
+    depends_on:
+      mysql:
+        condition: service_healthy
