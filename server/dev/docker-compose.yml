@@ -45,7 +45,7 @@ services:
   server:
     container_name: server.fleashop
     extends:
-      file:   ./docker-compose.base.yml
+      file: ./docker-compose.base.yml
       service: server
     ports:
       - 28080:8080

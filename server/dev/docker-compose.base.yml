@@ -27,7 +27,7 @@ services:
 
   mysql:
     image: mysql:8.0.22
-    env_file:  ./.env
+    env_file: ./.env
     volumes:
       - ./mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
     healthcheck:
@@ -40,7 +40,7 @@ services:
     build:
       context: ../
       dockerfile: Dockerfile.dev
-    env_file:  ./.env
+    env_file: ./.env
     environment:
       - JAVA_OPTS=-Djava.compiler=NONE -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=0.0.0.0:8888 -Xnoagent
 
