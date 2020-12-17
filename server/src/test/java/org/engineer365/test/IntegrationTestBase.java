@@ -83,7 +83,7 @@ public abstract class IntegrationTestBase {
    */
   static Properties ENV = new Properties();
   static {
-    try (var fis = new FileInputStream("dev/.env");) {
+    try (var fis = new FileInputStream("dev/fleashop.env");) {
       ENV.load(fis);
     } catch (IOException ex) {
       throw new RuntimeException(ex);

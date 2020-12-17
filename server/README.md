@@ -182,7 +182,7 @@ curl测试结果如下（mac）
 
   > 2. 怎样初始化MySQL数据库?
 
-       开发环境下，我们使用docker-compose管理开发服务器和MySQL，包括后续其他的Redis等也会这样做，所以不需要另外再安装MySQL或初始化数据库表。其中的MySQL，就定义在了dev/docker-compose.*.yml文件中，用户名和密码等参数在dev/.env文件中。
+       开发环境下，我们使用docker-compose管理开发服务器和MySQL，包括后续其他的Redis等也会这样做，所以不需要另外再安装MySQL或初始化数据库表。其中的MySQL，就定义在了dev/docker-compose.*.yml文件中，用户名和密码等参数在dev/fleashop.env文件中。
     
        另外，我们使用了Flyway，开发环境下，Flyway默认打开，服务器启动时Flyway会自动执行数据库初始化SQL和升级用SQL，这些SQL脚本遵循Flyway的规则和缺省设置，放在了src/main/resource/db目录下。
     
