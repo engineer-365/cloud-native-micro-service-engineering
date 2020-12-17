@@ -35,6 +35,8 @@ logging:
       - org.engineer365
   level:
     root: INFO
+  file:
+    path: ~/data/fleashop-logs/java
 
 management:
   endpoints:

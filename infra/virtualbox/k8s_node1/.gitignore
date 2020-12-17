@@ -1,0 +1,4 @@
+/data/
+/.vagrant/
+*.box  
+*.log

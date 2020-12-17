@@ -15,7 +15,7 @@
       sudo apt-get update
       sudo apt-get install docker-ce docker-ce-cli containerd.io
       ```
-      非root用户如何使用docker：https://docs.docker.com/engine/install/linux-postinstall/·
+      非root用户如何使用docker：https://docs.docker.com/engine/install/linux-postinstall/
 
     - Windows：https://docs.docker.com/docker-for-windows/install/
       下载：https://desktop.docker.com/win/stable/Docker%20Desktop%20Installer.exe
@@ -59,23 +59,24 @@
        然后就可以导入idea或eclipse
 
   4. 启动/查看log／停止
+
     - Mac或Linux
       - ```dev/up.sh```
       - ```dev/log.sh```
       - ```dev/down.sh```
     - Windows
       - TODO：bat脚本待写，以下命令待验证
-
+    
         ```shell
         cd dev
         docker-compose up --build -d --remove-orphans
         ```
-
+    
         ```shell
         cd dev
         docker-compose logs
         ```
-
+    
         ```shell
         cd dev
         docker-compose down --remove-orphans
@@ -84,8 +85,27 @@
   5. 简单验证RESTful API：
 
      - VSCode的REST插件: 见[./dev/manual-test.rest](./dev/manual-test.rest)
+- Curl: ```curl -v --request GET --header 'content-type: application/json' --url http://localhost:28080/platform/user/api/v1/rest/user/_/xxx```
 
-     - Curl: ```curl -v --request GET --header 'content-type: application/json' --url http://localhost:28080/platform/user/api/v1/rest/user/_/xxx```
+```
+curl测试结果如下（mac）
+*   Trying ::1:28080...
+* Connected to localhost (::1) port 28080 (#0)
+> GET /platform/user/api/v1/rest/user/_/xxx HTTP/1.1
+> Host: localhost:28080
+> User-Agent: curl/7.71.1
+> Accept: */*
+> content-type: application/json
+>
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 200
+< Content-Length: 0
+< Date: Sun, 13 Dec 2020 10:11:29 GMT
+<
+* Connection #0 to host localhost left intact
+```
+
+
 
 
 ## 示范的技术
@@ -97,11 +117,13 @@
   2. JaCoCo:
 
      测试覆盖率工具
+
      - 官方文档： https://www.jacoco.org/jacoco/trunk/doc/
 
   3. Flyway:
 
      数据库初始化和升级管理
+
      - 官网：https://flywaydb.org/
 
   4. QueryDSL:
@@ -153,17 +175,17 @@
        其中，最开始下载maven wrapper的jar包时，因为没有任何提示文字，会给人以卡住不动的错觉。虽然我们推荐使用maven wrapper以便使用统一的
        maven版本（目前是3.6.3），不过大多数情况使用自己原本安装的maven一般也是可以的，那么，直接把命令重的```./mvnw```替换成```mvn```就可以了，
        这样可以省去下载maven wrapper的时间。
-
+    
        注意：构建正式的docker镜像（即Dockerfile.release）时，因为容器内的maven repository是隔离的，所以构建和依赖的第三方包还是会重新下载一遍，而且，每次修改pom.xml以后再构建正式的docker镜像，都会触发重新下载第三方包，这是正常现象。开发用的docker镜像（即Dockerfile.dev)没有做构建，而是直接使用了本地环境的编译好的jar包（在target目录下），所以不存在这个现象。
-
+    
        后续会搭建我们的代理/镜像服务器（因为各种代理/镜像服务器也是国内开发工程的一部分）
 
   > 2. 怎样初始化MySQL数据库?
 
        开发环境下，我们使用docker-compose管理开发服务器和MySQL，包括后续其他的Redis等也会这样做，所以不需要另外再安装MySQL或初始化数据库表。其中的MySQL，就定义在了dev/docker-compose.*.yml文件中，用户名和密码等参数在dev/.env文件中。
-
+    
        另外，我们使用了Flyway，开发环境下，Flyway默认打开，服务器启动时Flyway会自动执行数据库初始化SQL和升级用SQL，这些SQL脚本遵循Flyway的规则和缺省设置，放在了src/main/resource/db目录下。
-
+    
        所以，概括说就是，不需要手动初始化或升级MySQL数据库。
 
   > 3. 开发环境下的MySQL的数据目录在哪里？

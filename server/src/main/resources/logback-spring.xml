@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  MIT License
+ 
+  Copyright (c) 2020 engineer365.org
+ 
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+ 
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-->
+<configuration>
+    <property name="LOG_BASE" value="${LOG_PATH}"/>
+    <property name="LOG_DATE_FORMAT" value="%d{yyyyMMdd}"/>
+    <property name="patternNologger"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%level]: [%thread] - %msg%n"/>
+    <property name="connectPattern"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %msg%n"/>
+    <property name="messagePattern"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %msg%n"/>
+    <property name="defaultPattern"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%level]: [%thread] - %logger{36} - %msg%n"/>
+
+    <appender name="request" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_BASE}/request.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${LOG_BASE}/request.${LOG_DATE_FORMAT}.%i.log</fileNamePattern>
+
+            <!-- keep 180 days' worth of history capped at 10GB total size -->
+            <maxHistory>180</maxHistory>
+            <maxFileSize>100MB</maxFileSize>
+            <totalSizeCap>10GB</totalSizeCap>
+
+        </rollingPolicy>
+        <encoder>
+            <pattern>${patternNologger}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_BASE}/info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${LOG_BASE}/info.${LOG_DATE_FORMAT}.%i.log</fileNamePattern>
+
+            <!-- keep 180 days' worth of history capped at 10GB total size -->
+            <maxHistory>180</maxHistory>
+            <maxFileSize>100MB</maxFileSize>
+            <totalSizeCap>10GB</totalSizeCap>
+
+        </rollingPolicy>
+        <encoder>
+            <pattern>${patternNologger}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_BASE}/error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${LOG_BASE}/error.${LOG_DATE_FORMAT}.%i.log</fileNamePattern>
+
+            <!-- keep 180 days' worth of history capped at 10GB total size -->
+            <maxHistory>180</maxHistory>
+            <maxFileSize>100MB</maxFileSize>
+            <totalSizeCap>10GB</totalSizeCap>
+
+        </rollingPolicy>
+        <encoder>
+            <pattern>${patternNologger}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_BASE}/warn.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${LOG_BASE}/warn.${LOG_DATE_FORMAT}.%i.log</fileNamePattern>
+
+            <!-- keep 180 days' worth of history capped at 10GB total size -->
+            <maxHistory>180</maxHistory>
+            <maxFileSize>100MB</maxFileSize>
+            <totalSizeCap>10GB</totalSizeCap>
+
+        </rollingPolicy>
+        <encoder>
+            <pattern>${patternNologger}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_BASE}/debug.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${LOG_BASE}/debug.${LOG_DATE_FORMAT}.%i.log</fileNamePattern>
+
+            <!-- keep 180 days' worth of history capped at 10GB total size -->
+            <maxHistory>180</maxHistory>
+            <maxFileSize>100MB</maxFileSize>
+            <totalSizeCap>10GB</totalSizeCap>
+
+        </rollingPolicy>
+        <encoder>
+            <pattern>${patternNologger}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="lib" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_BASE}/lib.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${LOG_BASE}/lib.${LOG_DATE_FORMAT}.%i.log</fileNamePattern>
+
+            <!-- keep 180 days' worth of history capped at 10GB total size -->
+            <maxHistory>180</maxHistory>
+            <maxFileSize>100MB</maxFileSize>
+            <totalSizeCap>10GB</totalSizeCap>
+
+        </rollingPolicy>
+        <encoder>
+            <pattern>${defaultPattern}</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="warn" level="WARN" additivity="false">
+        <appender-ref ref="warn"/>
+    </logger>
+
+    <logger name="debug" level="DEBUG" additivity="false">
+        <appender-ref ref="debug"/>
+    </logger>
+
+    <logger name="info" level="INFO" additivity="false">
+        <appender-ref ref="info"/>
+    </logger>
+
+    <logger name="error" level="ERROR" additivity="false">
+        <appender-ref ref="error"/>
+    </logger>
+
+    <logger name="request" level="INFO" additivity="false">
+        <appender-ref ref="request"/>
+    </logger>
+
+    <root level="info">
+        <appender-ref ref="lib"/>
+    </root>
+</configuration>

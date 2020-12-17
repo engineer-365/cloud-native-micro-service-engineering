@@ -20,22 +20,34 @@
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
-spring.application.name: fleashop
 
-spring.profiles.include:
-  - common
+version: '2.2'
 
-org.engineer365.platform:
-  user:
-    api:
-      host:
-        internal: ${ENGINEER365_PLATFORM_USER_API_HOST_INTERNAL:http://fleashop.engineer365.org}
-        external: ${ENGINEER365_PLATFORM_USER_API_HOST_EXTERNAL:https://fleashop.engineer365.org}
 
-service:
-  rdbms:
-    url: jdbc:mysql://${MYSQL_HOST:mysql.fleashop.engineer365.org}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:fleashop}?${MYSQL_JDBC_OPTIONS}
-    database: ${MYSQL_DATABASE:fleashop}
-    username: ${MYSQL_USER:fleashop_user}
-    password: ${MYSQL_PASSWORD:fleashop_password}
+networks:
+  default:
 
+
+services:
+
+  mysql-master:
+    container_name: mysql-master
+    image: mysql:8.0.22
+    environment: 
+      - MYSQL_ROOT_PASSWORD=rootpwd
+      - MYSQL_DATABASE=playground
+      - MYSQL_USER=playground_user
+      - MYSQL_PASSWORD=playground_password
+    restart: always
+    volumes:
+      - /opt/mysql-master/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
+      - /opt/mysql-master/create-fleashop.sql:/docker-entrypoint-initdb.d/create-fleashop.sql:ro
+      - /data/mysql-master/work:/var/lib/mysql:rw
+    ports: 
+      - 3306:3306
+    healthcheck:
+      test: "mysql --user=playground_user --password=playground_password -D playground --execute \"SHOW TABLES;\""
+      interval: 3s
+      timeout: 1s
+      retries: 60
+  

@@ -30,7 +30,7 @@ services:
 
   mysql: # don't change the name, integration-test depends on this to look up MySQL container
     extends:
-      file:   ./docker-compose.base.yml
+      file: ./docker-compose.base.yml
       service: mysql
     networks:
       default:
@@ -39,7 +39,7 @@ services:
 
   server: # don't change the name, integration-test depends on this to look up server container
     extends:
-      file:   ./docker-compose.base.yml
+      file: ./docker-compose.base.yml
       service: server
     networks:
       default:

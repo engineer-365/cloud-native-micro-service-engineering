@@ -1,18 +1,20 @@
-#
+#!/bin/bash
+
+# 
 #  MIT License
-#
+# 
 #  Copyright (c) 2020 engineer365.org
-#
+# 
 #  Permission is hereby granted, free of charge, to any person obtaining a copy
 #  of this software and associated documentation files (the "Software"), to deal
 #  in the Software without restriction, including without limitation the rights
 #  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 #  copies of the Software, and to permit persons to whom the Software is
 #  furnished to do so, subject to the following conditions:
-#
+# 
 #  The above copyright notice and this permission notice shall be included in all
 #  copies or substantial portions of the Software.
-#
+# 
 #  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 #  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,22 +22,11 @@
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
-spring.application.name: fleashop
 
-spring.profiles.include:
-  - common
+set -x
 
-org.engineer365.platform:
-  user:
-    api:
-      host:
-        internal: ${ENGINEER365_PLATFORM_USER_API_HOST_INTERNAL:http://fleashop.engineer365.org}
-        external: ${ENGINEER365_PLATFORM_USER_API_HOST_EXTERNAL:https://fleashop.engineer365.org}
+readonly this_dir=$(cd "$(dirname $0)";pwd)
+readonly virtualbox_dir=$(cd "${this_dir}/../";pwd)
+source $virtualbox_dir/vagrant.sh
 
-service:
-  rdbms:
-    url: jdbc:mysql://${MYSQL_HOST:mysql.fleashop.engineer365.org}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:fleashop}?${MYSQL_JDBC_OPTIONS}
-    database: ${MYSQL_DATABASE:fleashop}
-    username: ${MYSQL_USER:fleashop_user}
-    password: ${MYSQL_PASSWORD:fleashop_password}
-
+import_box ${box_name____org_store1}

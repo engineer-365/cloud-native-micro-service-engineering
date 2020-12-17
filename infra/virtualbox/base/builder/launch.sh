@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #
 #  MIT License
 #
@@ -20,22 +22,5 @@
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
-spring.application.name: fleashop
 
-spring.profiles.include:
-  - common
-
-org.engineer365.platform:
-  user:
-    api:
-      host:
-        internal: ${ENGINEER365_PLATFORM_USER_API_HOST_INTERNAL:http://fleashop.engineer365.org}
-        external: ${ENGINEER365_PLATFORM_USER_API_HOST_EXTERNAL:https://fleashop.engineer365.org}
-
-service:
-  rdbms:
-    url: jdbc:mysql://${MYSQL_HOST:mysql.fleashop.engineer365.org}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:fleashop}?${MYSQL_JDBC_OPTIONS}
-    database: ${MYSQL_DATABASE:fleashop}
-    username: ${MYSQL_USER:fleashop_user}
-    password: ${MYSQL_PASSWORD:fleashop_password}
-
+sudo --preserve-env bash /home/vagrant/provision.sh
