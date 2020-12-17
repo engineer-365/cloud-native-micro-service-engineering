@@ -1,14 +1,23 @@
 pipeline {
-    agent any
+    agent { 
+        node {
+            customWorkspace '/server'
+        }
+    }
     stages {
         stage('Unit Test') {
             steps {
-                sh 'cd server && ./mvnw test'
+                sh './mvnw test'
             }
         }
         stage('Verify') {
             steps {
-                sh 'cd server && ./mvnw verify'
+                sh './mvnw -B clean verify'
+            }
+        }
+        stage('Build Image') {
+            steps {
+                sh "docker build -t engineer365/fleashop:${env.BUILD_ID} ."
             }
         }
     }
