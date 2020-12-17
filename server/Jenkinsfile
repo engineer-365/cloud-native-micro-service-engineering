@@ -1,14 +1,9 @@
 pipeline {
     agent any
     stages {
-        stage('Unit Test') {
+        stage('Test') {
             steps {
-                sh 'cd server && ./mvnw test'
-            }
-        }
-        stage('Verify') {
-            steps {
-                sh 'cd server && ./mvnw -B clean verify'
+                sh 'cd server && ./mvnw clean && ./mvnw verify'
             }
         }
         stage('Build Image') {
