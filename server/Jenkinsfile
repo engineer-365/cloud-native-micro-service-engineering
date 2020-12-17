@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Verify') {
             steps {
-                sh 'cd server && ./mvnw -Dmaven.test.skip=true verify'
+                sh 'cd server && ./mvnw verify'
             }
         }
     }
