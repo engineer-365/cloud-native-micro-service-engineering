@@ -103,7 +103,9 @@ usermod -aG sudo jenkins
 usermod -aG docker jenkins
 echo "jenkins  ALL=(ALL) NOPASSWD:/usr/bin/docker,/usr/local/bin/docker-compose" | tee /etc/sudoers.d/jenkins
 # maven mirror in settings.xml
+mkdir /var/lib/jenkins/.m2
 cp /home/vagrant/.m2/settings.xml /var/lib/jenkins/.m2
+chown -R jenkins:jenkins /var/lib/jenkins/.m2
 
 systemctl restart jenkins
 
@@ -115,6 +117,7 @@ JENKINS_USER_ID=$(id -u jenkins)
 #chmod a+rw /var/run/docker.sock
 mkdir -p /run/user/${JENKINS_USER_ID}
 ln -s /var/run/docker.sock  /run/user/${JENKINS_USER_ID}/docker.sock
+chown -R jenkins:jenkins /run/user/111/docker.sock
 
 
 
