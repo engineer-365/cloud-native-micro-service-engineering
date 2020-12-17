@@ -3,12 +3,12 @@ pipeline {
     stages {
         stage('Unit Test') {
             steps {
-                sh './mvnw test'
+                sh 'cd server && ./mvnw test'
             }
         }
         stage('Verify') {
             steps {
-                sh './mvnw -Dmaven.test.skip=true verify'
+                sh 'cd server && ./mvnw -Dmaven.test.skip=true verify'
             }
         }
     }
