@@ -1,0 +1,215 @@
+#!/bin/bash
+
+#
+#  MIT License
+#
+#  Copyright (c) 2020 engineer365.org
+#
+#  Permission is hereby granted, free of charge, to any person obtaining a copy
+#  of this software and associated documentation files (the "Software"), to deal
+#  in the Software without restriction, including without limitation the rights
+#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#  copies of the Software, and to permit persons to whom the Software is
+#  furnished to do so, subject to the following conditions:
+#
+#  The above copyright notice and this permission notice shall be included in all
+#  copies or substantial portions of the Software.
+#
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+#  SOFTWARE.
+
+plugins:
+ - artifactId: blueocean
+   source:
+      version: 1.24.3
+ - artifactId: docker-workflow
+   source:
+      version: 1.25
+ - artifactId: maven-plugin
+   source:
+      version: 3.8
+ - artifactId: dashboard-view
+   source:
+      version: 2.14
+ - artifactId: bouncycastle-api
+   source:
+      version: 2.18
+ - artifactId: ssh-agent
+   source:
+      version: 1.20
+ - artifactId: cloudbees-folder
+   source:
+      version: 6.15
+ - artifactId: configuration-as-code
+   source:
+      version: 1.46
+ - artifactId: antisamy-markup-formatter
+   source:
+      version: 2.1
+ - artifactId: build-name-setter
+   source:
+      version: 2.1.0
+ - artifactId: build-timeout
+   source:
+      version: 1.20
+ - artifactId: config-file-provider
+   source:
+      version: 3.7.0
+ - artifactId: credentials-binding
+   source:
+      version: 1.24
+ - artifactId: embeddable-build-status
+   source:
+      version: 2.0.3
+ - artifactId: rebuild
+   source:
+      version: 1.31
+ - artifactId: throttle-concurrents
+   source:
+      version: 2.0.3
+ - artifactId: timestamper
+   source:
+      version: 1.11.8
+ - artifactId: ws-cleanup
+   source:
+      version: 0.38
+ - artifactId: ant
+   source:
+      version: 1.11
+ - artifactId: gradle
+   source:
+      version: 1.36
+ - artifactId: msbuild
+   source:
+      version: 1.29
+ - artifactId: nodejs
+   source:
+      version: 1.3.9
+ - artifactId: cobertura
+   source:
+      version: 1.16
+ - artifactId: htmlpublisher
+   source:
+      version: 1.25
+ - artifactId: junit
+   source:
+      version: 1.47
+ - artifactId: warnings-ng
+   source:
+      version: 8.4.4
+ - artifactId: xunit
+   source:
+      version: 2.4.0
+ - artifactId: workflow-aggregator
+   source:
+      version: 2.6
+ - artifactId: github-branch-source
+   source:
+      version: 2.9.2
+ - artifactId: pipeline-github-lib
+   source:
+      version: 1.0
+ - artifactId: conditional-buildstep
+   source:
+      version: 1.4.1
+ - artifactId: jenkins-multijob-plugin
+   source:
+      version: 1.33
+ - artifactId: parameterized-trigger
+   source:
+      version: 2.39
+ - artifactId: copyartifact
+   source:
+      version: 1.45.3
+ - artifactId: git
+   source:
+      version: 4.5.0
+ - artifactId: git-parameter
+   source:
+      version: 0.9.13
+ - artifactId: github
+   source:
+      version: 1.32.0
+ - artifactId: gitlab-plugin
+   source:
+      version: 1.5.13
+ - artifactId: matrix-project
+   source:
+      version: 1.18
+ - artifactId: ssh-slaves
+   source:
+      version: 1.31.4
+ - artifactId: windows-slaves
+   source:
+      version: 1.7
+ - artifactId: matrix-auth
+   source:
+      version: 2.6.4
+ - artifactId: pam-auth
+   source:
+      version: 1.6
+ - artifactId: ldap
+   source:
+      version: 2.1
+ - artifactId: role-strategy
+   source:
+      version: 3.1
+ - artifactId: active-directory
+   source:
+      version: 2.22
+ - artifactId: authorize-project
+   source:
+      version: 1.3.0
+ - artifactId: email-ext
+   source:
+      version: 2.80
+ - artifactId: emailext-template
+   source:
+      version: 1.2
+ - artifactId: mailer
+   source:
+      version: 1.32.1
+ - artifactId: publish-over-ssh
+   source:
+      version: 1.22
+ - artifactId: ssh
+   source:
+      version: 2.6.1
+ - artifactId: locale
+   source:
+      version: 1.4
+ - artifactId: localization-zh-cn
+   source:
+      version: 1.0.24
+ - artifactId: workflow-multibranch
+   source:
+      version: 2.22
+ - artifactId: delivery-pipeline-plugin
+   source:
+      version: 1.4.2
+
+# examples:
+#
+#  - artifactId: git
+#    source:
+#      version: latest
+#  - artifactId: job-import-plugin
+#    source:
+#      version: 2.1
+#  - artifactId: docker
+#  - artifactId: cloudbees-bitbucket-branch-source
+#    source:
+#      version: 2.4.4
+#  - artifactId: script-security
+#    source:
+#      url: http://ftp-chi.osuosl.org/pub/jenkins/plugins/script-security/1.56/script-security.hpi
+#  - artifactId: workflow-step-api
+#    groupId: org.jenkins-ci.plugins.workflow
+#    source:
+#      version: 2.19-rc289.d09828a05a74
+

@@ -1,0 +1,70 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+#
+#  MIT License
+#
+#  Copyright (c) 2020 engineer365.org
+#
+#  Permission is hereby granted, free of charge, to any person obtaining a copy
+#  of this software and associated documentation files (the "Software"), to deal
+#  in the Software without restriction, including without limitation the rights
+#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#  copies of the Software, and to permit persons to whom the Software is
+#  furnished to do so, subject to the following conditions:
+#
+#  The above copyright notice and this permission notice shall be included in all
+#  copies or substantial portions of the Software.
+#
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+#  SOFTWARE.
+
+puts "Vagrantfile variables ---------------------------------------------------"
+
+org=ENV["org"]
+puts "org: #{org}"
+
+vm_name=ENV["builder1_host"]
+puts "vm name: #{vm_name}"
+
+base_box_name=ENV["box_name____org_builder"]
+base_box_name_fq="#{org}/#{base_box_name}"
+puts "base box: #{base_box_name_fq}"
+
+ip=ENV["builder1_ip"]
+puts "ip: #{ip}"
+
+puts "Vagrantfile variables ---------------------------------------------------"
+
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = base_box_name_fq
+  config.vm.hostname = vm_name
+  config.vm.network "private_network", ip: ip
+  # config.vm.synced_folder "./data", "/data", create: true
+
+  config.vm.provider "virtualbox" do |p|
+     p.name = vm_name
+     p.linked_clone = true
+  end
+
+  #config.vm.provision "shell", inline: "sudo chown -R vagrant:vagrant /opt"
+  config.vm.provision "file", source: "./home/vagrant/.m2", destination: "/home/vagrant/.m2"
+  config.vm.provision "file", source: "./home/vagrant/jenkins-tool", destination: "/home/vagrant/jenkins-tool"
+  config.vm.provision "file", source: "./home/vagrant/post-install", destination: "/home/vagrant/post-install"
+
+  config.vm.provision "file", source: "./provision.sh", destination: "/home/vagrant/"
+
+  # Enable provisioning with a shell script.
+  config.vm.provision "shell" do |s|
+    s.path = "launch.sh"
+    s.args = ""
+  end
+
+end

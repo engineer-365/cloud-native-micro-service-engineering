@@ -15,7 +15,7 @@
       sudo apt-get update
       sudo apt-get install docker-ce docker-ce-cli containerd.io
       ```
-      非root用户如何使用docker：https://docs.docker.com/engine/install/linux-postinstall/·
+      非root用户如何使用docker：https://docs.docker.com/engine/install/linux-postinstall/
 
     - Windows：https://docs.docker.com/docker-for-windows/install/
       下载：https://desktop.docker.com/win/stable/Docker%20Desktop%20Installer.exe
