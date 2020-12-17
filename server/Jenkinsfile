@@ -1,0 +1,15 @@
+pipeline {
+    agent any
+    stages {
+        stage('Unit Test') {
+            steps {
+                sh './mvnw test'
+            }
+        }
+        stage('Verify') {
+            steps {
+                sh './mvnw -Dmaven.test.skip=true verify'
+            }
+        }
+    }
+}
