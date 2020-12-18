@@ -26,6 +26,12 @@
 #set -e
 set -x
 
+PROVISION_DONE_FLAG_FILE=/home/vagrant/provision_is_done_$(hostname)
+if [ -f ${PROVISION_DONE_FLAG_FILE} ]; then
+  echo "provision is ALREADY done for $(hostname). skipped"
+  exit 0
+fi
+
 readonly download_site=$1
 readonly org=$2
 readonly admin_user=$3
@@ -122,3 +128,7 @@ chown -R ${dev_user}:${dev_user} /home/${dev_user}/.ssh
 cat /home/vagrant/etc_hosts >> /etc/hosts
 
 echo "export download_site=${download_site}" >> /etc/profile
+
+# indicate the provision is done
+touch ${PROVISION_DONE_FLAG_FILE}
+echo "provision is DONE for $(hostname)"

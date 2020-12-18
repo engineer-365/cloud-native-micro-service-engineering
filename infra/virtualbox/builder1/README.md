@@ -1,4 +1,6 @@
-# 初始化启动
+# Builder虚拟机 - Jenkins ...
+
+## 初始化启动
   ```shell
   # 下载vagrant virtualbox镜像，导入
   ./import.sh
@@ -16,8 +18,8 @@
   # SSH登录
   vagrant ssh
   ```
- 
-# 设置maven
+
+## 设置maven
   - https://builder.engineer365.org:40443/configureTools
   - “默认全局 settings 提供”： - /var/lib/jenkins/.m2/settings.xml
   - "Maven 安装"
@@ -29,8 +31,8 @@
     - “别名”填写："openjdk 11.0.7+10"
     - 去掉“自动安装”
     - "JAVA_HOME"： /opt/jdk-11
-    
-# 创建第一个job
+
+## 创建第一个job
 
   https://builder.engineer365.org:40443/view/all/newJob
 
@@ -49,14 +51,14 @@
     - 选择“Add timestamps to the Console Output”
     - 选择“Abort the build if it's stuck”，“Timeout minutes”设为60
 
-# 若干plugin docs
+## 若干plugin docs
   - https://plugins.jenkins.io/maven-plugin/
   - https://plugins.jenkins.io/docker-workflow/
   - https://www.jenkins.io/doc/book/pipeline/
   - https://plugins.jenkins.io/workflow-aggregator/
   - https://www.jenkins.io/doc/book/blueocean
-  
-# 制作镜像
+
+## 制作镜像
   ```shell
   ./build.sh
   ```

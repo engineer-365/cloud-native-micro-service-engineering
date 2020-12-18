@@ -26,6 +26,18 @@
 set -e
 set -x
 
+PROVISION_DONE_FLAG_FILE=/home/vagrant/provision_is_done_$(hostname)
+if [ -f ${PROVISION_DONE_FLAG_FILE} ]; then
+  echo "provision is ALREADY done for $(hostname). skipped"
+  exit 0
+fi
+
+PROVISION_DONE_FLAG_FILE=/home/vagrant/provision_is_done_$(hostname)
+if [ -f ${PROVISION_DONE_FLAG_FILE} ]; then
+  echo "provision is ALREADY done for $(hostname). skipped"
+  exit 0
+fi
+
 ################################################################################
 # install jenkins via ubuntu package manager
 # see https://www.jenkins.io/doc/book/installing/linux/#debianubuntu
@@ -109,8 +121,10 @@ chown -R jenkins:jenkins /var/lib/jenkins/.m2
 
 systemctl restart jenkins
 
+# TODO: use intial groovy script or configuration-as-code plugin to import global configurations
+
 # the plugin initialization is really time-consuming, due to download from internet
-# need to do some investigation 
+# need to do some investigation
 sleep 1200
 
 JENKINS_USER_ID=$(id -u jenkins)
@@ -119,5 +133,6 @@ mkdir -p /run/user/${JENKINS_USER_ID}
 ln -s /var/run/docker.sock  /run/user/${JENKINS_USER_ID}/docker.sock
 chown -R jenkins:jenkins /run/user/111/docker.sock
 
-
-
+# indicate the provision is done
+touch ${PROVISION_DONE_FLAG_FILE}
+echo "provision is DONE for $(hostname)"

@@ -26,7 +26,15 @@
 set -e
 set -x
 
-sudo su -
+PROVISION_DONE_FLAG_FILE=/home/vagrant/provision_is_done_$(hostname)
+if [ -f ${PROVISION_DONE_FLAG_FILE} ]; then
+  echo "provision is ALREADY done for $(hostname). skipped"
+  exit 0
+fi
 
 cd /opt/
 docker-compose up -d --remove-orphans
+
+# indicate the provision is done
+touch ${PROVISION_DONE_FLAG_FILE}
+echo "provision is DONE for $(hostname)"
