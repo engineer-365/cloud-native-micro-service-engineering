@@ -23,10 +23,4 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-set -e
-set -x
-
-sudo su -
-
-cd /opt/
-docker-compose up -d --remove-orphans
+sudo --preserve-env bash /home/vagrant/provision.sh
