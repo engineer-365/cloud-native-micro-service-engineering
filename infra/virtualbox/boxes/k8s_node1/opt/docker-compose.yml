@@ -1,5 +1,3 @@
-#!/bin/bash
-
 #
 #  MIT License
 #
@@ -23,10 +21,23 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-set -x
+version: '2.2'
 
-export readonly this_dir=$(cd "$(dirname $0)";pwd)
-readonly script_dir=$(cd "${this_dir}/../script";pwd)
-source $script_dir/boxes.sh
 
-up_vm ${box_name____org_store4}
+networks:
+  default:
+
+
+services:
+
+  server:
+    container_name: fleashop-server
+    image: docker.engineer365.org:40443/engineer365/fleashop:latest
+    restart: always
+    env_file: ./fleashop.env
+    ports:
+      - 28080:8080
+      - 28081:8081
+      - 127.0.0.1:28888:8888
+    extra_hosts:
+      - "mysql.fleashop.engineer365.org:192.168.50.21"

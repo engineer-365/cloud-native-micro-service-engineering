@@ -1,4 +1,5 @@
-#!/bin/bash
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
 
 #
 #  MIT License
@@ -23,10 +24,43 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-set -x
+puts "Vagrantfile variables ---------------------------------------------------"
 
-export readonly this_dir=$(cd "$(dirname $0)";pwd)
-readonly script_dir=$(cd "${this_dir}/../script";pwd)
-source $script_dir/boxes.sh
+org=ENV["org"]
+puts "org: #{org}"
 
-up_vm ${box_name____org_store4}
+vm_name=ENV["store4_host"]
+puts "vm name: #{vm_name}"
+
+base_box_name=ENV["box_name____org_ubuntu18"]
+base_box_name_fq="#{org}/#{base_box_name}"
+puts "base box: #{base_box_name_fq}"
+
+ip=ENV["store4_ip"]
+puts "ip: #{ip}"
+
+puts "Vagrantfile variables ---------------------------------------------------"
+
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = base_box_name_fq
+  config.vm.hostname = vm_name
+  config.vm.network "private_network", ip: ip
+  # config.vm.synced_folder "./data", "/data", create: true
+
+  config.vm.provider "virtualbox" do |p|
+     p.name = vm_name
+     p.linked_clone = false
+  end
+
+  config.vm.provision "file", source: "./post-install", destination: "/home/vagrant/"
+  config.vm.provision "shell", inline: "mv /home/vagrant/post-install /"
+  
+  # Enable provisioning with a shell script.
+  config.vm.provision "shell" do |s|
+    s.path = "provision.sh"
+    s.args = ""
+  end
+
+end

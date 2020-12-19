@@ -23,10 +23,18 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
+set -e
 set -x
 
-export readonly this_dir=$(cd "$(dirname $0)";pwd)
-readonly script_dir=$(cd "${this_dir}/../script";pwd)
-source $script_dir/boxes.sh
+PROVISION_DONE_FLAG_FILE=/root/provision_is_done_$(hostname)
+if [ -f ${PROVISION_DONE_FLAG_FILE} ]; then
+  echo "provision is ALREADY done for $(hostname). skipped"
+  exit 0
+fi
 
-up_vm ${box_name____org_store4}
+cd /opt/
+docker-compose up -d --remove-orphans
+
+# indicate the provision is done
+echo $(hostname) > ${PROVISION_DONE_FLAG_FILE}
+echo "provision is DONE for $(hostname)"

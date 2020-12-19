@@ -1,4 +1,5 @@
-#!/bin/bash
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
 
 #
 #  MIT License
@@ -23,10 +24,36 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-set -x
+puts "Vagrantfile variables ---------------------------------------------------"
 
-export readonly this_dir=$(cd "$(dirname $0)";pwd)
-readonly script_dir=$(cd "${this_dir}/../script";pwd)
-source $script_dir/boxes.sh
+org=ENV["org"]
+puts "org: #{org}"
 
-up_vm ${box_name____org_store4}
+vm_name=ENV["box_name____org_builder"]
+vm_name_fq="#{org}-#{vm_name}"
+puts "vm name: #{vm_name_fq}"
+
+base_box_name=ENV["box_name____org_ubuntu18"]
+base_box_name_fq="#{org}/#{base_box_name}"
+puts "base box: #{base_box_name_fq}"
+
+puts "Vagrantfile variables ---------------------------------------------------"
+
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = base_box_name_fq
+  config.disksize.size = '200GB'
+
+  config.vm.provider "virtualbox" do |p|
+    p.name = vm_name_fq
+    p.linked_clone = false
+  end
+
+  # Enable provisioning with a shell script.
+  config.vm.provision "shell" do |s|
+    s.path = "provision.sh"
+    s.args = ""
+  end
+
+end

@@ -23,10 +23,9 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
+set -e
 set -x
 
-export readonly this_dir=$(cd "$(dirname $0)";pwd)
-readonly script_dir=$(cd "${this_dir}/../script";pwd)
-source $script_dir/boxes.sh
-
-up_vm ${box_name____org_store4}
+# directly launch the server in vm, will be replaced with k8s deployment
+cd /opt/
+docker-compose up -d --remove-orphans

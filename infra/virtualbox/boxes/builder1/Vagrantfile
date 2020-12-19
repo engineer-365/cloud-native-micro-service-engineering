@@ -29,14 +29,14 @@ puts "Vagrantfile variables ---------------------------------------------------"
 org=ENV["org"]
 puts "org: #{org}"
 
-vm_name=ENV["store4_host"]
+vm_name=ENV["builder1_host"]
 puts "vm name: #{vm_name}"
 
-box_name=ENV["box_name____org_store4"]
-box_name_fq="#{org}/#{box_name}"
-puts "base box: #{box_name_fq}"
+base_box_name=ENV["box_name____org_builder"]
+base_box_name_fq="#{org}/#{base_box_name}"
+puts "base box: #{base_box_name_fq}"
 
-ip=ENV["store4_ip"]
+ip=ENV["builder1_ip"]
 puts "ip: #{ip}"
 
 puts "Vagrantfile variables ---------------------------------------------------"
@@ -44,11 +44,26 @@ puts "Vagrantfile variables ---------------------------------------------------"
 
 Vagrant.configure("2") do |config|
 
-  config.vm.box = box_name_fq
+  config.vm.box = base_box_name_fq
+  config.vm.hostname = vm_name
   config.vm.network "private_network", ip: ip
-  
+  # config.vm.synced_folder "./data", "/data", create: true
+
   config.vm.provider "virtualbox" do |p|
      p.name = vm_name
+     p.linked_clone = false
+  end
+
+  config.vm.provision "file", source: "./post-install", destination: "/home/vagrant/"
+  config.vm.provision "shell", inline: "mv /home/vagrant/post-install /"
+  
+  config.vm.provision "file", source: "./root/jenkins-tool", destination: "/home/vagrant/"
+  config.vm.provision "shell", inline: "mv /home/vagrant/jenkins-tool /root/"
+
+  # Enable provisioning with a shell script.
+  config.vm.provision "shell" do |s|
+    s.path = "provision.sh"
+    s.args = ""
   end
 
 end

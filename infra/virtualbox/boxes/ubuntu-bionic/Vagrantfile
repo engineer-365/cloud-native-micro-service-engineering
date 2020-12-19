@@ -1,0 +1,100 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# 
+#  MIT License
+# 
+#  Copyright (c) 2020 engineer365.org
+# 
+#  Permission is hereby granted, free of charge, to any person obtaining a copy
+#  of this software and associated documentation files (the "Software"), to deal
+#  in the Software without restriction, including without limitation the rights
+#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#  copies of the Software, and to permit persons to whom the Software is
+#  furnished to do so, subject to the following conditions:
+# 
+#  The above copyright notice and this permission notice shall be included in all
+#  copies or substantial portions of the Software.
+# 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+#  SOFTWARE.
+
+puts "Vagrantfile variables ---------------------------------------------------"
+
+org=ENV["org"]
+puts "org: #{org}"
+
+vm_name=ENV["box_name____org_ubuntu18"]
+vm_name_fq="#{org}-#{vm_name}"
+puts "vm name: #{vm_name_fq}"
+
+download_site=ENV["download_site"]
+puts "download_site: #{download_site}"
+
+admin_user=ENV["admin_user"]
+puts "admin_user: #{admin_user}"
+
+dev_user=ENV["dev_user"]
+puts "dev_user: #{dev_user}"
+
+base_box_name=ENV["box_name____hashicorp_ubuntu_bionic"]
+base_box_name_fq="hashicorp/#{base_box_name}"
+puts "base box: #{base_box_name_fq}"
+
+
+puts "Vagrantfile variables ---------------------------------------------------"
+
+
+Vagrant.configure("2") do |config|
+  
+  config.vm.box = base_box_name_fq # "ubuntu/bionic64"
+
+  config.vm.provider "virtualbox" do |p|
+    p.name = vm_name_fq
+    p.linked_clone = false
+    
+    # Display the VirtualBox GUI when booting the machine
+    p.gui = false
+    
+    p.check_guest_additions = false
+    
+    p.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
+    #p.customize ["storagectl", :id, "--name", "SATA Controller", "--add", "sata", "--controller", "IntelAHCI"]  
+    
+    # Customize the amount of memory on the VM:
+    p.memory = "4096"
+    p.cpus = 2
+  end
+
+  config.disksize.size = '30GB'
+  # config.vagrant.plugins = ["vagrant-vbguest", "vagrant-disksize"]
+  
+  # Disable automatic box update checking. If you disable this, then boxes will only be checked
+  # for updates when the user runs `vagrant box outdated`. This is not recommended.
+  config.vm.box_check_update = false
+
+  # Create a private network, which allows host-only access to the machine using a specific IP.
+  #config.vm.network "private_network", ip: "192.168.50.10", name: "engineer365", create: true
+  config.vm.network "private_network", ip: "192.168.50.10"
+
+  # Share an additional folder to the guest VM. The first argument is the path on the host to
+  # the actual folder. The second argument is the path on the guest to mount the folder. And
+  # the optional third argument is a set of non-required options.
+  # config.vm.synced_folder "./data", "/data", create: true
+
+  ## we have no DNS server yet, so just hardcode the /etc/hosts ----------------
+  config.vm.provision "file", source: "../../etc_hosts", destination: "/home/vagrant/"
+  config.vm.provision "shell", inline: "mv /home/vagrant/etc_hosts /etc/hosts"
+  
+  # Enable provisioning with a shell script. 
+  config.vm.provision "shell" do |s|
+    s.path = "provision.sh"
+    s.args = "\"#{download_site}\" \"#{org}\" \"#{admin_user}\" \"#{dev_user}\""
+  end
+
+end

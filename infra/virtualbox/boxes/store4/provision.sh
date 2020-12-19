@@ -23,10 +23,31 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
+set -e
 set -x
 
-export readonly this_dir=$(cd "$(dirname $0)";pwd)
-readonly script_dir=$(cd "${this_dir}/../script";pwd)
-source $script_dir/boxes.sh
+cd /tmp
 
-up_vm ${box_name____org_store4}
+# offline install harbor#######################################################
+# https://github.com/goharbor/harbor
+# https://goharbor.io/docs/2.0.0/install-config/
+HARBOR_VER=2.1.2
+HARBOR_INSTALLER=harbor-offline-installer-v${HARBOR_VER}.tgz
+
+# https://github.com/goharbor/harbor/releases/download/v2.1.2/harbor-offline-installer-v2.1.2.tgz.asc
+
+wget --quiet "${download_site}/harbor/${HARBOR_VER}/${HARBOR_INSTALLER}"
+tar -C /opt/ -xzf ${HARBOR_INSTALLER}
+cd /opt/harbor
+
+cp /post-install/harbor/harbor.yml ./
+
+# Default installation without Notary, Clair, or Chart Repository Service
+./install.sh
+
+docker-compose down --remove-orphans
+cp /post-install/harbor/common/config/nginx/nginx.conf /opt/harbor/common/config/nginx/nginx.conf
+docker-compose up -d
+
+# TODO:
+# create project/users via CLI, see https://goharbor.io/docs/2.0.0/install-config/configure-user-settings-cli/

@@ -25,8 +25,13 @@
 
 set -x
 
-export readonly this_dir=$(cd "$(dirname $0)";pwd)
-readonly script_dir=$(cd "${this_dir}/../script";pwd)
-source $script_dir/boxes.sh
+export readonly org="engineer365.org"
 
-up_vm ${box_name____org_store4}
+export readonly download_site="https://download.engineer365.org:40443"
+export readonly upload_site_for_scp="192.168.4.2:/hdd/engineer365/download"
+export readonly box_download_path="${download_site}/vagrant/box"
+
+# users
+export readonly admin_user="admin"
+export readonly dev_user="dev"
+

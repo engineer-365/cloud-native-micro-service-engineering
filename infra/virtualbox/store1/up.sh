@@ -29,4 +29,4 @@ export readonly this_dir=$(cd "$(dirname $0)";pwd)
 readonly script_dir=$(cd "${this_dir}/../script";pwd)
 source $script_dir/boxes.sh
 
-up_vm ${box_name____org_store4}
+up_vm ${box_name____org_store1}
