@@ -59,6 +59,5 @@
   - https://www.jenkins.io/doc/book/blueocean
 
 ## 制作镜像
-  ```shell
-  ./build.sh
-  ```
+
+  `./build.sh`
