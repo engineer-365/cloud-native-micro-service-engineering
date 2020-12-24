@@ -1,21 +1,21 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 
+#
 #  MIT License
-# 
+#
 #  Copyright (c) 2020 engineer365.org
-# 
+#
 #  Permission is hereby granted, free of charge, to any person obtaining a copy
 #  of this software and associated documentation files (the "Software"), to deal
 #  in the Software without restriction, including without limitation the rights
 #  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 #  copies of the Software, and to permit persons to whom the Software is
 #  furnished to do so, subject to the following conditions:
-# 
+#
 #  The above copyright notice and this permission notice shall be included in all
 #  copies or substantial portions of the Software.
-# 
+#
 #  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 #  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -48,15 +48,15 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = vm_name
   config.vm.network "private_network", ip: ip
   # config.vm.synced_folder "./data", "/data", create: true
-  
+
   config.vm.provider "virtualbox" do |p|
      p.name = vm_name
      p.linked_clone = false
   end
 
-  config.vm.provision "file", source: "./opt", destination: "/home/vagrant/"
-  config.vm.provision "shell", inline: "mv /home/vagrant/opt /"
-  
+  config.vm.provision "file", source: "./files", destination: "/home/vagrant/"
+  #config.vm.provision "shell", inline: "mv /home/vagrant/opt /"
+
   config.vm.provision "shell" do |s|
     s.path = "provision.sh"
     s.args = ""

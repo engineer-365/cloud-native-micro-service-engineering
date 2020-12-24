@@ -40,13 +40,13 @@ wget --quiet "${download_site}/harbor/${HARBOR_VER}/${HARBOR_INSTALLER}"
 tar -C /opt/ -xzf ${HARBOR_INSTALLER}
 cd /opt/harbor
 
-cp /post-install/harbor/harbor.yml ./
+mv /home/vagrant/files/harbor/harbor.yml ./
 
 # Default installation without Notary, Clair, or Chart Repository Service
 ./install.sh
 
 docker-compose down --remove-orphans
-cp /post-install/harbor/common/config/nginx/nginx.conf /opt/harbor/common/config/nginx/nginx.conf
+mv /home/vagrant/files/harbor/common/config/nginx/nginx.conf /opt/harbor/common/config/nginx/nginx.conf
 docker-compose up -d
 
 # TODO:
