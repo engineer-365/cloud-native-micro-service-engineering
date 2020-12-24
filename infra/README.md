@@ -119,19 +119,18 @@
    /virtualbox/boxes/builder1
    ├── build.sh # 启动构建的bash脚本，在宿主机上执行
    ├── provision.sh # 虚拟机启动成功后的初始化脚本，在虚拟机内执行，譬如安装JDK
-   ├── post-install # 虚拟机启动成功后会用到的文件，不同的虚拟机不一样
+   ├── files # 虚拟机启动成功后会拷贝进去的文件，不同的虚拟机不一样
    │   └── etc
-   │       ├── default
-   │       │   └── jenkins
-   │       └── nginx
-   │           └── sites-enabled
-   │               ├── mirrors.jenkins-ci.org.conf
-   │               └── updates.jenkins-ci.org.conf
-   ├── pre-install # 虚拟机启动成功前会拷贝进虚拟机内的文件，不同的虚拟机不一样
+   │   │    ├── default
+   │   │    │   └── jenkins
+   │   │    └── nginx
+   │   │        └── sites-enabled
+   │   │            ├── mirrors.jenkins-ci.org.conf
+   │   │            └── updates.jenkins-ci.org.conf
    │   └── root
-   │       └── jenkins-tool
-   │           ├── executors.groovy
-   │           └── plugins.yaml
+   │        └── jenkins-tool
+   │            ├── jenkins.yaml
+   │            └── plugins.yaml
    ├── README.md
    └── Vagrantfile # Vagrant设置文件
    ```

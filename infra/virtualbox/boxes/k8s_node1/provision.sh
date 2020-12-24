@@ -27,5 +27,7 @@ set -e
 set -x
 
 # directly launch the server in vm, will be replaced with k8s deployment
+mv /home/vagrant/files/opt /
 cd /opt/
+
 docker-compose up -d --remove-orphans

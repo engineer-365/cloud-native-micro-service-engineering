@@ -45,7 +45,7 @@ JENKINS_PLUGIN_MGR_VER=2.5.0
 # the nginx is used  to reverse-proxy as mirror ###############################
 
 apt-get install -y nginx=1.14.0-0ubuntu1.7
-mv /post-install/etc/nginx/sites-enabled/* /etc/nginx/sites-enabled/
+mv /home/vagrant/files/etc/nginx/sites-enabled/* /etc/nginx/sites-enabled/
 nginx -s reload
 
 echo "export JENKINS_UC=http://updates.jenkins-ci.org" >> /etc/profile
@@ -64,7 +64,7 @@ echo "127.0.0.1        updates.jenkins-ci.org"  >> /etc/hosts
 
 cd /tmp/
 
-# download offline installer
+# download offline installer, then install it using ubuntu package manager
 wget --quiet ${download_site}/jenkins/${JENKINS_VER}/jenkins_${JENKINS_VER}_all.deb
 apt install daemon
 dpkg -i jenkins_${JENKINS_VER}_all.deb
@@ -73,11 +73,12 @@ rm jenkins_${JENKINS_VER}_all.deb
 # wait jenkins to launch first time
 sleep 30
 
-mv /post-install/etc/default/jenkins /etc/default/jenkins
+mv /home/vagrant/files/etc/default/jenkins /etc/default/jenkins
 chown -R jenkins:jenkins /etc/default/jenkins
 
 # set up jenkins CLI
 # see https://www.jenkins.io/doc/book/managing/cli/
+mv /home/vagrant/files/root/jenkins-tool /root/
 cd /root/jenkins-tool/
 
 wget --quiet ${download_site}/jenkins/jenkins-plugin-manager-${JENKINS_PLUGIN_MGR_VER}.jar
@@ -110,7 +111,7 @@ echo "jenkins  ALL=(ALL) NOPASSWD:/usr/bin/docker,/usr/local/bin/docker-compose"
 
 # maven mirror in settings.xml
 mkdir /var/lib/jenkins/.m2
-mv /post-install/.m2/settings.xml /var/lib/jenkins/.m2
+mv /home/vagrant/files/.m2/settings.xml /var/lib/jenkins/.m2
 chown -R jenkins:jenkins /var/lib/jenkins/.m2
 
 systemctl restart jenkins
