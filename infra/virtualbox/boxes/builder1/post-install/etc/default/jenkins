@@ -107,5 +107,7 @@ FOOTER_URL=https://builder.engineer365.org:40443
 # Timezone: see https://www.jenkins.io/doc/book/managing/change-system-timezone/
 # TIME_ZONE="-Dorg.apache.commons.jelly.tags.fmt.timeZone=Asia/Shanghai"
 
-JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT -Dhudson.footerURL=$FOOTER_URL $TIME_ZONE"
+CASC_JENKINS_CONFIG=/root/jenkins-tool/jenkins.yaml
+
+JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT -Dhudson.footerURL=$FOOTER_URL -Dcasc.jenkins.config=$CASC_JENKINS_CONFIG $TIME_ZONE"
 

@@ -19,19 +19,6 @@
   vagrant ssh
   ```
 
-## 设置maven
-  - https://builder.engineer365.org:40443/configureTools
-  - “默认全局 settings 提供”： - /var/lib/jenkins/.m2/settings.xml
-  - "Maven 安装"
-    - 点击"新增maven"
-    - name: "Maven 3.6.3"
-    - 去掉“自动安装”
-    - "MAVEN_HOME" :/opt/maven
-  - "JDK 安装":
-    - “别名”填写："openjdk 11.0.9.1+1"
-    - 去掉“自动安装”
-    - "JAVA_HOME"： /opt/jdk-11
-
 ## 创建第一个job
 
   https://builder.engineer365.org:40443/view/all/newJob
