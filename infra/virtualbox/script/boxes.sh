@@ -81,7 +81,7 @@ function build_box() {
     vagrant destroy --force
     rm -rf ${this_dir}/.vagrant
 
-    # upload to the mirror site
+    ## upload to the mirror site
     scp -P 30022 ${this_dir}/${box_file} ${upload_site_for_scp}/vagrant/box/${org}
     rm -f ${this_dir}/${box_file}
 }

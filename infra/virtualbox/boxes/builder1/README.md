@@ -34,7 +34,6 @@
       - Root POM: server/pom.xml
       - “Branches to build”：“
     - 选择“丢弃旧的构建”，“保持构建的天数”设为30
-    - 选择“Delete workspace before build starts”
     - 选择“Add timestamps to the Console Output”
     - 选择“Abort the build if it's stuck”，“Timeout minutes”设为60
 
