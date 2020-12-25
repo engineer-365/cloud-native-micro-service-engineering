@@ -7,3 +7,6 @@
 [submodule "fleashop-server-k8s"]
 	path = fleashop-server-k8s
 	url = https://github.com/engineer-365/fleashop-server-k8s.git
+[submodule "engineer365-infrastructure"]
+	path = engineer365-infrastructure
+	url = https://github.com/engineer-365/engineer365-infrastructure.git
