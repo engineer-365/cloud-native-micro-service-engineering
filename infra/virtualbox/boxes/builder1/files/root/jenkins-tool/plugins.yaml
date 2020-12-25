@@ -98,7 +98,7 @@ plugins:
       version: 1.25
  - artifactId: junit
    source:
-      version: 1.47
+      version: 1.48
  - artifactId: warnings-ng
    source:
       version: 8.4.4
@@ -110,7 +110,7 @@ plugins:
       version: 2.6
  - artifactId: github-branch-source
    source:
-      version: 2.9.2
+      version: 2.9.3
  - artifactId: pipeline-github-lib
    source:
       version: 1.0

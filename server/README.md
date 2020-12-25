@@ -40,52 +40,52 @@
 
   1. 编译打包：
 
-     注：因为集成测试里包括了编译打包的步骤，所以也可以跳过这一步直接执行下一步的```集成测试```
+     注：因为集成测试里包括了编译打包的步骤，所以也可以跳过这一步直接执行下一步的`集成测试`
 
-     ```./mvnw package```
+     `./mvnw package`
 
   2. 集成测试：
 
-     ```./mvnw verify```
-     注意，集成测试使用了docker-compose，所以Linux环境下需要加上```sudo```。Windows和Mac环境下因为docker实际是跑在了Virtual Box虚拟机里，所以不需要管理员权限。
+     `./mvnw verify`
+     注意，集成测试使用了docker-compose，所以Linux环境下需要加上`sudo`。Windows和Mac环境下因为docker实际是跑在了Virtual Box虚拟机里，所以不需要管理员权限。
 
   3. 可选：
      - 下载第三方包的源代码和javadoc，方便调试和学习
-       - ```./mvnw dependency:sources```
-       - ```./mvnw dependency:resolve -Dclassifier=javadoc```
+       - `./mvnw dependency:sources`
+       - `./mvnw dependency:resolve -Dclassifier=javadoc`
      - 生成IDE项目文件
-       - ```./mvnw idea:idea```
-       - ```./mvnw eclipse:eclipse```
+       - `./mvnw idea:idea`
+       - `./mvnw eclipse:eclipse`
        然后就可以导入idea或eclipse
 
   4. 启动/查看log／停止
 
     - Mac或Linux
-      - ```dev/up.sh```
-      - ```dev/log.sh```
-      - ```dev/down.sh```
+      - `dev/up.sh`
+      - `dev/log.sh`
+      - `dev/down.sh`
     - Windows
       - TODO：bat脚本待写，以下命令待验证
-    
-        ```shell
+
+        `shell
         cd dev
         docker-compose up --build -d --remove-orphans
-        ```
-    
-        ```shell
+        `
+
+        `shell
         cd dev
         docker-compose logs
-        ```
-    
-        ```shell
+        `
+
+        `shell
         cd dev
         docker-compose down --remove-orphans
-        ```
+        `
 
   5. 简单验证RESTful API：
 
      - VSCode的REST插件: 见[./dev/manual-test.rest](./dev/manual-test.rest)
-- Curl: ```curl -v --request GET --header 'content-type: application/json' --url http://localhost:28080/platform/user/api/v1/rest/user/_/xxx```
+- Curl: `curl -v --request GET --header 'content-type: application/json' --url http://localhost:28080/platform/user/api/v1/rest/user/_/xxx`
 
 ```
 curl测试结果如下（mac）
@@ -169,26 +169,26 @@ curl测试结果如下（mac）
 
 ## 常见问题
 
-  > 1. ```./mvnw package```或```./mvnw verify```卡住不动了，怎么办？
+  > 1. `./mvnw package`或`./mvnw verify`卡住不动了，怎么办？
 
        第一次构建时，首先会下载maven wrapper，然后再从maven官网下载依赖到的很多第三方包，确实非常慢，可能需要半小时，最好是开着梯子。
        其中，最开始下载maven wrapper的jar包时，因为没有任何提示文字，会给人以卡住不动的错觉。虽然我们推荐使用maven wrapper以便使用统一的
-       maven版本（目前是3.6.3），不过大多数情况使用自己原本安装的maven一般也是可以的，那么，直接把命令重的```./mvnw```替换成```mvn```就可以了，
+       maven版本（目前是3.6.3），不过大多数情况使用自己原本安装的maven一般也是可以的，那么，直接把命令重的`./mvnw`替换成`mvn`就可以了，
        这样可以省去下载maven wrapper的时间。
-    
+
        注意：构建正式的docker镜像（即Dockerfile.release）时，因为容器内的maven repository是隔离的，所以构建和依赖的第三方包还是会重新下载一遍，而且，每次修改pom.xml以后再构建正式的docker镜像，都会触发重新下载第三方包，这是正常现象。开发用的docker镜像（即Dockerfile.dev)没有做构建，而是直接使用了本地环境的编译好的jar包（在target目录下），所以不存在这个现象。
-    
+
        后续会搭建我们的代理/镜像服务器（因为各种代理/镜像服务器也是国内开发工程的一部分）
 
   > 2. 怎样初始化MySQL数据库?
 
        开发环境下，我们使用docker-compose管理开发服务器和MySQL，包括后续其他的Redis等也会这样做，所以不需要另外再安装MySQL或初始化数据库表。其中的MySQL，就定义在了dev/docker-compose.*.yml文件中，用户名和密码等参数在dev/fleashop.env文件中。
-    
+
        另外，我们使用了Flyway，开发环境下，Flyway默认打开，服务器启动时Flyway会自动执行数据库初始化SQL和升级用SQL，这些SQL脚本遵循Flyway的规则和缺省设置，放在了src/main/resource/db目录下。
-    
+
        所以，概括说就是，不需要手动初始化或升级MySQL数据库。
 
   > 3. 开发环境下的MySQL的数据目录在哪里？
 
-       ```dev/work/mysql```
+       `dev/work/mysql`
 

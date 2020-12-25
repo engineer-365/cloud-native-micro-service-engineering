@@ -29,7 +29,7 @@ NAME=jenkins
 # arguments to pass to java
 
 # Allow graphs etc. to work even when an X server is present
-JAVA_ARGS="-Djava.awt.headless=true"
+JAVA_ARGS="-Djava.awt.headless=true -Dcasc.jenkins.config=/var/lib/jenkins/casc"
 
 #JAVA_ARGS="-Xmx256m"
 
@@ -105,7 +105,9 @@ PREFIX=/$NAME
 FOOTER_URL=https://builder.engineer365.org:40443
 
 # Timezone: see https://www.jenkins.io/doc/book/managing/change-system-timezone/
-# TIME_ZONE="-Dorg.apache.commons.jelly.tags.fmt.timeZone=Asia/Shanghai"
+TIME_ZONE="-Dorg.apache.commons.jelly.tags.fmt.timeZone=Asia/Shanghai"
 
-JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT -Dhudson.footerURL=$FOOTER_URL $TIME_ZONE"
+JENKINS_UC_DOWNLOAD=https://mirrors.tuna.tsinghua.edu.cn/jenkins/
+
+JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT"
 

@@ -45,6 +45,4 @@
 
 
 ## 制作镜像
-  ```shell
-  ./build.sh
-  ```
+  `./build.sh`
