@@ -1,3 +1,6 @@
 [submodule "fleashop-server"]
 	path = fleashop-server
 	url = https://github.com/engineer-365/fleashop-server.git
+[submodule "fleashop-fronter"]
+	path = fleashop-fronter
+	url = https://github.com/engineer-365/fleashop-fronter.git
