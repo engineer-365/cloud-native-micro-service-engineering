@@ -26,6 +26,9 @@
 set -e
 set -x
 
+# wait for some system-update work done
+sleep 180
+
 ################################################################################
 # install jenkins via ubuntu package manager
 # see https://www.jenkins.io/doc/book/installing/linux/#debianubuntu
@@ -44,12 +47,11 @@ JENKINS_PLUGIN_MGR_VER=2.5.0
 
 # the nginx is used  to reverse-proxy as mirror ###############################
 
-apt-get install -y nginx=1.14.0-0ubuntu1.7
-mv /home/vagrant/files/etc/nginx/sites-enabled/* /etc/nginx/sites-enabled/
-nginx -s reload
-
-echo "export JENKINS_UC=http://updates.jenkins-ci.org" >> /etc/profile
-echo "export JENKINS_URL=http://localhost:8080" >> /etc/profile
+#apt-get install -y nginx=1.14.0-0ubuntu1.7
+#mv /home/vagrant/files/etc/nginx/sites-enabled/* /etc/nginx/sites-enabled/
+#nginx -s reload
+#echo "export JENKINS_UC=http://updates.jenkins-ci.org" >> /etc/profile
+#echo "export JENKINS_URL=http://localhost:8080" >> /etc/profile
 echo "export JENKINS_UC_DOWNLOAD=https://mirrors.tuna.tsinghua.edu.cn/jenkins/" >> /etc/profile
 
 source /etc/profile
@@ -57,29 +59,25 @@ source /etc/profile
 echo "192.168.50.20    docker.engineer365.org"  >> /etc/hosts
 echo "192.168.50.20    nexus.engineer365.org"   >> /etc/hosts
 echo "127.0.0.1        builder.engineer365.org" >> /etc/hosts
-echo "127.0.0.1        mirrors.jenkins-ci.org"  >> /etc/hosts
-echo "127.0.0.1        updates.jenkins-ci.org"  >> /etc/hosts
 
 # offline install #############################################################
 
 cd /tmp/
 
+apt install  -y daemon ttf-dejavu fontconfig
+
 # download offline installer, then install it using ubuntu package manager
 wget --quiet ${download_site}/jenkins/${JENKINS_VER}/jenkins_${JENKINS_VER}_all.deb
-apt install daemon
 dpkg -i jenkins_${JENKINS_VER}_all.deb
 rm jenkins_${JENKINS_VER}_all.deb
-
-# wait jenkins to launch first time
-sleep 30
 
 mv /home/vagrant/files/etc/default/jenkins /etc/default/jenkins
 chown -R jenkins:jenkins /etc/default/jenkins
 
 # set up jenkins CLI
 # see https://www.jenkins.io/doc/book/managing/cli/
-mv /home/vagrant/files/root/jenkins-tool /root/
-cd /root/jenkins-tool/
+mv /home/vagrant/files/var/lib/jenkins/casc /var/lib/jenkins/
+mv /home/vagrant/files/root/jenkins-tool/ /root/ && cd /root/jenkins-tool/
 
 wget --quiet ${download_site}/jenkins/jenkins-plugin-manager-${JENKINS_PLUGIN_MGR_VER}.jar
 ln -s /root/jenkins-tool/jenkins-plugin-manager-${JENKINS_PLUGIN_MGR_VER}.jar /root/jenkins-tool/jenkins-plugin-manager.jar
@@ -93,18 +91,16 @@ ln -s /root/jenkins-tool/jenkins-plugin-manager-${JENKINS_PLUGIN_MGR_VER}.jar /r
 # java -jar jenkins-plugin-manager-*.jar --war /your/path/to/jenkins.war --plugin-file /your/path/to/plugins.txt --plugins delivery-pipeline-plugin:1.3.2 deployit-plugin
 java -jar /root/jenkins-tool/jenkins-plugin-manager.jar \
      --verbose \
-     --jenkins-update-center https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/ \
-     --jenkins-experimental-update-center https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/experimental/ \
-     --jenkins-plugin-info ${download_site}/jenkins/plugin-versions.json \
+     --jenkins-update-center https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/dynamic-2.269/update-center.actual.json \
+     --jenkins-experimental-update-center https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/experimental/update-center.actual.json \
+     --jenkins-plugin-info https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/current/plugin-versions.json \
      --plugin-file /root/jenkins-tool/plugins.yaml \
      --plugin-download-directory /var/lib/jenkins/plugins/ \
      --plugins delivery-pipeline-plugin:1.4.2 \
      deployit-plugin
 #     --skip-failed-plugins
+
 # enable jenkins to talk with docker ##########################################
-
-chown -R jenkins:jenkins /var/lib/jenkins/plugins/
-
 usermod -aG sudo jenkins
 usermod -aG docker jenkins
 echo "jenkins  ALL=(ALL) NOPASSWD:/usr/bin/docker,/usr/local/bin/docker-compose" | tee /etc/sudoers.d/jenkins
@@ -112,15 +108,12 @@ echo "jenkins  ALL=(ALL) NOPASSWD:/usr/bin/docker,/usr/local/bin/docker-compose"
 # maven mirror in settings.xml
 mkdir /var/lib/jenkins/.m2
 mv /home/vagrant/files/.m2/settings.xml /var/lib/jenkins/.m2
-chown -R jenkins:jenkins /var/lib/jenkins/.m2
+
+chown -R jenkins:jenkins /var/lib/jenkins/
 
 systemctl restart jenkins
 
-# TODO: use intial groovy script or configuration-as-code plugin to import global configurations
-
-# the plugin initialization is really time-consuming, due to download from internet
-# need to do some investigation
-sleep 900
+sleep 300
 
 JENKINS_USER_ID=$(id -u jenkins)
 #chmod a+rw /var/run/docker.sock
